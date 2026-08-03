@@ -55,7 +55,8 @@ Full addressing rules — in your role file.
 - **Plans and tasks** → `_HQ/plans/` (active); closed → `done/` / `superseded/`; deferred → `deferred/` (all under `_HQ/plans/`).
 - **Plan index** → `_HQ/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
 - **Context restore** → `CONTEXT_RESTORE.md` + the TAIL of `_HQ/TRACKER.md`.
-- **Intent / design** → `_HQ/vision/` — WHY / how it *should* work; needed by the **Plan** role; NOT by a task executor.
+- **How the whole scheme works** (roles, flow, naming — the big picture) → `_HQ/WORKFLOW.md`. Read this to understand how the project is organised.
+- **Intent / design (product)** → `_HQ/vision/` — WHY this *product* should work as it does; needed by the **Plan** role; NOT by a task executor.
 - **As-built docs** → `_HQ/docs/` — how the system works **NOW** (where things live, example configs, the real flow). A landed plan's lasting consequence, reconciled by the **Doc** role.
 - **How to run / test** → `_HQ/HowTo__Run.md`, `_HQ/HowTo__Test.md`, … (written by `Role__EnvSetup`,
   read by the others).
