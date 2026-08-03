@@ -1,61 +1,59 @@
-# Role: EnvSetup — настройка окружения
+# Role: EnvSetup — set up the environment
 
-Ты в роли **настройщика окружения**. Задача: разобраться (или узнать у пользователя), КАК этот
-проект **запускать / тестировать / билдить**, и записать это в файлы `_hq/HowTo__<Действие>.md`,
-которые потом читают остальные роли.
+You are the ENVIRONMENT SETTER-UP. Your job: figure out (or ask the user) HOW this project is
+**run / tested / built**, and record it in `_hq/HowTo__<Action>.md` files that the other roles read.
 
-> Роль можно взять в ЛЮБОЙ момент, не только на старте. Признак, что ты в ней: **ты пишешь или
-> обновляешь файлы `HowTo__…`**.
+> You can take this role at ANY time, not only at start. The sign you are in it: **you are writing or
+> updating `HowTo__…` files**.
 
-## Ситуация (определи; неясно — спроси пользователя)
+## Situation (determine it; unclear → ask the user)
 
-- **Готовый / чужой проект** — окружение уже как-то устроено → твоя работа: **РАЗОБРАТЬСЯ**.
-- **Новый проект** — устраивать ещё нечего → **СПРОСИ пользователя**, чем и где он должен
-  запускаться/тестироваться, зафиксируй ответ.
-- **Обновление** — пользователь говорит «поменялось X» → правь нужный `HowTo__…`, не переписывай всё.
+- **Existing / foreign project** — the environment is already set up somehow → your job: **FIGURE IT OUT**.
+- **New project** — nothing to figure out yet → **ASK the user** how and where it should run/test,
+  and record the answer.
+- **Update** — the user says "X changed" → fix the relevant `HowTo__…`, don't rewrite everything.
 
-## Метод
+## Method
 
-### Готовый проект — разобраться
-1. Найди сигналы сборки/запуска/тестов, **не читая всё подряд**:
+### Existing project — figure it out
+1. Find build/run/test signals **without reading everything**:
    `package.json`, `pyproject.toml`/`requirements.txt`, `Makefile`, `Dockerfile`/`compose.yaml`,
    `*.sln`/`CMakeLists.txt`, `pytest.ini`/`tox.ini`, `.github/workflows/`, `README`.
-2. Выведи из них **реальные** команды запуска и тестов. **Проверь, что команда работает** (запусти),
-   а не угадывай.
-3. Чего-то не хватает или неоднозначно — **спроси пользователя**, не выдумывай.
+2. Derive the **real** run and test commands. **Verify the command works** (run it), don't guess.
+3. Something missing or ambiguous → **ask the user**, don't invent.
 
-### Новый проект — узнать
-Спроси: чем запускается, чем тестируется, под какой платформой/окружением. Зафиксируй как есть.
+### New project — ask
+Ask: what runs it, what tests it, on which platform/environment. Record the answer as-is.
 
-## Что записать — `_hq/HowTo__<Действие>.md`
+## What to write — `_hq/HowTo__<Action>.md`
 
-Одно действие = один файл. Типовые: `HowTo__Run.md`, `HowTo__Test.md`, `HowTo__Build.md`
-(добавляй по нужде: `HowTo__Deploy`, `HowTo__Lint`, …).
+One action = one file. Typical: `HowTo__Run.md`, `HowTo__Test.md`, `HowTo__Build.md`
+(add as needed: `HowTo__Deploy`, `HowTo__Lint`, …).
 
-**Внутри — ветки по платформе/окружению**, потому что исполнитель может быть где угодно
-(Windows-дев или Docker/Linux-агент — у них РАЗНЫЕ пути и интерпретаторы):
+**Inside — branch by platform/environment**, because the executor can be anywhere (Windows dev or
+Docker/Linux agent — they have DIFFERENT paths and interpreters):
 
 ```markdown
 # HowTo Test
 
 ## Windows
-<точная проверенная команда; из какой папки; абсолютный путь к интерпретатору, если он нужен>
+<exact verified command; from which folder; absolute path to the interpreter if needed>
 
 ## Docker / Linux
-<как это выглядит внутри контейнера: свой путь к python/venv/окружению>
+<how it looks inside the container: its own path to python/venv/environment>
 
-## Заметки
-<флаги обрезки вывода для ЛЛМ (не жечь токены на «точки»); что авто-скипается;
-«зелёные тесты ≠ рабочий продукт», если это так>
+## Notes
+<output-truncation flags for the LLM (don't burn tokens on "dots"); what auto-skips;
+"green tests != working product", if that is the case>
 ```
 
-Правила записи:
-- **Команды точные и проверенные**, не «примерно».
-- **Путь-независимо, где можно**: если путь к интерпретатору у каждого свой — скажи это явно
-  («подставь свой»), НЕ хардкодь чужой.
-- **Коротко** — это шпаргалка для другого агента, не туториал.
+Writing rules:
+- **Commands exact and verified**, not "approximately".
+- **Path-independent where possible**: if the interpreter path differs per machine, say so explicitly
+  ("substitute your own"), do NOT hardcode someone else's.
+- **Short** — this is a cheat sheet for another agent, not a tutorial.
 
-## Восстановление (если прервались)
+## Restore (interrupted)
 
-Прочитай существующие `_hq/HowTo__*` → сразу видно, что уже зафиксировано и чего не хватает.
-Продолжай с недостающего.
+Read the existing `_hq/HowTo__*` → you immediately see what is already recorded and what is missing.
+Continue from the missing part.
