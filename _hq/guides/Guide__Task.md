@@ -4,13 +4,22 @@ A task file (`PlanNN-TaskMM__<slug>.md`, written by the Plan role) is NOT a fill
 differ in content. What every task shares is the **action schema** below. The Plan role shapes the
 task around it; the executor (`Role__Exec`) walks it.
 
-**Assume the executor did NOT read the plan.** A task must be self-sufficient — put **direct links**
-to everything it needs right inside the task:
-- how to assemble context for task agent → `read _hq/guides/Guide__Context.md` + the task's own `Context` file;
-- how to test / run (when relevant) → `read _hq/HowTo__Test.md` / `read _hq/HowTo__Run.md`;
+**Assume the executor did NOT read the plan.** A task must be self-sufficient — inside the task, put
+**direct links to every file the executor must read** to do the work:
+- the task's own **`Context`** file (the reading manifest — what to read for this task);
+- **`HowTo`** files when relevant → e.g. `read _hq/HowTo__Test.md`, `read _hq/HowTo__Run.md`;
+- **the parent plan** — if doing this task requires knowing the whole plan, put a **link to the plan
+  file** into the read-list. This happens often. Link it — do NOT copy the plan into the task.
 - any other file or instruction the task needs that is not already in those.
 
-If the executor needs the parent plan, add a **link to the plan** — do NOT copy the plan into the task.
+> Not for the task: `Guide__Context` is the **Plan role's** own instruction on HOW to author a
+> `Context` file — it is NOT linked into the task. (Plan role: `read _hq/guides/Guide__Context.md`.)
+
+## What is `<address>`
+
+`<address>` = the node's coordinate, taken from its file name (the part before `__`).
+Example: file `Plan01-Task07__extract.md` → address **`Plan01-Task07`** (Task 07 of Plan 01).
+Full addressing rules → naming section in `START.md` and `Role__Exec.md`.
 
 ## Action schema
 
