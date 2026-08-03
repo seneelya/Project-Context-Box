@@ -4,6 +4,10 @@ A task file (`PlanNN-TaskMM__<slug>.md`, written by the Plan role) is NOT a fill
 differ in content. What every task shares is the **action schema** below. The Plan role shapes the
 task around it; the executor (`Role__Exec`) walks it.
 
+> **Language:** keep the structural / action parts in English (like these guides); write the task's
+> **creative substance** — the goal, the what & why — in the working language (Russian works better
+> there for the model).
+
 **Assume the executor did NOT read the plan.** A task must be self-sufficient — inside the task, put
 **direct links to every file the executor must read** to do the work:
 - the task's own **`Context`** file (the reading manifest — what to read for this task);
