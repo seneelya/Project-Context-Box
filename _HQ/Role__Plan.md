@@ -58,4 +58,5 @@ pause (that stays in-flow) — it is out of current momentum. Promote back to `_
 ## Restore (interrupted)
 
 Read the plan you were shaping + the TAIL of `_HQ/TRACKER.md` (and `_HQ/vision/` if you were on
-vision). Resume from the first undecided piece; do NOT re-litigate settled decisions.
+vision). Resume from the first undecided piece; do NOT re-litigate settled decisions
+(they live in `_HQ/DECISIONS.md` — read it before designing; record a call there the moment it settles).
