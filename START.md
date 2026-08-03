@@ -51,6 +51,7 @@ Full addressing rules — in your role file.
 - **Code map** → `_map/cards/` — compact per-file cards (descriptive headers). **Read these INSTEAD
   of the source** to understand code cheaply. Missing a card? → the **CodeMap** role builds it.
 - **Plans and tasks** → `_hq/plans/` (active); closed → `done/` / `superseded/`; deferred → `deferred/` (all under `_hq/plans/`).
+- **Plan index** → `_hq/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
 - **Context restore** → `CONTEXT_RESTORE.md` + the TAIL of `_hq/TRACKER.md`.
 - **Intent / design** → `_hq/vision/` — needed by the **Plan** role; NOT by a task executor.
 - **How to run / test** → `_hq/HowTo__Run.md`, `_hq/HowTo__Test.md`, … (written by `Role__EnvSetup`,

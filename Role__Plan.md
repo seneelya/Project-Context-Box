@@ -29,7 +29,10 @@ source. In a foreign project they are definitely there.
    context now — compile a reading manifest so the executor reads little and never blind-searches:
    - a fact you KNOW → inline it (executor reads nothing);
    - a zone you are UNSURE about → point coarsely ("explore here"), do NOT fake `§`-precision.
-5. **Register** the first task(s) in the TAIL of `_hq/TRACKER.md` so Exec can pick them up
+5. **List the plan in the index** — add/update its one-line row in `_hq/plans/INDEX.md`
+   (`PlanNN — <one-line what it is> · <rough status>`). The index is the catalog of what plans exist;
+   you (Plan role) own it. Hard status is still the folder — the index status is a quick glance.
+6. **Register** the first task(s) in the TAIL of `_hq/TRACKER.md` so Exec can pick them up
    (`→ next PlanNN-TaskMM`).
 
 ## Generations (rework)
