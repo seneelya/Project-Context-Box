@@ -1,8 +1,7 @@
 # Pass 1 — make ONE card from ONE source file
 
-Language-agnostic. The orchestrator gave you: **this instruction file**, **ONE source file**, and a
-**checklist**. Take exactly that one source file and produce exactly one card — the other files belong
-to other agents.
+Language-agnostic. The orchestrator gave you: **this instruction file** and **ONE source file**.
+Take exactly that one source file and produce exactly one card — the other files belong to other agents.
 
 A card is a **HINT, not a spec** — a cheap orientation so another agent understands the module WITHOUT
 reading the source. **Facts from the code only.** Target compression **4–10×**; full coverage of the
@@ -86,5 +85,4 @@ for reading the code.
 1. Read the source file you were given.
 2. For each public object: read its docstring + implementation; check for discrepancies.
 3. Write the card at the exact mask path `_map/cards/<path>/<name><ext>.md`.
-4. Mark your file `[x]` in the checklist.
-5. Report the result.
+4. Report the result.

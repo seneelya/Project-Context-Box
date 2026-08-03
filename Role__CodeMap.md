@@ -23,12 +23,13 @@ goal:  Your task is in _map/batch-make-cards.md — read it and execute it for t
        ...
 ```
 
-The subagent reads the shared spec, produces ONE card per file at the mask path, and marks the checklist.
+The subagent reads the shared spec and produces ONE card per file at the mask path.
 
 ## Verify
 
 After each batch: check that every expected card exists at `_map/cards/<path>/<name><ext>.md` and is
-non-empty. Missing/empty → re-assign that file (a smaller batch, or do it yourself).
+**non-zero in size** (check the size, do NOT read the file). Missing/empty → re-assign that file
+(a smaller batch, or do it yourself).
 
 ## No Pass 2
 

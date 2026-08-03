@@ -13,7 +13,7 @@ fix the mechanical errors you can, and report the rest.
 
 ## Read
 
-Read every card in `_map/cards/` (walk the checklist). Do not skip any — even a tiny one.
+Read every card under `_map/cards/`. Do not skip any — even a tiny one.
 
 ## Errors to find (all checkable WITHOUT source)
 
