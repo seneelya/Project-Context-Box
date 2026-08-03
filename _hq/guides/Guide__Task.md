@@ -31,3 +31,10 @@ Full addressing rules → naming section in `START.md` and `Role__Exec.md`.
    and user-tested if that was needed.
 
 Keep a task narrow enough to do WITHOUT holding the whole plan in mind.
+
+## Context improves over time
+
+If, after finishing, you realize you needed files that were NOT in your read-list — **append** links
+to them at the END of the plan file you read (or the task's `Context` file if you did not read the
+plan). This is the improve-over-time loop from `Guide__Context`: the next run reads better.
+Just append — do not rewrite.
