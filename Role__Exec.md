@@ -17,6 +17,7 @@ NOT the vision, NOT the whole codebase.
    - Inline facts → use them, do NOT re-look-up. Named zones → read only those files.
    - Manifest insufficient? **STOP and ask/report — do NOT blind-search the repo.**
 3. Need to run or test? → read `_hq/HowTo__Run.md` / `_hq/HowTo__Test.md`.
+   Empty / missing? → switch to `Role__EnvSetup` first (or ask the user).
 - You do NOT need `_hq/vision/` or sibling plans. Skip them.
 
 ## Do it
@@ -27,7 +28,8 @@ NOT the vision, NOT the whole codebase.
 
 ## Track progress
 
-- Append ONE line to the **TAIL** of `_hq/TRACKER.md`: `✅ <address> done → next <address>`.
+- Log to the **TAIL** of `_hq/TRACKER.md`: `◐ <address>` when you START, then
+  `✅ <address> done → next <address>` when finished.
 - **Outcome note — only to cross a context boundary.** Write a short **Outcome** note INTO the
   task file ONLY if the next task's executor would MISS it otherwise: a tacit decision / constraint /
   gotcha that is NOT visible in the code they will read. If you continue to the next task yourself
@@ -51,9 +53,11 @@ Parse: `split("__")[0].split("-")` → address levels; the rest is the human slu
 - **Separators:** `__` = address↔slug · `-` = between coordinates (tree levels) · `.` = generation of a node.
 - **Self-addressing:** the name carries the FULL address (`Plan01-Task07__extract.md`), never derived
   from the folder path — so grepping the address finds the file directly.
-- **Tags:** `Plan` · `Task` · `Context` · `Vision` · `Role` · `HowTo`.
+- **Tags:** `Plan` · `Task` · `Context` · `Vision` · `Role` · `HowTo` · `Guide`.
 - **Fractal node:** any node = `<addr>__<slug>.md` (+ a same-named folder for its children — created
-  ONLY when there are many; otherwise children sit as flat files beside it).
+  ONLY when there are many; otherwise children sit as flat files beside it). A **subtask** is a child
+  with a bare trailing number: `Plan01-Task08-1__<slug>.md` (rare — if it needs real splitting, make
+  it a separate task).
 - **Status by folder (whole chain):** active in `_hq/plans/`; finished → `_hq/plans/done/`;
   replaced → `_hq/plans/superseded/`. The address (file name) never changes when a family moves.
 - **Generations:** an address is IMMORTAL within its generation. A genuine rework = a NEW plan

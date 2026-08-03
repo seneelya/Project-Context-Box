@@ -7,7 +7,8 @@ contract, fill it later) · **acceptance criteria** · a **cross-check** against
 (`_hq/plans/*__*.md`) so you don't overlap or conflict.
 
 When you **decompose into tasks**: for each task, write its **context-assembly instruction** into the
-`Context` file the task will reference (`PlanNN-Context__<slug>.md`) — `read _hq/guides/Guide__Context.md`.
+`Context` file the task will reference (`PlanNN-Context__<slug>.md`), **or a section of the plan** for a
+small/shared context — `read _hq/guides/Guide__Context.md`.
 That is where "what to read to do this" lives, so the executor never blind-searches.
 
 **Tracking:** in the plan (and in each task) add a short pointer to `_hq/guides/Guide__Tracker.md`,
