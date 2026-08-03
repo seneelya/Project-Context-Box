@@ -11,18 +11,19 @@
 
 1. From the user's words, pick the role from the table (look at "when you take it" — meaning-aliases).
 2. None fits / unclear → **ask the user**, return to step 1.
-3. Open the role file (`Role__*.md`, in the root) and follow it strictly — it holds both the method
+3. Open the role file (`_HQ/Role__*.md`) and follow it strictly — it holds both the method
    and how to restore context for exactly that role.
 
 ## Roles
 
-| Role file (root) | When you take it — the user says… |
+| Role file (in `_HQ/`) | When you take it — the user says… |
 | --- | --- |
-| **`Role__Plan.md`** | "let's plan", "write the vision", "make a plan", "how should this work" |
-| **`Role__Exec.md`** | "do the task", "continue", "your task was …", "implement …" |
-| **`Role__CodeMap.md`** | "let's understand the project", "build the map / cards", "what's this code" |
-| **`Role__CodeMapLocal.md`** | you are a **local agent** and we are building the project map |
-| **`Role__EnvSetup.md`** | "set up the environment", "how to run / test this", taking a new/foreign project |
+| **`_HQ/Role__Plan.md`** | "let's plan", "write the vision", "make a plan", "how should this work" |
+| **`_HQ/Role__Exec.md`** | "do the task", "continue", "your task was …", "implement …" |
+| **`_HQ/Role__CodeMap.md`** | "let's understand the project", "build the map / cards", "what's this code" |
+| **`_HQ/Role__CodeMapLocal.md`** | you are a **local agent** and we are building the project map |
+| **`_HQ/Role__EnvSetup.md`** | "set up the environment", "how to run / test this", taking a new/foreign project |
+| **`_HQ/Role__Doc.md`** | "the plan is done, update the docs", "reconcile the as-built docs", "document what changed" |
 
 **Restoring** ("we stopped at …", "continue") → first open **`CONTEXT_RESTORE.md`**.
 
@@ -55,7 +56,7 @@ Full addressing rules — in your role file.
 - **Plan index** → `_HQ/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
 - **Context restore** → `CONTEXT_RESTORE.md` + the TAIL of `_HQ/TRACKER.md`.
 - **Intent / design** → `_HQ/vision/` — WHY / how it *should* work; needed by the **Plan** role; NOT by a task executor.
-- **As-built docs** → `_HQ/docs/` — how the system works **NOW** (where things live, example configs, the real flow). A landed plan's lasting consequence, distilled by the **Plan** role.
+- **As-built docs** → `_HQ/docs/` — how the system works **NOW** (where things live, example configs, the real flow). A landed plan's lasting consequence, reconciled by the **Doc** role.
 - **How to run / test** → `_HQ/HowTo__Run.md`, `_HQ/HowTo__Test.md`, … (written by `Role__EnvSetup`,
   read by the others).
 - **Authoring recipes** → `_HQ/guides/` — how to shape a Plan / Task / Context (used by the Plan role).

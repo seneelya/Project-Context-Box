@@ -24,6 +24,7 @@ flowchart TD
   S --> RENV["Role__EnvSetup<br/>запуск/тесты → _HQ/HowTo__*"]
   S --> RPLAN["Role__Plan<br/>вижен → планы → таски + Context"]
   S --> REXEC["Role__Exec<br/>таск → Context → делать → трекать"]
+  S --> RDOC["Role__Doc<br/>план сдан → правит as-built доки"]
   S --> RREST["CONTEXT_RESTORE<br/>обрыв → хвост TRACKER → restore роли"]
 
   RMAP --> CARDS[("_map/cards/")]
@@ -31,8 +32,10 @@ flowchart TD
   RPLAN --> PLANS[("_HQ/plans/ (+ done / superseded)")]
   REXEC --> PLANS
   REXEC --> TR[("_HQ/TRACKER.md")]
+  RDOC --> DOCS[("_HQ/docs/ — как работает СЕЙЧАС")]
   CARDS -.->|читают| RPLAN
   CARDS -.->|читают| REXEC
+  PLANS -.->|сданный план читает| RDOC
   HOWTO -.->|читают| REXEC
 ```
 
@@ -43,7 +46,8 @@ flowchart TD
 3. **Окружение** — `Role__EnvSetup` пишет `HowTo__Run/Test` (как запускать/тестировать, ветки по платформе).
 4. **Планирование** — `Role__Plan`: вижен → планы → **grade-aware нарезка** на узкие таски + компиляция `Context`.
 5. **Исполнение** — `Role__Exec`: взять таск (хвост `TRACKER`/юзер) → читать только его `Context` → делать → лог.
-6. **Восстановление** — обрыв → `CONTEXT_RESTORE` → хвост `TRACKER` + restore-секция роли.
+6. **Документирование** — `Role__Doc`: план сдан → привести `_HQ/docs/` к реальности (как работает СЕЙЧАС; предметный slug, правка на месте).
+7. **Восстановление** — обрыв → `CONTEXT_RESTORE` → хвост `TRACKER` + restore-секция роли.
 
 ## Ключевые механизмы (детали — в файлах ролей)
 

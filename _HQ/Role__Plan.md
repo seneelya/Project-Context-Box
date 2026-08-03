@@ -35,18 +35,11 @@ source. In a foreign project they are definitely there.
 6. **Register** the first task(s) in the TAIL of `_HQ/TRACKER.md` so Exec can pick them up
    (`→ next PlanNN-TaskMM`).
 
-## Consequences of a landed plan (as-built docs)
+## After a plan lands → hand off to Role__Doc
 
-A finished plan changes HOW the system works — and that lasting effect must be written down, because
-the **weak executor doesn't know it** (it just did its small task). YOU (Plan role, strong model) hold
-the picture, so you distill it:
-
-- When a plan's tasks are all done, extract from the plan **what globally changed** and write/update
-  `_HQ/docs/Doc__<slug>.md` — practical, not intent: *"configs are now read from `X`, here's an
-  example", "the new flow is A→B→C", "module Y replaced Z"*.
-- Also fix any **`HowTo__…`** if run/test/build changed.
-- This is NOT the Vision (that is WHY / how it *should* be). `Doc` is the current reality.
-- Small effect → a couple of lines in an existing `Doc`. Big → a new `Doc__<slug>.md`.
+A finished plan changes HOW the system works, and that must be reflected in the as-built docs
+(`_HQ/docs/`). That is a separate, backward-looking job — **`Role__Doc`** (it reads the landed plan and
+reconciles the docs). Not your forward-looking work here; just know the handoff exists.
 
 ## Generations (rework)
 
