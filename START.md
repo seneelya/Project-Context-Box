@@ -1,56 +1,61 @@
-# START — точка входа: назови роль → читай её файл
+# START — entry point: name your role → read its file
 
-> Ты только что вошёл в проект на скелете **ProjectStarter** и почти пуст — контекста у тебя нет.
-> Твою **РОЛЬ задаёт ПОЛЬЗОВАТЕЛЬ** (тем, что вы сейчас делаете). Найди роль в списке ниже,
-> открой её файл — дальше действуй по нему.
+> You just entered a project on the **ProjectStarter** skeleton and you are nearly empty — you have
+> no context yet. Your **ROLE is set by the USER** (by what you are doing together). Find your role
+> in the list below, open its file, then act by it.
 >
-> ⚠️ **Не знаешь свою задачу/роль? — СПРОСИ пользователя** («какая моя задача?»), получи ответ
-> и вернись к этому файлу.
+> ⚠️ **Don't know your task/role? — ASK the user** ("what is my task?"), get the answer, and come
+> back to this file.
 
-## Как пользоваться (по шагам)
+## How to use (step by step)
 
-1. Из слов пользователя определи роль по таблице (смотри на «когда берём» — это алиасы по смыслу).
-2. Ни одна не подходит / непонятно → **спроси пользователя**, вернись к шагу 1.
-3. Открой файл роли (`Role__*.md`, лежат в корне) и дальше делай строго по нему — там и метод,
-   и как восстановить контекст именно для этой роли.
+1. From the user's words, pick the role from the table (look at "when you take it" — meaning-aliases).
+2. None fits / unclear → **ask the user**, return to step 1.
+3. Open the role file (`Role__*.md`, in the root) and follow it strictly — it holds both the method
+   and how to restore context for exactly that role.
 
-## Роли
+## Roles
 
-| Файл роли (в корне) | Когда берём — пользователь говорит… |
+| Role file (root) | When you take it — the user says… |
 | --- | --- |
-| **`Role__Plan.md`** | «планируем», «напишем вижен», «сделаем план», «как это должно работать» |
-| **`Role__Exec.md`** | «делаем таск», «продолжаем», «твой таск был …», «реализуй …» |
-| **`Role__CodeMap.md`** | «разберём проект», «построй карту / карточки», «что тут за код» |
-| **`Role__CodeMapLocal.md`** | ты **локальный агент** мы строим карту проекта |
-| **`Role__EnvSetup.md`** | «настроим окружение», «как это запускать / тестировать», берём новый/чужой проект себе |
+| **`Role__Plan.md`** | "let's plan", "write the vision", "make a plan", "how should this work" |
+| **`Role__Exec.md`** | "do the task", "continue", "your task was …", "implement …" |
+| **`Role__CodeMap.md`** | "let's understand the project", "build the map / cards", "what's this code" |
+| **`Role__CodeMapLocal.md`** | you are a **local agent** and we are building the project map |
+| **`Role__EnvSetup.md`** | "set up the environment", "how to run / test this", taking a new/foreign project |
 
-**Восстанавливаешься** («мы остановились на …», «продолжи») → сперва открой **`CONTEXT_RESTORE.md`**.
+**Restoring** ("we stopped at …", "continue") → first open **`CONTEXT_RESTORE.md`**.
 
-## Универсальные правила (язык-независимо)
+## Universal rules (language-independent)
 
-- Правишь исходник (`*.py`, `*.cpp`, `*.ts`, `*.go`, …) → в ТОМ ЖЕ заходе обнови его карточку
-  в `_map/cards/` (карточки — дешёвая карта кода вместо чтения исходника).
-- Прогресс пиши **аппендом в хвост** `_hq/TRACKER.md` (`✅ сделал … → следующий …`); при чтении
-  смотри только **ХВОСТ** (последние строки = где мы).
+- Edit a source file (`*.py`, `*.cpp`, `*.ts`, `*.go`, …) → in the SAME pass update its card in
+  `_map/cards/` (cards are a cheap map of the code instead of reading the source).
+- Record progress by **appending to the TAIL** of `_hq/TRACKER.md` (`✅ done … → next …`); when
+  reading, look only at the **TAIL** (last lines = where we are).
 
-## Система имён (универсальная)
+## Naming system (universal)
 
-Имя файла кодирует **адрес + человекочитаемое имя**:
+A file name encodes **address + human-readable name**:
 
 ```
-<Тег><№>[-<Тег><№> …]__<имя>.md
+<Tag><N>[-<Tag><N> …]__<name>.md
 ```
-Примеры: `Plan01__lab.md` (План 01) · `Plan01-Task07__extract.md` (Таск 07 Плана 01, тема extract).
+Examples: `Plan01__lab.md` (Plan 01) · `Plan01-Task07__extract.md` (Task 07 of Plan 01, topic "extract").
 
-Теги: **`Plan`** (план) · **`Task`** (шаг плана) · **`Context`** (что читать под задачу) ·
-**`Vision`** (замысел/дизайн) · **`Role`** (роль) · **`HowTo`** (как запускать/тестировать).
-Полные правила адресации — в файле твоей роли.
+Tags: **`Plan`** · **`Task`** (a plan's step) · **`Context`** (what to read for a task) ·
+**`Vision`** (intent/design) · **`Role`** · **`HowTo`** (how to run/test). Full addressing rules —
+in your role file.
 
-## Где что лежит (карта — не грузи лишнее)
+## Where things live (map — don't load extra)
 
-- **Планы и таски** → `_hq/plans/` (активные); закрытые — `_hq/plans/done/` и `.../superseded/`.
-- **Восстановление контекста** → `CONTEXT_RESTORE.md` + хвост `_hq/TRACKER.md`.
-- **Замысел/дизайн** → `_hq/vision/` — нужен роли **Планирования**; исполнителю таска НЕ нужен.
-- **Как запускать/тестировать** → `_hq/HowTo__Run.md`, `_hq/HowTo__Test.md`, … (пишет `Role__EnvSetup`, читают остальные).
+- **Code map** → `_map/cards/` — compact per-file cards (descriptive headers). **Read these INSTEAD
+  of the source** to understand code cheaply. Missing a card? → the **CodeMap** role builds it.
+- **Plans and tasks** → `_hq/plans/` (active); closed → `_hq/plans/done/` and `.../superseded/`.
+- **Context restore** → `CONTEXT_RESTORE.md` + the TAIL of `_hq/TRACKER.md`.
+- **Intent / design** → `_hq/vision/` — needed by the **Plan** role; NOT by a task executor.
+- **How to run / test** → `_hq/HowTo__Run.md`, `_hq/HowTo__Test.md`, … (written by `Role__EnvSetup`,
+  read by the others).
 
 ---
+
+Bootstrap (copying this skeleton into an empty/foreign folder) is a **manual action by the owner**, not a role.
