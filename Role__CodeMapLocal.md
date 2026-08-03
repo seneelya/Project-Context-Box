@@ -44,7 +44,8 @@ Apply the fixes it reports, then re-run the reviewer until it returns `>> DONE`.
 
 ## Where things go
 
-- **Cards** → `_map/cards/`.
+- **Cards** → `_map/cards/<path>/<name><ext>.md` — mirror the source's path, keep its extension
+  (exact mask in `pass1-make-cards.md`). Verify each card at that path.
 - **Instruction files** (`pass1-make-cards.md`, `pass2-audit.md`, checklists) hold ONLY instructions
   — never write progress/reports into them.
 - **Progress / reports** → separate files (e.g. `_map/pass2-report.md`, a session log).
