@@ -10,5 +10,8 @@ When you **decompose into tasks**: for each task, write its **context-assembly i
 `Context` file the task will reference (`PlanNN-Context__<slug>.md`) — `read _hq/guides/Guide__Context.md`.
 That is where "what to read to do this" lives, so the executor never blind-searches.
 
+**Tracking:** in the plan (and in each task) add a short pointer to `_hq/guides/Guide__Tracker.md`,
+so progress is logged to the tracker as work proceeds.
+
 **Generations:** a genuine rework → a new plan `PlanNN.K` with its own tasks (`supersedes:`); the old
 family moves to `_hq/plans/superseded/`. Addresses are immortal; a small edit is just git.

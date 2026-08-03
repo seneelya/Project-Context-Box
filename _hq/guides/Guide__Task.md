@@ -8,6 +8,7 @@ task around it; the executor (`Role__Exec`) walks it.
 **direct links to every file the executor must read** to do the work:
 - the task's own **`Context`** file (the reading manifest — what to read for this task);
 - **`HowTo`** files when relevant → e.g. `read _hq/HowTo__Test.md`, `read _hq/HowTo__Run.md`;
+- **how to record progress** → `read _hq/guides/Guide__Tracker.md` (log to the tracker as you go);
 - **the parent plan** — if doing this task requires knowing the whole plan, put a **link to the plan
   file** into the read-list. This happens often. Link it — do NOT copy the plan into the task.
 - any other file or instruction the task needs that is not already in those.
