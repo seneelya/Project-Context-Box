@@ -21,7 +21,7 @@ prompt inlined into the goal (paste the instructions + a format example).
 
 ## Pass 1 — make cards (STRICTLY sequential, 1 subagent = 1 file)
 
-1. (optional) run `python _map/check_freshness.py` to see which cards are missing/stale.
+1. (optional) run `python _map/check_freshness.py` to see which cards already exist and which are stale.
 2. For each source file, in order:
    1. launch one subagent with the goal above,
    2. wait for it,
@@ -40,7 +40,8 @@ goal:  Your task is in _map/pass2-audit.md — read it and execute it.
 
 The reviewer checks ALL cards for **mechanical errors only** — broken links, junk, structural
 mismatches — it **does NOT read source** and **does NOT judge correctness** (hallucination guard).
-Apply the fixes it reports, then re-run the reviewer until it returns `>> DONE`.
+It patches what it can in place and reports the rest. If it returns `>> RERUN_PASS1: <files>`, re-run
+**Pass 1** for those files; otherwise re-run the reviewer until it returns `>> ALL_FIXED` or `>> DONE`.
 
 ## Where things go
 
