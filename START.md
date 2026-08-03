@@ -43,8 +43,8 @@ A file name encodes **address + human-readable name**:
 Examples: `Plan01__lab.md` (Plan 01) · `Plan01-Task07__extract.md` (Task 07 of Plan 01, topic "extract").
 
 Tags: **`Plan`** · **`Task`** (a plan's step) · **`Context`** (what to read for a task) ·
-**`Vision`** (intent/design) · **`Role`** · **`HowTo`** (how to run/test). Full addressing rules —
-in your role file.
+**`Vision`** (intent/design) · **`Role`** · **`HowTo`** (how to run/test) · **`Guide`** (authoring recipe).
+Full addressing rules — in your role file.
 
 ## Where things live (map — don't load extra)
 
@@ -55,6 +55,7 @@ in your role file.
 - **Intent / design** → `_hq/vision/` — needed by the **Plan** role; NOT by a task executor.
 - **How to run / test** → `_hq/HowTo__Run.md`, `_hq/HowTo__Test.md`, … (written by `Role__EnvSetup`,
   read by the others).
+- **Authoring recipes** → `_hq/_guides/` — how to shape a Plan / Task / Context (used by the Plan role).
 
 ---
 

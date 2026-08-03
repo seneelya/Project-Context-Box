@@ -10,5 +10,8 @@
 
 An optional compact **phase map** may sit at the top (it changes rarely); the moving state is the log below.
 
+**Rotation:** when this file grows too large, start `TRACKER2.md`, `TRACKER3.md`, … and read the
+TAIL of the latest one. Execution progress is tracked HERE, separately from plans/tasks.
+
 ---
 <!-- progress log — append below, newest last -->
