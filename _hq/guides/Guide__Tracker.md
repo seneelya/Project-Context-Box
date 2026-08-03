@@ -16,5 +16,8 @@ and tasks.
 **Rotation:** when the file grows too large, start `TRACKER2.md`, `TRACKER3.md`, … and read the TAIL
 of the latest one.
 
+**First entry:** on an empty tracker, the **Plan** role seeds it — after decomposing, it appends
+`→ next PlanNN-TaskMM` so Exec has a starting point. Exec then continues the log from there.
+
 An optional compact **phase map** may sit at the top of the tracker (it changes rarely); the moving
 state is the appended log.
