@@ -40,6 +40,12 @@ source. In a foreign project they are definitely there.
 - Addresses are IMMORTAL — never rename an old plan's tasks. (No `## History` section — git + the
   generation links are the record.)
 
+## Deferring
+
+Consciously postpone a plan/task OUT of the active flow (the proper version of a temp fix, hygiene,
+an idea noticed in passing) → move its family to `_hq/plans/deferred/`. This is NOT a tracker `⏸`
+pause (that stays in-flow) — it is out of current momentum. Promote back to `_hq/plans/` when picked up.
+
 ## Restore (interrupted)
 
 Read the plan you were shaping + the TAIL of `_hq/TRACKER.md` (and `_hq/vision/` if you were on

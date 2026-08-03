@@ -59,7 +59,8 @@ Parse: `split("__")[0].split("-")` → address levels; the rest is the human slu
   with a bare trailing number: `Plan01-Task08-1__<slug>.md` (rare — if it needs real splitting, make
   it a separate task).
 - **Status by folder (whole chain):** active in `_hq/plans/`; finished → `_hq/plans/done/`;
-  replaced → `_hq/plans/superseded/`. The address (file name) never changes when a family moves.
+  replaced → `_hq/plans/superseded/`; deferred → `_hq/plans/deferred/`. The address (file name)
+  never changes when a family moves.
 - **Generations:** an address is IMMORTAL within its generation. A genuine rework = a NEW plan
   `Plan01.2` with its OWN tasks (`Plan01.2-Task01…`) + frontmatter `supersedes: Plan01`; the old
   chain moves to `superseded/`. A small text edit is just git — same address.

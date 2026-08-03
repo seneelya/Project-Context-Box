@@ -8,7 +8,8 @@ and tasks.
 **Write:** append ONE line per step to the BOTTOM, newest last:
 - `◐ <address>` — in progress
 - `✅ <address> done → next <address>` — a step finished + what to take next
-- `⏸ <address> — <why>` — blocked / parked
+- `⏸ <address> — <why>` — blocked / parked (still IN the active flow; a fully **deferred** chain is
+  moved to `_hq/plans/deferred/` instead)
 
 `<address>` = the node coordinate from a file name, e.g. `Plan01-Task07` (see `Guide__Task`).
 

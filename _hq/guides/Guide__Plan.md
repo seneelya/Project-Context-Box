@@ -16,3 +16,6 @@ so progress is logged to the tracker as work proceeds.
 
 **Generations:** a genuine rework → a new plan `PlanNN.K` with its own tasks (`supersedes:`); the old
 family moves to `_hq/plans/superseded/`. Addresses are immortal; a small edit is just git.
+
+**Deferring:** postpone a plan/task out of the active flow → move its family to `_hq/plans/deferred/`
+(not a tracker `⏸` pause). Promote back to active when picked up.
