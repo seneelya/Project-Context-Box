@@ -28,8 +28,12 @@ NOT the vision, NOT the whole codebase.
 ## Track progress
 
 - Append ONE line to the **TAIL** of `_hq/TRACKER.md`: `✅ <address> done → next <address>`.
-- If the result MATTERS for the next task (a constraint found, a contract changed, a decision),
-  write a short **Outcome** note INTO the task file. Otherwise write nothing (rarely-but-precisely).
+- **Outcome note — only to cross a context boundary.** Write a short **Outcome** note INTO the
+  task file ONLY if the next task's executor would MISS it otherwise: a tacit decision / constraint /
+  gotcha that is NOT visible in the code they will read. If you continue to the next task yourself
+  now (same context), you already know it → write nothing. If it is already reflected in the code /
+  interfaces → write nothing. Unsure whether anyone will need it later? → **ASK the user.**
+  Default: write nothing (rarely-but-precisely).
 - Whole plan finished → move the family (`<Plan>__…md` + its `<Plan>__…/` folder) to `_hq/plans/done/`.
 
 ## Restore (interrupted)
