@@ -55,7 +55,7 @@ Full addressing rules — in your role file.
 - **Intent / design** → `_hq/vision/` — needed by the **Plan** role; NOT by a task executor.
 - **How to run / test** → `_hq/HowTo__Run.md`, `_hq/HowTo__Test.md`, … (written by `Role__EnvSetup`,
   read by the others).
-- **Authoring recipes** → `_hq/_guides/` — how to shape a Plan / Task / Context (used by the Plan role).
+- **Authoring recipes** → `_hq/guides/` — how to shape a Plan / Task / Context (used by the Plan role).
 
 ---
 

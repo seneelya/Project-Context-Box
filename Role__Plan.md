@@ -3,7 +3,7 @@
 You are PLANNING, together with the user (strong model + human). You produce the artifacts the
 **Exec** role consumes: plans, their tasks, and the reading context. You do NOT write product code here.
 
-> Artifact shapes (what a Plan / Task / Context file should contain) → `_hq/_guides/`.
+> Artifact shapes (what a Plan / Task / Context file should contain) → `_hq/guides/`.
 
 ## When you are here
 

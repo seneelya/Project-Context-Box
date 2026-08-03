@@ -7,8 +7,8 @@ contract, fill it later) · **acceptance criteria** · a **cross-check** against
 (`_hq/plans/*__*.md`) so you don't overlap or conflict.
 
 When you **decompose into tasks**: for each task, write its **context-assembly instruction** into the
-`Context` file the task will reference (`PlanNN-Context__<slug>.md`) — see `Guide__Context`. That is
-where "what to read to do this" lives, so the executor never blind-searches.
+`Context` file the task will reference (`PlanNN-Context__<slug>.md`) — `read _hq/guides/Guide__Context.md`.
+That is where "what to read to do this" lives, so the executor never blind-searches.
 
 **Generations:** a genuine rework → a new plan `PlanNN.K` with its own tasks (`supersedes:`); the old
 family moves to `_hq/plans/superseded/`. Addresses are immortal; a small edit is just git.
