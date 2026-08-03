@@ -1,6 +1,6 @@
 # Guide: Tracker — how to fill and read the tracker
 
-The tracker (`_hq/TRACKER.md`) is a **tail log** of execution progress, kept **separate** from plans
+The tracker (`_HQ/TRACKER.md`) is a **tail log** of execution progress, kept **separate** from plans
 and tasks.
 
 **Read:** only the **TAIL** (last few lines) — that is where we are. Never read the whole file.
@@ -9,7 +9,7 @@ and tasks.
 - `◐ <address>` — in progress
 - `✅ <address> done → next <address>` — a step finished + what to take next
 - `⏸ <address> — <why>` — blocked / parked (still IN the active flow; a fully **deferred** chain is
-  moved to `_hq/plans/deferred/` instead)
+  moved to `_HQ/plans/deferred/` instead)
 
 `<address>` = the node coordinate from a file name, e.g. `Plan01-Task07` (see `Guide__Task`).
 

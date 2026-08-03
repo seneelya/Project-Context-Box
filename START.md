@@ -30,7 +30,7 @@
 
 - Edit a source file (`*.py`, `*.cpp`, `*.ts`, `*.go`, …) → in the SAME pass update its card in
   `_map/cards/` (cards are a cheap map of the code instead of reading the source).
-- Record progress by **appending to the TAIL** of `_hq/TRACKER.md` (`✅ done … → next …`); when
+- Record progress by **appending to the TAIL** of `_HQ/TRACKER.md` (`✅ done … → next …`); when
   reading, look only at the **TAIL** (last lines = where we are).
 
 ## Naming system (universal)
@@ -43,20 +43,22 @@ A file name encodes **address + human-readable name**:
 Examples: `Plan01__lab.md` (Plan 01) · `Plan01-Task07__extract.md` (Task 07 of Plan 01, topic "extract").
 
 Tags: **`Plan`** · **`Task`** (a plan's step) · **`Context`** (what to read for a task) ·
-**`Vision`** (intent/design) · **`Role`** · **`HowTo`** (how to run/test) · **`Guide`** (authoring recipe).
+**`Vision`** (intent/design) · **`Doc`** (how the system works NOW / as-built) · **`Role`** ·
+**`HowTo`** (how to run/test) · **`Guide`** (authoring recipe).
 Full addressing rules — in your role file.
 
 ## Where things live (map — don't load extra)
 
 - **Code map** → `_map/cards/` — compact per-file cards (descriptive headers). **Read these INSTEAD
   of the source** to understand code cheaply. Missing a card? → the **CodeMap** role builds it.
-- **Plans and tasks** → `_hq/plans/` (active); closed → `done/` / `superseded/`; deferred → `deferred/` (all under `_hq/plans/`).
-- **Plan index** → `_hq/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
-- **Context restore** → `CONTEXT_RESTORE.md` + the TAIL of `_hq/TRACKER.md`.
-- **Intent / design** → `_hq/vision/` — needed by the **Plan** role; NOT by a task executor.
-- **How to run / test** → `_hq/HowTo__Run.md`, `_hq/HowTo__Test.md`, … (written by `Role__EnvSetup`,
+- **Plans and tasks** → `_HQ/plans/` (active); closed → `done/` / `superseded/`; deferred → `deferred/` (all under `_HQ/plans/`).
+- **Plan index** → `_HQ/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
+- **Context restore** → `CONTEXT_RESTORE.md` + the TAIL of `_HQ/TRACKER.md`.
+- **Intent / design** → `_HQ/vision/` — WHY / how it *should* work; needed by the **Plan** role; NOT by a task executor.
+- **As-built docs** → `_HQ/docs/` — how the system works **NOW** (where things live, example configs, the real flow). A landed plan's lasting consequence, distilled by the **Plan** role.
+- **How to run / test** → `_HQ/HowTo__Run.md`, `_HQ/HowTo__Test.md`, … (written by `Role__EnvSetup`,
   read by the others).
-- **Authoring recipes** → `_hq/guides/` — how to shape a Plan / Task / Context (used by the Plan role).
+- **Authoring recipes** → `_HQ/guides/` — how to shape a Plan / Task / Context (used by the Plan role).
 
 ---
 

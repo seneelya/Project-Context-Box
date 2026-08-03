@@ -3,12 +3,12 @@
 You are PLANNING, together with the user (strong model + human). You produce the artifacts the
 **Exec** role consumes: plans, their tasks, and the reading context. You do NOT write product code here.
 
-> Artifact shapes (what a Plan / Task / Context file should contain) → `_hq/guides/`.
+> Artifact shapes (what a Plan / Task / Context file should contain) → `_HQ/guides/`.
 
 ## When you are here
 
-- **Vision** — describe/adjust HOW the system should work → `_hq/vision/` (`VisionNN__<slug>.md`).
-- **New plan** — a big multi-step chunk of the app → `_hq/plans/PlanNN__<slug>.md`.
+- **Vision** — describe/adjust HOW the system should work → `_HQ/vision/` (`VisionNN__<slug>.md`).
+- **New plan** — a big multi-step chunk of the app → `_HQ/plans/PlanNN__<slug>.md`.
 - **Local plan** — a small, focused plan; agree its scope with the user first.
 - **Rework** — an existing plan is wrong/stale → new generation (see below).
 
@@ -17,7 +17,7 @@ source. In a foreign project they are definitely there.
 
 ## Method
 
-1. **Cross-check first.** Scan existing plans (`_hq/plans/*__*.md`) — avoid overlap/conflict with what
+1. **Cross-check first.** Scan existing plans (`_HQ/plans/*__*.md`) — avoid overlap/conflict with what
    is already planned; reconcile with the user.
 2. **Write the plan** (`PlanNN__<slug>.md`): goal · scope · in→out contracts (treat an unsolved hard
    part as a BLACK BOX with a contract, fill it later) · acceptance criteria.
@@ -29,27 +29,40 @@ source. In a foreign project they are definitely there.
    context now — compile a reading manifest so the executor reads little and never blind-searches:
    - a fact you KNOW → inline it (executor reads nothing);
    - a zone you are UNSURE about → point coarsely ("explore here"), do NOT fake `§`-precision.
-5. **List the plan in the index** — add/update its one-line row in `_hq/plans/INDEX.md`
+5. **List the plan in the index** — add/update its one-line row in `_HQ/plans/INDEX.md`
    (`PlanNN — <one-line what it is> · <rough status>`). The index is the catalog of what plans exist;
    you (Plan role) own it. Hard status is still the folder — the index status is a quick glance.
-6. **Register** the first task(s) in the TAIL of `_hq/TRACKER.md` so Exec can pick them up
+6. **Register** the first task(s) in the TAIL of `_HQ/TRACKER.md` so Exec can pick them up
    (`→ next PlanNN-TaskMM`).
+
+## Consequences of a landed plan (as-built docs)
+
+A finished plan changes HOW the system works — and that lasting effect must be written down, because
+the **weak executor doesn't know it** (it just did its small task). YOU (Plan role, strong model) hold
+the picture, so you distill it:
+
+- When a plan's tasks are all done, extract from the plan **what globally changed** and write/update
+  `_HQ/docs/Doc__<slug>.md` — practical, not intent: *"configs are now read from `X`, here's an
+  example", "the new flow is A→B→C", "module Y replaced Z"*.
+- Also fix any **`HowTo__…`** if run/test/build changed.
+- This is NOT the Vision (that is WHY / how it *should* be). `Doc` is the current reality.
+- Small effect → a couple of lines in an existing `Doc`. Big → a new `Doc__<slug>.md`.
 
 ## Generations (rework)
 
 - Small edit to a plan → just git (same address).
 - Genuine rework (needs new tasks) → a NEW plan `PlanNN.K` with its OWN tasks + frontmatter
-  `supersedes: PlanNN`; move the old family to `_hq/plans/superseded/` (`superseded_by: PlanNN.K`).
+  `supersedes: PlanNN`; move the old family to `_HQ/plans/superseded/` (`superseded_by: PlanNN.K`).
 - Addresses are IMMORTAL — never rename an old plan's tasks. (No `## History` section — git + the
   generation links are the record.)
 
 ## Deferring
 
 Consciously postpone a plan/task OUT of the active flow (the proper version of a temp fix, hygiene,
-an idea noticed in passing) → move its family to `_hq/plans/deferred/`. This is NOT a tracker `⏸`
-pause (that stays in-flow) — it is out of current momentum. Promote back to `_hq/plans/` when picked up.
+an idea noticed in passing) → move its family to `_HQ/plans/deferred/`. This is NOT a tracker `⏸`
+pause (that stays in-flow) — it is out of current momentum. Promote back to `_HQ/plans/` when picked up.
 
 ## Restore (interrupted)
 
-Read the plan you were shaping + the TAIL of `_hq/TRACKER.md` (and `_hq/vision/` if you were on
+Read the plan you were shaping + the TAIL of `_HQ/TRACKER.md` (and `_HQ/vision/` if you were on
 vision). Resume from the first undecided piece; do NOT re-litigate settled decisions.

@@ -1,7 +1,7 @@
 # Vision 01 — ProjectStarter: что это и как работает
 
 > Идейный слой проекта: что, зачем, как устроен поток работы. Истина по деталям — файлы скелета
-> (`START.md`, `Role__*`, `_hq/guides/`); здесь — цельная картина.
+> (`START.md`, `Role__*`, `_HQ/guides/`); здесь — цельная картина.
 
 ## Проблема
 
@@ -21,16 +21,16 @@
 flowchart TD
   U["Пользователь: назначает роль"] --> S["START.md — роутер по ролям"]
   S --> RMAP["Role__CodeMap / CodeMapLocal<br/>карта кода → _map/cards/"]
-  S --> RENV["Role__EnvSetup<br/>запуск/тесты → _hq/HowTo__*"]
+  S --> RENV["Role__EnvSetup<br/>запуск/тесты → _HQ/HowTo__*"]
   S --> RPLAN["Role__Plan<br/>вижен → планы → таски + Context"]
   S --> REXEC["Role__Exec<br/>таск → Context → делать → трекать"]
   S --> RREST["CONTEXT_RESTORE<br/>обрыв → хвост TRACKER → restore роли"]
 
   RMAP --> CARDS[("_map/cards/")]
-  RENV --> HOWTO[("_hq/HowTo__*")]
-  RPLAN --> PLANS[("_hq/plans/ (+ done / superseded)")]
+  RENV --> HOWTO[("_HQ/HowTo__*")]
+  RPLAN --> PLANS[("_HQ/plans/ (+ done / superseded)")]
   REXEC --> PLANS
-  REXEC --> TR[("_hq/TRACKER.md")]
+  REXEC --> TR[("_HQ/TRACKER.md")]
   CARDS -.->|читают| RPLAN
   CARDS -.->|читают| REXEC
   HOWTO -.->|читают| REXEC
@@ -49,7 +49,7 @@ flowchart TD
 
 - **Само-адресующиеся имена:** `<Tag><N>[-<Tag><N>]__<slug>.md`, разбор `split("__")[0].split("-")`. Имя = грепаемый адрес.
 - **Поколения:** переделка → `Plan01.2` (`supersedes:`), адрес старого бессмертен; мелкие правки — git.
-- **Статус папкой:** активные в `_hq/plans/`, закрытые → `done/`, заменённые → `superseded/`, отложенные → `deferred/` (семьёй).
+- **Статус папкой:** активные в `_HQ/plans/`, закрытые → `done/`, заменённые → `superseded/`, отложенные → `deferred/` (семьёй).
 - **Context = манифест чтения:** планировщик компилирует «что читать» (карточки > код); исполнитель не рыщет, при нехватке — СТОП.
 - **Трекер = хвост-лог:** читать только хвост; ротация `TRACKER2/3`.
 
