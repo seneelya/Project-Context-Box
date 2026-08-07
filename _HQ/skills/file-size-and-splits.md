@@ -1,22 +1,20 @@
 ---
 name: file-size-and-splits
-description: large modules split into packages; how to split without breaking seams
+description: split large modules into packages without breaking public seams
 ---
 
-Owner dislikes big source files — when a `.py` pushes \~40KB / \~850+ lines it should be split, so future edits (and my re-reads) touch small, atomic files.
-Prefer FEW logical parts, each atomic, not many tiny fragments.
+When a source file grows too large (rule of thumb: ~40KB / ~850+ lines), split it — so future edits
+and re-reads touch small, atomic files, not a wall of context. Prefer FEW logical parts, each atomic,
+over many tiny fragments.
 
-**Why:** editing means re-reading; a 900-line file wastes context every time
+**Why:** editing means re-reading; a large file burns context every time it is touched.
 
-**How to apply — module → package (the pattern used for** **`_engine/backends/`):**
-turn `X.py` into `X/` package. Keep the PUBLIC dispatchers in `__init__.py` and
-move leaf implementations into submodules, then **re-export every name tests or
-callers reference** from `__init__`.  Then imports (`from ._engine import
-backends`) and all monkeypatches keep working with ZERO test churn. Verify:
-run the full suite, count must be identical .
-Also expose `import time` at package top if any test patches `mod.time.sleep`.
+**How to apply — module → package:**
+turn `X.<ext>` into an `X/` package. Keep the PUBLIC entry points (dispatchers / the exported surface)
+in the package's init file, and move leaf implementations into submodules. Then **re-export every name
+that callers or tests reference** from the init, so existing imports and test hooks keep working with
+ZERO churn. Verify by running the full test suite — the result must be identical before and after
+(same count, same pass/fail).
 
-Test files: split by concern (per-driver) freely — no imports depend on test
-file layout, zero risk. Cards: owner wants them FULLY duplicated (one card per
-file mirroring the tree), more cards is fine — less to read later.
-
+**Test files:** split by concern freely — no imports depend on test-file layout, so it is zero-risk.
+**Cards:** keep one card per source file mirroring the tree — more small cards is fine, less to read later.

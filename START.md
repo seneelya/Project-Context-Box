@@ -45,7 +45,7 @@ Examples: `Plan01__lab.md` (Plan 01) · `Plan01-Task07__extract.md` (Task 07 of 
 
 Tags: **`Plan`** · **`Task`** (a plan's step) · **`Context`** (what to read for a task) ·
 **`Vision`** (intent/design) · **`Doc`** (how the system works NOW / as-built) · **`Role`** ·
-**`HowTo`** (how to run/test) · **`Guide`** (authoring recipe).
+**`HowTo`** (how to do a recurring project action — run/test/build, or how to write the project's own kind of program) · **`Guide`** (authoring recipe).
 Full addressing rules — in your role file.
 
 ## Where things live (map — don't load extra)
@@ -60,8 +60,12 @@ Full addressing rules — in your role file.
 - **How the whole scheme works** (roles, flow, naming — the big picture) → `_HQ/WORKFLOW.md`. Read this to understand how the project is organised.
 - **Intent / design (product)** → `_HQ/vision/` — WHY this *product* should work as it does; needed by the **Plan** role; NOT by a task executor.
 - **As-built docs** → `_HQ/docs/` — how the system works **NOW** (where things live, example configs, the real flow). A landed plan's lasting consequence, reconciled by the **Doc** role.
-- **How to run / test** → `_HQ/HowTo__Run.md`, `_HQ/HowTo__Test.md`, … (written by `Role__EnvSetup`,
-  read by the others).
+- **How to run / test / build — and how to write this project's own recurring programs** →
+  `_HQ/HowTo__<Action>.md` (`HowTo__Run`, `HowTo__Test`, …). Recurring, project-specific SERVICE docs
+  that **accumulate as the project grows**: run/test/build are written by `Role__EnvSetup`; *authoring*
+  HowTos (e.g. "how to write a module/harness of this project's kind", for weak local models to follow)
+  emerge once such a pattern stabilises. Distinct from `_HQ/guides/` (recipes for the SCHEME's own
+  artifacts). **Link each new HowTo here in START** as it appears.
 - **Authoring recipes** → `_HQ/guides/` — how to shape a Plan / Task / Context (used by the Plan role).
 
 ---
