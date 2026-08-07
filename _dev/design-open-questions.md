@@ -29,8 +29,8 @@ The scheme should name these distinctly (link verbs: `supersedes:` vs `follows:`
 When a plan spawns **variants/branches** (not a linear "next generation"), addressing (`PlanNN.K`) and
 status-folders may get messy. Watch for it on a real case before designing a fix.
 
-## Meta-aim (why these matter)
+## Why these matter
 
-The scheme's goal: **for every action there is a path to an ATOMIC rule** that resolves the situation.
-A situation with no clear rule = the signal to add/refine one. That is how the ruleset is hardened —
-by running it on real work and closing the gaps it exposes.
+The atomic-rule aim (for every action a path to an atomic rule; a gap = the signal to add one) is a
+scheme invariant — see `_dev/vision/Vision01__project-starter.md`. This file is where the gaps it
+exposes get parked until resolved.
