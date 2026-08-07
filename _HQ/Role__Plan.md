@@ -41,6 +41,24 @@ A finished plan changes HOW the system works, and that must be reflected in the 
 (`_HQ/docs/`). That is a separate, backward-looking job — **`Role__Doc`** (it reads the landed plan and
 reconciles the docs). Not your forward-looking work here; just know the handoff exists.
 
+### Close-out: append the `## CARRY` block (planning memory)
+
+When a plan closes (moves to `done/`), append a short **`## CARRY`** section to the END of that plan
+file — greppable planning memory the NEXT generation reads WITHOUT opening the whole plan:
+
+`## CARRY — deviations · smells (where parked) · next-gen TODO`
+
+3–5 bullets MAX (keep it cheap or it rots): where execution deviated from the plan, which smells were
+found and where they were parked, what the next generation must fix. Distinct from `Doc` (current
+state) and `DECISIONS` (locks) — this is *what executing taught us*. Sweep every closed plan at once:
+`grep -rn "^## CARRY" _HQ/plans/done/`.
+
+### Receiving a KICKBACK
+
+If `Role__Exec` hits a WRONG CONTRACT it stops and logs `KICKBACK <address>: … → Plan` to the tail of
+`_HQ/TRACKER.md`. That comes back to YOU: fix the contract here (+ record the call in `_HQ/DECISIONS.md`),
+then re-hand the task. Find open ones with `grep -rn "KICKBACK" _HQ/`.
+
 ## Generations (rework)
 
 - Small edit to a plan → just git (same address).

@@ -55,6 +55,7 @@ Full addressing rules — in your role file.
 - **Plans and tasks** → `_HQ/plans/` (active); closed → `done/` / `superseded/`; deferred → `deferred/` (all under `_HQ/plans/`).
 - **Plan index** → `_HQ/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
 - **Settled decisions** → `_HQ/DECISIONS.md` — locked calls + one-line why; **read before (re)designing, don't relitigate**. Owned by the **Plan** role.
+- **Lessons from closed plans** → grep `^## CARRY` in `_HQ/plans/done/` (deviations · smells · next-gen TODO — jump to the line, don't read whole plans). **Open contract-drift** → grep `KICKBACK` in `_HQ/` (Exec kicked a wrong contract back to Plan).
 - **Context restore** → `CONTEXT_RESTORE.md` + the TAIL of `_HQ/TRACKER.md`.
 - **How the whole scheme works** (roles, flow, naming — the big picture) → `_HQ/WORKFLOW.md`. Read this to understand how the project is organised.
 - **Intent / design (product)** → `_HQ/vision/` — WHY this *product* should work as it does; needed by the **Plan** role; NOT by a task executor.

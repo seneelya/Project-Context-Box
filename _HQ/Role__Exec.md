@@ -26,6 +26,18 @@ NOT the vision, NOT the whole codebase.
 - Edit source (`*.py`, `*.cpp`, `*.ts`, …) → in the SAME pass update its card in `_map/cards/`.
 - Keep the trunk green: small, verifiable steps.
 
+## Contract wrong → KICKBACK to Plan (do NOT silently redesign)
+
+Missing context (a fact/file the manifest omitted) → you fill it / ask (see above).
+But if the task's **contract itself is wrong** — the in→out shape, a block/interface signature, or a
+design assumption the plan LOCKED no longer holds — **STOP. Do NOT redesign it in Exec** (that drifts
+from the locked decisions). Append one line to the TAIL of `_HQ/TRACKER.md`:
+
+`KICKBACK <address>: <what in the contract is wrong> → Plan`
+
+and hand back to `Role__Plan`. Contract changes go through Plan (+ `_HQ/DECISIONS.md`), never Exec.
+Greppable: `grep -rn "KICKBACK" _HQ/` gathers every contract-drift event.
+
 ## Track progress
 
 - Log to the **TAIL** of `_HQ/TRACKER.md`: `◐ <address>` when you START, then
@@ -36,7 +48,9 @@ NOT the vision, NOT the whole codebase.
   now (same context), you already know it → write nothing. If it is already reflected in the code /
   interfaces → write nothing. Unsure whether anyone will need it later? → **ASK the user.**
   Default: write nothing (rarely-but-precisely).
-- Whole plan finished → move the family (`<Plan>__…md` + its `<Plan>__…/` folder) to `_HQ/plans/done/`.
+- Whole plan finished → move the family (`<Plan>__…md` + its `<Plan>__…/` folder) to `_HQ/plans/done/`,
+  then trigger **plan-close**: `Role__Plan` appends the `## CARRY` block to the closed plan, `Role__Doc`
+  reconciles `_HQ/docs/`.
 
 ## Restore (interrupted)
 

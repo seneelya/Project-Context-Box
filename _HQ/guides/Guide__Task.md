@@ -4,9 +4,10 @@ A task file (`PlanNN-TaskMM__<slug>.md`, written by the Plan role) is NOT a fill
 differ in content. What every task shares is the **action schema** below. The Plan role shapes the
 task around it; the executor (`Role__Exec`) walks it.
 
-> **Language:** keep the structural / action parts in English (like these guides); write the task's
-> **creative substance** — the goal, the what & why — in the working language (Russian works better
-> there for the model).
+> **Language (strict):** in a Task file, Russian is ONLY for the **creative substance** — the goal,
+> the what & why. EVERYTHING hard — read-list, steps, in→out contract, acceptance, tracker tokens —
+> is **ALWAYS English** (English binds procedure harder / fewer tokens; Russian is for creative
+> precision only, where the model produces better output in the working language).
 
 **Assume the executor did NOT read the plan.** A task must be self-sufficient — inside the task, put
 **direct links to every file the executor must read** to do the work:

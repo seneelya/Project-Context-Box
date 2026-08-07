@@ -14,6 +14,11 @@ That is where "what to read to do this" lives, so the executor never blind-searc
 **Tracking:** in the plan (and in each task) add a short pointer to `_HQ/guides/Guide__Tracker.md`,
 so progress is logged to the tracker as work proceeds.
 
+**Close-out (`CARRY`):** when the plan closes to `done/`, append a `## CARRY` section — 3–5 bullets:
+deviations · smells (where parked) · next-gen TODO. Greppable planning memory
+(`grep -rn "^## CARRY" _HQ/plans/done/`), distinct from as-built `Doc` and locked `DECISIONS`. Owned by
+the Plan role.
+
 **Generations:** a genuine rework → a new plan `PlanNN.K` with its own tasks (`supersedes:`); the old
 family moves to `_HQ/plans/superseded/`. Addresses are immortal; a small edit is just git.
 
