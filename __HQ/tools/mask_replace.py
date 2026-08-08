@@ -3,6 +3,7 @@ import glob
 import os
 import re
 import sys
+from pathlib import Path
 
 # Minimal safe builtins for -m expressions (no __import__, no open, no exec).
 # Only string ops, numeric helpers, and type checks.
@@ -73,6 +74,9 @@ Examples:
   Simple replace across all matches:
     %(prog)s path/to/folder "*.md" -r "old text" "new text"
 
+  Recurse into subfolders (-R):
+    %(prog)s path/to/cards "*.md" -R -r "old text" "new text"
+
   Replace only in lines that match a Python expression:
     %(prog)s path/to/folder "*.md" -m 'line.startswith("## Dependencies")' "Dependencies" "DEPS"
 
@@ -110,6 +114,7 @@ Notes:
 
     # Build replacement list preserving command-line order
     replacements = []
+    recursive = False
 
     # Scan remaining argv for -r/-m in command-line order
     i = 0
@@ -149,6 +154,9 @@ Notes:
                 "with": with_text,
             })
             i += 4
+        elif tok in ("-R", "--recursive"):
+            recursive = True
+            i += 1
         elif tok == "-h" or tok == "--help":
             parser.print_help()
             sys.exit(0)
@@ -158,9 +166,13 @@ Notes:
     if not args.replace and not args.match:
         parser.error("Specify at least one replacement (-r or -m).")
 
-    # Resolve file list
-    pattern = os.path.join(args.folder, args.mask)
-    files = sorted(glob.glob(pattern))
+    # Resolve file list (-R walks subfolders too)
+    if recursive:
+        pattern = os.path.join(args.folder, "**", args.mask)
+        files = sorted(str(p) for p in Path(args.folder).rglob(args.mask) if p.is_file())
+    else:
+        pattern = os.path.join(args.folder, args.mask)
+        files = sorted(glob.glob(pattern))
 
     if not files:
         print(f"No files matched: {pattern}", file=sys.stderr)
