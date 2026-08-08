@@ -36,7 +36,7 @@ def _git(root, *args):
     try:
         proc = subprocess.run(
             ["git", "-C", str(root), *args],
-            capture_output=True, text=True, timeout=30,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
         )
         return proc.returncode, proc.stdout
     except (OSError, subprocess.SubprocessError):
