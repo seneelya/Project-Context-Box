@@ -49,3 +49,6 @@
 - ✅ ВЕХА: memohood переведён на новый скелет (`__HQ`/`__map` + новый тулинг), коммит memohood
   `f60b3f6`; тулы валидированы на живом репо (freshness 83 fresh; rebuild_graph db.py 7, ...). Формат
   карточек memohood ещё легаси (validate: 83/83) → миграция ФОРМАТА = отдельный шаг.
+- ✅ memohood: механический проход миграции ФОРМАТА карточек (коммит memohood `7ffec8d`) — H1-split +
+  канон общих H2 (legacy-H1 83→0, non-canon 155→1). Остаток НЕ механический = пере-генерация карточек
+  под контракт (Role__CodeMap заново по `Guide__MakeCard`) + майнинг — детали в `__dev/CONTEXT_RESTORE.md` Next#1.
