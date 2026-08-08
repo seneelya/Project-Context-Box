@@ -30,7 +30,18 @@
 - ⚑ Всплыло: 16 не-канонических «From file» в карточках memohood (дотточная нотация `._engine`,
   проза) → часть хабов (напр. `provider.py`) показалась листьями. Долг карточек, не тулов — чинится
   нормализацией по правилу идентичности.
-- → next (Vision02 NOW, осталось): (1) ужесточить контракт `Guide__MakeCard` — «From file» =
-  канонический root-relative путь (+обязательное присутствие полей) — закроет класс unresolved;
-  (2) валидатор на стороне создателя (структура + coverage/сироты); затем свод ⚠️ discrepancies
-  и причёсывалка git.
+- ✅ Контракт формата карточки залочен: `__HQ/tools/card_format.py` (единый источник) — H1=имя,
+  сводка строкой 2; обязательные секции + `(none)`; deps-колонки `Import|File Path|Symbols|Why|Kind`
+  (ребро = File Path); **тип карточки** module vs package/node (`## Package layout`); `Re-exports`;
+  ALIASES (RU/легаси → канон). `Guide__MakeCard` переписан под контракт. `mask_replace` научен
+  escape `\n \t \r \\`.
+- ✅ `validate_cards.py` — проверка по контракту (H1==файл · сводка · все секции по типу ·
+  deps-таблица/`(none)` · File Path резолвится · private=подсказка · сироты). Чисто на фикстурах
+  (module+package); на memohood — worklist: 83/83, unresolved 18, private 27, non-canon 155, ...
+- ✅ Майнинг «непрошедших» memohood → 4 находки внесены в контракт: package/node тип + `Package
+  layout` (подмодули со ссылками) · re-exports-by-origin · ссылки между карточками · «consumed
+  surface» вместо «public surface».
+- → next: (d) **механическая миграция карточек memohood** (гардированный `mask_replace`: заголовки/
+  колонки RU→канон на якорных строках · H1-split · From-file→File Path). Правит РЕПО memohood массово
+  → нужен рекурсивный glob в `mask_replace`; после — ре-валидация, остаток на ручной разбор. Затем
+  свод ⚠️ discrepancies + причёсывалка git.
