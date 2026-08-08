@@ -4,11 +4,11 @@ A `Context` file is the **instruction for assembling context** for a task — th
 to do the work. The **Plan** role compiles it (it holds the knowledge now); the executor consumes it
 and reads little, never blind-searching.
 
-**Prefer cards over source.** List the relevant `_map/cards/*.md` FIRST — the executor reads those
+**Prefer cards over source.** List the relevant `__map/*.md` FIRST — the executor reads those
 cheap descriptive headers INSTEAD of the source. Point to actual source only when the card is not enough.
 
 Fill it as a LIST:
-- **Cards to read** → `_map/cards/…` (preferred — read these first).
+- **Cards to read** → `__map/…` (preferred — read these first).
 - **Code files** → the few source files the task truly touches.
 - **Docs** → the `.md` files that matter (a design note, another plan, a `HowTo__…`).
 - **Facts you KNOW** → inline them (the executor then reads nothing for those).

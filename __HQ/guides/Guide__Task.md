@@ -12,14 +12,14 @@ task around it; the executor (`Role__Exec`) walks it.
 **Assume the executor did NOT read the plan.** A task must be self-sufficient — inside the task, put
 **direct links to every file the executor must read** to do the work:
 - the task's own **`Context`** file (the reading manifest — what to read for this task);
-- **`HowTo`** files when relevant → e.g. `read _HQ/HowTo__Test.md`, `read _HQ/HowTo__Run.md`;
-- **how to record progress** → `read _HQ/guides/Guide__Tracker.md` (log to the tracker as you go);
+- **`HowTo`** files when relevant → e.g. `read __HQ/HowTo__Test.md`, `read __HQ/HowTo__Run.md`;
+- **how to record progress** → `read __HQ/guides/Guide__Tracker.md` (log to the tracker as you go);
 - **the parent plan** — if doing this task requires knowing the whole plan, put a **link to the plan
   file** into the read-list. This happens often. Link it — do NOT copy the plan into the task.
 - any other file or instruction the task needs that is not already in those.
 
 > Not for the task: `Guide__Context` is the **Plan role's** own instruction on HOW to author a
-> `Context` file — it is NOT linked into the task. (Plan role: `read _HQ/guides/Guide__Context.md`.)
+> `Context` file — it is NOT linked into the task. (Plan role: `read __HQ/guides/Guide__Context.md`.)
 
 ## What is `<address>`
 
@@ -30,7 +30,7 @@ Full addressing rules → naming section in `START.md` and `Role__Exec.md`.
 ## Action schema
 
 1. **Gather context** — read the task's `Context` (the reading manifest). Nothing more.
-2. **Log start** — append to `_HQ/TRACKER.md`: `◐ <address>`.
+2. **Log start** — append to `__HQ/TRACKER.md`: `◐ <address>`.
 3. **Solve** the task.
 4. **Test** — run / write tests per the task's linked `HowTo__Test`.
 5. **Log done** — append `✅ <address> done → next <address>`, noting what was verified: self-tested,

@@ -32,5 +32,5 @@ status-folders may get messy. Watch for it on a real case before designing a fix
 ## Why these matter
 
 The atomic-rule aim (for every action a path to an atomic rule; a gap = the signal to add one) is a
-scheme invariant — see `_dev/vision/Vision01__project-starter.md`. This file is where the gaps it
+scheme invariant — see `__dev/vision/Vision01__project-starter.md`. This file is where the gaps it
 exposes get parked until resolved.

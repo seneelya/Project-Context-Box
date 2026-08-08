@@ -1,7 +1,7 @@
 # Plan index — what plans exist
 
 Catalog of all plans, one line each. Owned by the **Plan** role (add/update a row when you create or
-rework a plan). Hard status = the folder a plan lives in (`_HQ/plans/` · `done/` · `superseded/` ·
+rework a plan). Hard status = the folder a plan lives in (`__HQ/plans/` · `done/` · `superseded/` ·
 `deferred/`); the status here is just a quick glance.
 
 Format: `PlanNN — <one-line what it is> · <status>`

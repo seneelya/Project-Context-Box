@@ -9,21 +9,21 @@ public API matters more than saving lines.
 
 ## WHERE THE CARD GOES — exact path mask
 
-The card **mirrors the source's full path** but lives under `_map/cards/`, and keeps the source
+The card **mirrors the source's full path** but lives under `__map/`, and keeps the source
 filename **including its extension**, plus `.md`:
 
 ```
 source:   <WORKSPACE>/<path>/<name><ext>
-card:     <WORKSPACE>/_map/cards/<path>/<name><ext>.md
+card:     <WORKSPACE>/__map/<path>/<name><ext>.md
 ```
 
 Examples:
-- `_engine/retrieve.py`  →  `_map/cards/_engine/retrieve.py.md`
-- `src/main.cpp`         →  `_map/cards/src/main.cpp.md`
-- `utils.ts`             →  `_map/cards/utils.ts.md`
+- `_engine/retrieve.py`  →  `__map/_engine/retrieve.py.md`
+- `src/main.cpp`         →  `__map/src/main.cpp.md`
+- `utils.ts`             →  `__map/utils.ts.md`
 
 Keep the FULL path and the source extension — this exact mask is how other agents locate the card.
-Create intermediate folders under `_map/cards/` as needed.
+Create intermediate folders under `__map/` as needed.
 
 ## Card format
 
@@ -76,13 +76,13 @@ Several× smaller than the source; one sentence per object.
 
 ## Optional helper
 
-If a language helper exists in `_map/helpers/`, you MAY run it for a structured hint (public symbols,
-imports) and cross-check. Python: `python _map/helpers/py_api.py <file>`. A hint — not a replacement
+If a language helper exists in `__HQ/tools/`, you MAY run it for a structured hint (public symbols,
+imports) and cross-check. Python: `python __HQ/tools/py_api.py <file>`. A hint — not a replacement
 for reading the code.
 
 ## Steps
 
 1. Read the source file you were given.
 2. For each public object: read its docstring + implementation; check for discrepancies.
-3. Write the card at the exact mask path `_map/cards/<path>/<name><ext>.md`.
+3. Write the card at the exact mask path `__map/<path>/<name><ext>.md`.
 4. Report the result.

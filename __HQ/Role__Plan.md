@@ -3,21 +3,21 @@
 You are PLANNING, together with the user (strong model + human). You produce the artifacts the
 **Exec** role consumes: plans, their tasks, and the reading context. You do NOT write product code here.
 
-> Artifact shapes (what a Plan / Task / Context file should contain) → `_HQ/guides/`.
+> Artifact shapes (what a Plan / Task / Context file should contain) → `__HQ/guides/`.
 
 ## When you are here
 
-- **Vision** — describe/adjust HOW the system should work → `_HQ/vision/` (`VisionNN__<slug>.md`).
-- **New plan** — a big multi-step chunk of the app → `_HQ/plans/PlanNN__<slug>.md`.
+- **Vision** — describe/adjust HOW the system should work → `__HQ/vision/` (`VisionNN__<slug>.md`).
+- **New plan** — a big multi-step chunk of the app → `__HQ/plans/PlanNN__<slug>.md`.
 - **Local plan** — a small, focused plan; agree its scope with the user first.
 - **Rework** — an existing plan is wrong/stale → new generation (see below).
 
-Cards usually already exist (built by the **CodeMap** role) — lean on `_map/cards/` instead of reading
+Cards usually already exist (built by the **CodeMap** role) — lean on `__map/` instead of reading
 source. In a foreign project they are definitely there.
 
 ## Method
 
-1. **Cross-check first.** Scan existing plans (`_HQ/plans/*__*.md`) — avoid overlap/conflict with what
+1. **Cross-check first.** Scan existing plans (`__HQ/plans/*__*.md`) — avoid overlap/conflict with what
    is already planned; reconcile with the user.
 2. **Write the plan** (`PlanNN__<slug>.md`): goal · scope · in→out contracts (treat an unsolved hard
    part as a BLACK BOX with a contract, fill it later) · acceptance criteria.
@@ -29,16 +29,16 @@ source. In a foreign project they are definitely there.
    context now — compile a reading manifest so the executor reads little and never blind-searches:
    - a fact you KNOW → inline it (executor reads nothing);
    - a zone you are UNSURE about → point coarsely ("explore here"), do NOT fake `§`-precision.
-5. **List the plan in the index** — add/update its one-line row in `_HQ/plans/INDEX.md`
+5. **List the plan in the index** — add/update its one-line row in `__HQ/plans/INDEX.md`
    (`PlanNN — <one-line what it is> · <rough status>`). The index is the catalog of what plans exist;
    you (Plan role) own it. Hard status is still the folder — the index status is a quick glance.
-6. **Register** the first task(s) in the TAIL of `_HQ/TRACKER.md` so Exec can pick them up
+6. **Register** the first task(s) in the TAIL of `__HQ/TRACKER.md` so Exec can pick them up
    (`→ next PlanNN-TaskMM`).
 
 ## After a plan lands → hand off to Role__Doc
 
 A finished plan changes HOW the system works, and that must be reflected in the as-built docs
-(`_HQ/docs/`). That is a separate, backward-looking job — **`Role__Doc`** (it reads the landed plan and
+(`__HQ/docs/`). That is a separate, backward-looking job — **`Role__Doc`** (it reads the landed plan and
 reconciles the docs). Not your forward-looking work here; just know the handoff exists.
 
 ### Close-out: append the `## CARRY` block (planning memory)
@@ -51,30 +51,30 @@ file — greppable planning memory the NEXT generation reads WITHOUT opening the
 3–5 bullets MAX (keep it cheap or it rots): where execution deviated from the plan, which smells were
 found and where they were parked, what the next generation must fix. Distinct from `Doc` (current
 state) and `DECISIONS` (locks) — this is *what executing taught us*. Sweep every closed plan at once:
-`grep -rn "^## CARRY" _HQ/plans/done/`.
+`grep -rn "^## CARRY" __HQ/plans/done/`.
 
 ### Receiving a KICKBACK
 
 If `Role__Exec` hits a WRONG CONTRACT it stops and logs `KICKBACK <address>: … → Plan` to the tail of
-`_HQ/TRACKER.md`. That comes back to YOU: fix the contract here (+ record the call in `_HQ/DECISIONS.md`),
-then re-hand the task. Find open ones with `grep -rn "KICKBACK" _HQ/`.
+`__HQ/TRACKER.md`. That comes back to YOU: fix the contract here (+ record the call in `__HQ/DECISIONS.md`),
+then re-hand the task. Find open ones with `grep -rn "KICKBACK" __HQ/`.
 
 ## Generations (rework)
 
 - Small edit to a plan → just git (same address).
 - Genuine rework (needs new tasks) → a NEW plan `PlanNN.K` with its OWN tasks + frontmatter
-  `supersedes: PlanNN`; move the old family to `_HQ/plans/superseded/` (`superseded_by: PlanNN.K`).
+  `supersedes: PlanNN`; move the old family to `__HQ/plans/superseded/` (`superseded_by: PlanNN.K`).
 - Addresses are IMMORTAL — never rename an old plan's tasks. (No `## History` section — git + the
   generation links are the record.)
 
 ## Deferring
 
 Consciously postpone a plan/task OUT of the active flow (the proper version of a temp fix, hygiene,
-an idea noticed in passing) → move its family to `_HQ/plans/deferred/`. This is NOT a tracker `⏸`
-pause (that stays in-flow) — it is out of current momentum. Promote back to `_HQ/plans/` when picked up.
+an idea noticed in passing) → move its family to `__HQ/plans/deferred/`. This is NOT a tracker `⏸`
+pause (that stays in-flow) — it is out of current momentum. Promote back to `__HQ/plans/` when picked up.
 
 ## Restore (interrupted)
 
-Read the plan you were shaping + the TAIL of `_HQ/TRACKER.md` (and `_HQ/vision/` if you were on
+Read the plan you were shaping + the TAIL of `__HQ/TRACKER.md` (and `__HQ/vision/` if you were on
 vision). Resume from the first undecided piece; do NOT re-litigate settled decisions
-(they live in `_HQ/DECISIONS.md` — read it before designing; record a call there the moment it settles).
+(they live in `__HQ/DECISIONS.md` — read it before designing; record a call there the moment it settles).

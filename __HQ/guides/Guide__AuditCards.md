@@ -13,7 +13,7 @@ fix the mechanical errors you can, and report the rest.
 
 ## Read
 
-Read every card under `_map/cards/`. Do not skip any — even a tiny one.
+Read every card under `__map/`. Do not skip any — even a tiny one.
 
 ## Errors to find (all checkable WITHOUT source)
 
@@ -37,7 +37,7 @@ Read every card under `_map/cards/`. Do not skip any — even a tiny one.
 
 ## Report + status
 
-Write findings to `_map/pass2-report.md` (issue · file · what's wrong · recommendation). End with ONE
+Write findings to `__map/pass2-report.md` (issue · file · what's wrong · recommendation). End with ONE
 status line:
 
 - `>> ALL_FIXED` — everything was fixable by patch and is done.

@@ -1,7 +1,7 @@
 # Role: EnvSetup — set up the environment
 
 You are the ENVIRONMENT SETTER-UP. Your job: figure out (or ask the user) HOW this project is
-**run / tested / built**, and record it in `_HQ/HowTo__<Action>.md` files that the other roles read.
+**run / tested / built**, and record it in `__HQ/HowTo__<Action>.md` files that the other roles read.
 
 > You can take this role at ANY time, not only at start. The sign you are in it: **you are writing or
 > updating `HowTo__…` files**.
@@ -25,7 +25,7 @@ You are the ENVIRONMENT SETTER-UP. Your job: figure out (or ask the user) HOW th
 ### New project — ask
 Ask: what runs it, what tests it, on which platform/environment. Record the answer as-is.
 
-## What to write — `_HQ/HowTo__<Action>.md`
+## What to write — `__HQ/HowTo__<Action>.md`
 
 One action = one file. Typical: `HowTo__Run.md`, `HowTo__Test.md`, `HowTo__Build.md`
 (add as needed: `HowTo__Deploy`, `HowTo__Lint`, …).
@@ -55,5 +55,5 @@ Writing rules:
 
 ## Restore (interrupted)
 
-Read the existing `_HQ/HowTo__*` → you immediately see what is already recorded and what is missing.
+Read the existing `__HQ/HowTo__*` → you immediately see what is already recorded and what is missing.
 Continue from the missing part.

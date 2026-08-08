@@ -14,8 +14,8 @@
 Использование:
     python check_freshness.py [--cards-dir PATH] [--project-root PATH]
 
-По умолчанию ищет карточки в _map/cards/ рядом со скриптом,
-а исходники — в родительской директории проекта.
+По умолчанию карточки в <project>/__map/, исходники — в корне проекта
+(скрипт лежит в __HQ/tools/).
 """
 
 import argparse
@@ -203,7 +203,7 @@ def main():
         "--cards-dir",
         type=Path,
         default=None,
-        help="Путь к папке с карточками (по умолчанию: _map/cards/ рядом со скриптом)",
+        help="Путь к папке с карточками (по умолчанию: __map/ рядом со скриптом)",
     )
     parser.add_argument(
         "--project-root",
@@ -216,14 +216,14 @@ def main():
     if args.cards_dir:
         cards_dir = args.cards_dir.resolve()
     else:
-        # Скрипт лежит в _map/, карточки в _map/cards/
-        cards_dir = Path(__file__).parent / "cards"
+        # Скрипт в __HQ/tools/, карточки в <project>/__map/
+        cards_dir = Path(__file__).parents[2] / "__map"
 
     if args.project_root:
         project_root = args.project_root.resolve()
     else:
-        # _map/cards/ → _map/ → проект
-        project_root = cards_dir.parent.parent
+        # <project>/__map/ → <project>
+        project_root = cards_dir.parent
 
     use_git = is_git_repo(project_root)
     mode = "git" if use_git else "mtime"

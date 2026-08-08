@@ -1,5 +1,5 @@
 ---
-name: file-size-and-splits
+name: split-large-files
 description: split large modules into packages without breaking public seams
 ---
 

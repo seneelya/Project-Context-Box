@@ -1,6 +1,6 @@
 # Role: CodeMapLocal — build the code map with a LOCAL (weak) agent
 
-You are the **ORCHESTRATOR**. You produce cards in `_map/cards/` (a cheap map of the code, read
+You are the **ORCHESTRATOR**. You produce cards in `__map/` (a cheap map of the code, read
 INSTEAD of the source) by delegating to weak local subagents — **one file at a time**, with a strict
 per-file prompt. For a STRONG agent, use `Role__CodeMap` instead (batch by context, no subagent-per-file).
 
@@ -12,7 +12,7 @@ drive the subagents.
 You launch each subagent by giving it a **goal**, and the subagent reads its own instruction file:
 
 ```
-goal:  Your task is in _map/pass1-make-cards.md — read it and execute it for file <path>.
+goal:  Your task is in __HQ/guides/Guide__MakeCard.md — read it and execute it for file <path>.
 ```
 
 **Fallback:** if a weak subagent fails to read the task file (empty result), retry with the FULL
@@ -20,7 +20,7 @@ prompt inlined into the goal (paste the instructions + a format example).
 
 ## Pass 1 — make cards (STRICTLY sequential, 1 subagent = 1 file)
 
-1. (optional) run `python _map/check_freshness.py` to see which cards already exist and which are stale.
+1. (optional) run `python __HQ/tools/check_freshness.py` to see which cards already exist and which are stale.
 2. For each source file, in order:
    1. launch one subagent with the goal above,
    2. wait for it,
@@ -34,7 +34,7 @@ prompt inlined into the goal (paste the instructions + a format example).
 Launch a single reviewer:
 
 ```
-goal:  Your task is in _map/pass2-audit.md — read it and execute it.
+goal:  Your task is in __HQ/guides/Guide__AuditCards.md — read it and execute it.
 ```
 
 The reviewer checks ALL cards for **mechanical errors only** — broken links, junk, structural
@@ -44,13 +44,13 @@ It patches what it can in place and reports the rest. If it returns `>> RERUN_PA
 
 ## Where things go
 
-- **Cards** → `_map/cards/<path>/<name><ext>.md` — mirror the source's path, keep its extension
-  (exact mask in `pass1-make-cards.md`). Verify each card at that path.
-- **Instruction files** (`pass1-make-cards.md`, `pass2-audit.md`) hold ONLY instructions
+- **Cards** → `__map/<path>/<name><ext>.md` — mirror the source's path, keep its extension
+  (exact mask in `Guide__MakeCard.md`). Verify each card at that path.
+- **Instruction files** (`Guide__MakeCard.md`, `Guide__AuditCards.md`) hold ONLY instructions
   — never write progress/reports into them.
-- **Progress / reports** → separate files (e.g. `_map/pass2-report.md`, a session log).
+- **Progress / reports** → separate files (e.g. `__map/pass2-report.md`, a session log).
 
 ## Restore (interrupted)
 
-Run `python _map/check_freshness.py`; a source file with no non-zero card at the mask = not done yet.
+Run `python __HQ/tools/check_freshness.py`; a source file with no non-zero card at the mask = not done yet.
 Resume from there.
