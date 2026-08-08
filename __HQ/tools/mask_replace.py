@@ -19,6 +19,14 @@ _SAFE_BUILTINS = {
     "type": type,
 }
 
+# Decode a small set of backslash escapes in -r/-m find/with args, so the CLI can
+# insert newlines/tabs (e.g. -r " — " "\n"). The -m match EXPRESSION is left raw.
+_ESCAPES = {"n": "\n", "t": "\t", "r": "\r", "\\": "\\", "0": "\0"}
+
+
+def _decode_escapes(s):
+    return re.sub(r"\\(.)", lambda m: _ESCAPES.get(m.group(1), m.group(0)), s)
+
 
 def process_file(filepath, replacements, warned_expressions):
     with open(filepath, "r", encoding="utf-8", newline="") as f:
@@ -77,6 +85,7 @@ Examples:
 Notes:
   - The expression is evaluated as Python with two builtins available: `line` (current string) and `re` module.
   - Multiple -r or -m can be specified; rules are applied in the exact order they appear on the command line.
+  - In find/with, backslash escapes \\n \\t \\r \\\\ are decoded (insert newlines/tabs); the -m expression is left raw.
 """,
     )
 
@@ -109,14 +118,15 @@ Notes:
         if tok in ("-r", "--replace"):
             if i + 2 >= len(_rest):
                 parser.error(f"-{tok} requires exactly 2 arguments")
-            find_text, with_text = _rest[i + 1], _rest[i + 2]
+            find_text, with_text = _decode_escapes(_rest[i + 1]), _decode_escapes(_rest[i + 2])
             args.replace.append((find_text, with_text))
             replacements.append({"type": "simple", "find": find_text, "with": with_text})
             i += 3
         elif tok in ("-m", "--match"):
             if i + 3 >= len(_rest):
                 parser.error(f"-{tok} requires exactly 3 arguments")
-            expr, find_text, with_text = _rest[i + 1], _rest[i + 2], _rest[i + 3]
+            expr = _rest[i + 1]
+            find_text, with_text = _decode_escapes(_rest[i + 2]), _decode_escapes(_rest[i + 3])
             args.match.append((expr, find_text, with_text))
 
             # Validate expression upfront instead of spamming per-line warnings
