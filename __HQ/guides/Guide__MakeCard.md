@@ -129,4 +129,6 @@ not a replacement for reading the code.
    code and this contract (the card is the object being processed; the correct shape is here).
 2. For each public object: read its docstring + implementation; note discrepancies.
 3. Write the card at `__map/<path>/<name><ext>.md`, following the format above (all sections present).
-4. Report the result.
+4. **Self-check:** `python __HQ/tools/validate_cards.py --cards-dir __map` — fix everything it flags for
+   your card (missing section, deps columns, a `File Path` that doesn't resolve, private in Public API).
+5. Report the result.

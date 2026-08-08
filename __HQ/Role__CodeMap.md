@@ -29,7 +29,8 @@ The subagent reads the shared spec and produces ONE card per file at the mask pa
 
 After each batch: check that every expected card exists at `__map/<path>/<name><ext>.md` and is
 **non-zero in size** (check the size, do NOT read the file). Missing/empty → re-assign that file
-(a smaller batch, or do it yourself).
+(a smaller batch, or do it yourself). Then run `python __HQ/tools/validate_cards.py` → re-assign any
+card it flags (contract violations), so the batch lands conformant.
 
 ## No Pass 2
 

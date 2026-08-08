@@ -28,6 +28,8 @@ prompt inlined into the goal (paste the instructions + a format example).
    4. move to the next file.
    No parallel batches.
 3. If a subagent produced nothing twice → write the card yourself.
+4. After the pass: run `python __HQ/tools/validate_cards.py`; re-run Pass 1 for any card it flags
+   (contract violation). This cheap programmatic check runs BEFORE the Pass-2 LLM audit.
 
 ## Pass 2 — audit (ONE reviewer subagent)
 
