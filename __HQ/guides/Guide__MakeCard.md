@@ -70,6 +70,8 @@ Traits, …). Include only the kinds that actually occur.
   interface, not a private helper. Format: `exposed_name -> origin`.
 - If the module has no public surface at all → the whole section body is `(none)`.
 
+Cards may **link to sibling cards** as `[name](relative/name.ext.md)` — cheap navigation for the reader.
+
 ## Dependencies Internal — the table
 
 - **File Path** = the dependency's **root-relative path WITH extension** (`_core/registry.py`), the
@@ -79,11 +81,33 @@ Traits, …). Include only the kinds that actually occur.
   line. **Kind** = `normal` / `lazy` / `conditional` / `type` (default `normal`).
 - No internal deps → section body is `(none)` (no table).
 
+## Package cards (`__init__.py` and language index files: `mod.rs`, `index.ts`, …)
+
+A package/index file is a **node, not a leaf** — usually no functions/classes of its own. Its card adds
+one section and reshapes Public API (all other sections are as for a module card):
+
+- **`## Package layout`** — the submodules, each a **link to its card** + a one-line role:
+  ```
+  - [`_http.py`](_http.py.md) — transport floor: timeouts, retries, headers.
+  - [`resolve.py`](resolve.py.md) — offline config → backend chain.
+  ```
+- **`## Public API`** here = **re-exports grouped by origin** (what the package exposes from its
+  submodules) + any dispatchers/functions defined in the index file itself:
+  ```
+  ### Re-exports
+  from `_http`: `BackendError`, `_post_with_retries`
+  from `resolve`: `resolve_chain`, `is_local_backend`
+  ### Functions
+  #### `chat(cfg, role, ...) -> str | None`
+  Dispatcher defined here; walks the role's chain, first success wins.
+  ```
+
 ## RULES
 
 - **Facts from the code only.** No "key / main / important / core". Don't invent deps not in the imports.
-- **Public surface only.** Do NOT describe private (`_x`) objects — EXCEPT deliberate re-exports/aliases
-  under `### Re-exports`.
+- **Consumed surface, not just "public".** Describe every symbol that OTHER files import — even a
+  `_`-named one: within a package that IS the effective interface — plus conventional public symbols.
+  **Skip** helpers used only inside this file. (Re-exports/aliases → `### Re-exports`, `_`-names ok there.)
 - **Check docstring vs code** for every public object; real contradictions → `## Discrepancies`.
   Mention commented-out / disabled code in one line.
 - **Keep it short** — several× smaller than the source; one sentence per object.

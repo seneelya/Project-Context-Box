@@ -14,7 +14,11 @@
 # H1 больше НЕ содержит разделитель " — ": строка 1 = имя, строка 2 = сводка.
 
 # Обязательные секции H2 (в этом порядке). Пусто -> EMPTY.
-SECTIONS = [
+# Две ФОРМЫ карточки:
+#  - МОДУЛЬНАЯ (лист/обычный файл);
+#  - ПАКЕТНАЯ/УЗЛОВАЯ (__init__ и языковые индексы пакета) — добавляет "Package layout"
+#    (подмодули со ссылками на их карточки), а Public API там = re-exports + диспетчеры.
+MODULE_SECTIONS = [
     "Public API",
     "Dependencies Internal",
     "Dependencies External",
@@ -22,6 +26,11 @@ SECTIONS = [
     "Doc links",
     "Discrepancies",
 ]
+PACKAGE_SECTIONS = ["Package layout"] + MODULE_SECTIONS
+SECTIONS = MODULE_SECTIONS   # дефолт/совместимость
+
+# Файлы-«пакеты» (индекс пакета). Другие языки добавляют свои: mod.rs, index.ts, mod.ts, ...
+PACKAGE_BASENAMES = ["__init__.py"]
 
 # Подсекции Public API (H3) — РЕКОМЕНДУЕМЫЕ примеры, НЕ закрытый список: локальная
 # модель группирует экспорт по виду и добавляет уместные для языка (Enums, Interfaces,
@@ -52,6 +61,8 @@ ALIASES = {
     "Принцип работы": "How it works",
     "Расхождения docstring ↔ код": "Discrepancies",
     "Docstring ↔ code discrepancies": "Discrepancies",
+    "Раскладка пакета": "Package layout",
+    "Публичный API (реэкспорт из пакета)": "Public API",
     # подсекции
     "Функции": "Functions",
     "Классы": "Classes",
@@ -74,3 +85,13 @@ def canon(token):
 def is_empty(text):
     """True, если тело секции/ячейка — маркер пустоты (с бэктиками или без)."""
     return text.strip().strip("`").strip() == EMPTY
+
+
+def is_package(filename):
+    """True для пакетной/узловой карточки (__init__ и языковые аналоги)."""
+    return filename.rsplit("/", 1)[-1] in PACKAGE_BASENAMES
+
+
+def sections_for(filename):
+    """Обязательные секции для карточки данного файла (пакет vs модуль)."""
+    return PACKAGE_SECTIONS if is_package(filename) else MODULE_SECTIONS

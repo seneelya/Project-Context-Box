@@ -84,7 +84,7 @@ def validate_card(path, cards_dir, unresolved_raw, project_root):
         present.setdefault(c, (raw, body))
         if c in cf.SECTIONS and raw != c:
             issues.append(f"non-canonical header '{raw}' -> '{c}'")
-    for sec in cf.SECTIONS:
+    for sec in cf.sections_for(fname):
         if sec not in present:
             issues.append(f"missing section: {sec}")
 
@@ -120,7 +120,7 @@ def validate_card(path, cards_dir, unresolved_raw, project_root):
                 elif s.startswith("#### "):
                     nm = _entry_name(line)
                     if nm.startswith("_") and cur_h3 != cf.REEXPORT_SUBSECTION:
-                        issues.append(f"private '{nm}' in Public API (not a Re-export)")
+                        issues.append(f"review: private '{nm}' in Public API (keep only if consumed elsewhere)")
             if not has_h3:
                 issues.append("Public API: neither (none) nor an H3 subsection")
 
