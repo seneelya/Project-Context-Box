@@ -22,9 +22,9 @@ import re
 import sys
 from pathlib import Path
 
-_DASH = re.compile(r"\s+[—–-]\s+")           # разделитель в "# name — summary"
-_FROM_FILE_HEADERS = {"from file", "из файла"}
-_EMPTY = {"", "-", "—", "–", "none", "нет", "n/a"}
+import card_format as cf
+
+_DASH = re.compile(r"\s+[—–-]\s+")   # legacy "# name — summary" separator
 
 
 def _cells(row):
@@ -37,40 +37,44 @@ def _is_sep(cells):
 
 
 def parse_card(path, cards_dir):
-    """-> {'id', 'summary', 'deps_raw': [<from-file строки>]}."""
+    """-> {'id', 'summary', 'deps_raw': [<File Path строки>]}. Держит и новую форму
+    (сводка на 2-й строке), и легаси (`# name — summary`)."""
     node_id = path.relative_to(cards_dir).as_posix()[:-3]  # без '.md'
     summary = ""
+    name_seen = False
     deps_raw = []
     in_deps = False
-    col_idx = 1          # дефолт: 2-я колонка = From file
+    col_idx = 1
     header_seen = False
 
     for line in path.read_text(encoding="utf-8").splitlines():
         s = line.strip()
-        if not summary and s.startswith("# ") and not s.startswith("## "):
+        if not name_seen and s.startswith("# ") and not s.startswith("## "):
+            name_seen = True
             head = s[2:].strip()
-            parts = _DASH.split(head, 1)
-            summary = parts[1].strip() if len(parts) > 1 else head
+            if _DASH.search(head):                       # легаси: "# name — summary"
+                summary = _DASH.split(head, 1)[1].strip()
             continue
+        if name_seen and not summary and s and not s.startswith("#"):
+            summary = s                                  # новая форма: сводка на след. строке
         if s.startswith("## "):
-            title = s[3:].strip().lower()
-            in_deps = title.startswith("internal dependencies") or title.startswith("зависимости")
+            in_deps = cf.canon(s[3:].strip()) == "Dependencies Internal"
             header_seen = False
             continue
         if in_deps and s.startswith("|"):
             cells = _cells(line)
             if _is_sep(cells):
                 continue
-            if not header_seen:                      # строка заголовка таблицы
+            if not header_seen:                          # строка заголовка таблицы
                 header_seen = True
                 for i, c in enumerate(cells):
-                    if c.lower() in _FROM_FILE_HEADERS:
+                    if cf.canon(c) == cf.EDGE_COLUMN:
                         col_idx = i
                         break
                 continue
             if col_idx < len(cells):
                 val = cells[col_idx]
-                if val.lower() not in _EMPTY:
+                if val and not cf.is_empty(val):
                     deps_raw.append(val)
     return {"id": node_id, "summary": summary, "deps_raw": deps_raw}
 

@@ -1,88 +1,108 @@
-# Pass 1 — make ONE card from ONE source file
+# Guide — make ONE card from ONE source file
 
-Language-agnostic. The orchestrator gave you: **this instruction file** and **ONE source file**.
-Take exactly that one source file and produce exactly one card — the other files belong to other agents.
+Language-agnostic. You were given: **this file** and **ONE source file**. Produce exactly one card.
 
 A card is a **HINT, not a spec** — a cheap orientation so another agent understands the module WITHOUT
 reading the source. **Facts from the code only.** Target compression **4–10×**; full coverage of the
-public API matters more than saving lines.
+public API matters more than saving lines. The exact token contract lives in `__HQ/tools/card_format.py`
+(the machine reads that); this guide is how to write to it.
 
 ## WHERE THE CARD GOES — exact path mask
 
-The card **mirrors the source's full path** but lives under `__map/`, and keeps the source
-filename **including its extension**, plus `.md`:
+Mirror the source's full path under `__map/`, keep the source filename **including its extension**, add `.md`:
 
 ```
 source:   <WORKSPACE>/<path>/<name><ext>
 card:     <WORKSPACE>/__map/<path>/<name><ext>.md
 ```
+Examples: `_engine/retrieve.py` → `__map/_engine/retrieve.py.md` · `src/main.cpp` → `__map/src/main.cpp.md`.
 
-Examples:
-- `_engine/retrieve.py`  →  `__map/_engine/retrieve.py.md`
-- `src/main.cpp`         →  `__map/src/main.cpp.md`
-- `utils.ts`             →  `__map/utils.ts.md`
-
-Keep the FULL path and the source extension — this exact mask is how other agents locate the card.
-Create intermediate folders under `__map/` as needed.
-
-## Card format
+## Card format (ALL sections present, in this order; empty → exactly `(none)`)
 
 ```markdown
-# <name><ext> — <one factual sentence: what the module does>
+# <name><ext>
+<one-line summary: WHAT the module does — never empty>
 
 ## Public API
 ### Functions
 #### `func_name(args) -> return_type`
 <1–2 sentences: what it does, params, return. Facts from code only.>
-
 ### Classes
 #### `ClassName`
 <1–2 sentences: purpose.>
 - **Attributes:** <significant ones>
 - **Methods:** every public method, one per line: `method(args) -> type` — <desc>
 
-## Internal dependencies
-| Imports | From file | Objects | Why |
-|---|---|---|---|
-| `name` | `module<ext>` | `obj1`, `obj2` | <one sentence> |
+## Dependencies Internal
+| Import | File Path | Symbols | Why | Kind |
+|---|---|---|---|---|
+| `config` | `config.py` | `DEFAULTS`, `load()` | reads config | normal |
+
+## Dependencies External
+<third-party/stdlib the reader may not know; else `(none)`>
 
 ## How it works
-<2–3 sentences, facts only; be concrete — "filters records by date and priority", not "processes data".>
+<2–3 sentences on the MECHANISM (the "how"); be concrete — "filters records by date and priority",
+not "processes data". The one-line summary above already carries the "what".>
 
-## External dependencies
-<Only if the reader may not know it. Skip stdlib and popular packages.>
+## Doc links
+<links to project docs / ticket or task numbers referenced in docstrings; else `(none)`>
 
-## ⚠️ Docstring ↔ code discrepancies
-<Only real contradictions between a docstring and the code. Omit the section if none.>
+## Discrepancies
+<real contradictions between a docstring/comment and the code; else `(none)`>
 ```
+
+## Line 1 / line 2 (STRICT — parsed automatically)
+
+- **Line 1** is the H1 and is **ONLY the file name** (`# db.py`) — it must equal the card's file name.
+  No `— summary` on this line.
+- **Line 2** is the **one-line summary** (what the module does). It is extracted automatically —
+  **never leave it empty.**
+
+## Public API — group exports by kind (H3)
+
+Put each public export under an H3 by its kind. Common kinds: **Functions · Classes · Constants ·
+Types · Objects**. This list is **open** — add kinds that fit the language (Enums, Interfaces, Macros,
+Traits, …). Include only the kinds that actually occur.
+
+- **`### Re-exports`** — names this module exposes but that live in another file (incl. back-compat
+  aliases like `_setup = register_cli`). Here a leading-`_` name is fine: it is a *deliberate*
+  interface, not a private helper. Format: `exposed_name -> origin`.
+- If the module has no public surface at all → the whole section body is `(none)`.
+
+## Dependencies Internal — the table
+
+- **File Path** = the dependency's **root-relative path WITH extension** (`_core/registry.py`), the
+  same address as its card. **NOT** the language import path (`._core`, `agent.memory_provider`) —
+  that goes in the **Import** column. This is what lets tools link cards into a graph.
+- **Import** = how it is referenced in code (module/name). **Symbols** = objects used. **Why** = one
+  line. **Kind** = `normal` / `lazy` / `conditional` / `type` (default `normal`).
+- No internal deps → section body is `(none)` (no table).
 
 ## RULES
 
-### FACTS FROM THE CODE ONLY
-No "key / main / important / core". Do NOT guess architectural role. Do NOT invent dependencies that
-are not in the imports.
+- **Facts from the code only.** No "key / main / important / core". Don't invent deps not in the imports.
+- **Public surface only.** Do NOT describe private (`_x`) objects — EXCEPT deliberate re-exports/aliases
+  under `### Re-exports`.
+- **Check docstring vs code** for every public object; real contradictions → `## Discrepancies`.
+  Mention commented-out / disabled code in one line.
+- **Keep it short** — several× smaller than the source; one sentence per object.
 
-### CHECK DOCSTRING vs CODE
-For EVERY public object: read its docstring/comment AND its implementation. Any contradiction goes to
-the **⚠️ Discrepancies** section (omit the section if there are none). Mention commented-out or
-disabled code in one line (fact of presence).
+## Language notes
 
-### DESCRIBE THE PUBLIC SURFACE, NOTHING ELSE
-Every public function, class, attribute, method (list EVERY public method — one per line), and
-non-obvious external imports. Do NOT describe private (`_x`) objects or helper internals.
-
-### KEEP IT SHORT
-Several× smaller than the source; one sentence per object.
+Kinds and extensions vary by language (a `.h`/`.hpp` card describes declarations; `Types`/`Interfaces`
+matter in typed languages; `Kind=lazy` where the language defers imports). Use judgement — the H3 kind
+list is a suggestion, not a fixed enum.
 
 ## Optional helper
 
-If a language helper exists in `__HQ/tools/`, you MAY run it for a structured hint (public symbols,
-imports) and cross-check. Python: `python __HQ/tools/py_api.py <file>`. A hint — not a replacement
-for reading the code.
+Python: `python __HQ/tools/py_api.py <file>` for a structured hint (public symbols, imports) — a hint,
+not a replacement for reading the code.
 
 ## Steps
 
-1. Read the source file you were given.
-2. For each public object: read its docstring + implementation; check for discrepancies.
-3. Write the card at the exact mask path `__map/<path>/<name><ext>.md`.
+1. Read the source file. If a card already exists at the mask path → **read it and correct it** to the
+   code and this contract (the card is the object being processed; the correct shape is here).
+2. For each public object: read its docstring + implementation; note discrepancies.
+3. Write the card at `__map/<path>/<name><ext>.md`, following the format above (all sections present).
 4. Report the result.

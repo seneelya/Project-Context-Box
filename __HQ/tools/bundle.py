@@ -19,9 +19,8 @@ import argparse
 import sys
 from pathlib import Path
 
+import card_format as cf
 from rebuild_graph import build_graph  # соседний модуль в __HQ/tools/
-
-_API_HEADERS = ("public api", "публичный api")
 
 
 def _find_card(cards_dir, target):
@@ -48,7 +47,7 @@ def api_slice(text):
     for line in lines:
         s = line.strip()
         if s.startswith("## "):
-            in_api = any(s[3:].strip().lower().startswith(h) for h in _API_HEADERS)
+            in_api = cf.canon(s[3:].strip()) == "Public API"
             if in_api:
                 out.append(line.rstrip())
             continue
