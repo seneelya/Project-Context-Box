@@ -4,8 +4,10 @@ Language-agnostic. You were given: **this file** and **ONE source file**. Produc
 
 A card is a **HINT, not a spec** — a cheap orientation so another agent understands the module WITHOUT
 reading the source. **Facts from the code only.** Target compression **4–10×**; full coverage of the
-public API matters more than saving lines. The exact token contract lives in `__HQ/tools/card_format.py`
-(the machine reads that); this guide is how to write to it.
+public API matters more than saving lines. 
+
+## The exact token contract lives in:  `__HQ/tools/card_format.py` read this file.
+(the machine reads that); this guide is how to write card.
 
 ## WHERE THE CARD GOES — exact path mask
 
@@ -17,7 +19,7 @@ card:     <WORKSPACE>/__map/<path>/<name><ext>.md
 ```
 Examples: `_engine/retrieve.py` → `__map/_engine/retrieve.py.md` · `src/main.cpp` → `__map/src/main.cpp.md`.
 
-## Card format (ALL sections present, in this order; empty → exactly `(none)`)
+## Card format (ALL sections present, in this order; if section id empty → then write its header and in its body write exactly `(none)`)
 
 ```markdown
 # <name><ext>
@@ -36,7 +38,7 @@ Examples: `_engine/retrieve.py` → `__map/_engine/retrieve.py.md` · `src/main.
 ## Dependencies Internal
 | Import | File Path | Symbols | Why | Kind |
 |---|---|---|---|---|
-| `config` | `config.py` | `DEFAULTS`, `load()` | reads config | normal |
+| `config` | `path/config.<ext>` | `DEFAULTS`, `load()` | reads config | normal |
 
 ## Dependencies External
 <third-party/stdlib the reader may not know; else `(none)`>
@@ -54,10 +56,10 @@ not "processes data". The one-line summary above already carries the "what".>
 
 ## Line 1 / line 2 (STRICT — parsed automatically)
 
-- **Line 1** is the H1 and is **ONLY the file name** (`# db.py`) — it must equal the card's file name.
+- **Line 1** is the H1 and is **ONLY the file name**  that was given to you  `# <name><ext>`  Example: `# db.py` — it must equal the card's file name.
   No `— summary` on this line.
 - **Line 2** is the **one-line summary** (what the module does). It is extracted automatically —
-  **never leave it empty.**
+  **never leave it empty.**   Line could be long. It should clearly answer on question: what the file/module does. 
 
 ## Public API — group exports by kind (H3)
 
@@ -102,15 +104,22 @@ one section and reshapes Public API (all other sections are as for a module card
   Dispatcher defined here; walks the role's chain, first success wins.
   ```
 
-## RULES
+## **RULES**
 
-- **Facts from the code only.** No "key / main / important / core". Don't invent deps not in the imports.
-- **Consumed surface, not just "public".** Describe every symbol that OTHER files import — even a
-  `_`-named one: within a package that IS the effective interface — plus conventional public symbols.
-  **Skip** helpers used only inside this file. (Re-exports/aliases → `### Re-exports`, `_`-names ok there.)
-- **Check docstring vs code** for every public object; real contradictions → `## Discrepancies`.
+### **FACTS FROM THE CODE ONLY** 
+No "key / main / important / core". Do NOT guess architectural role. Do NOT invent dependencies that are not in the imports.
+### **Skip** 
+skip helpers used only inside this file. (Re-exports/aliases → `### Re-exports`, `_`-names ok there.)
+### **CHECK DOCSTRING vs CODE** 
+for every public object; real contradictions → `## Discrepancies`.
   Mention commented-out / disabled code in one line.
-- **Keep it short** — several× smaller than the source; one sentence per object.
+### **KEEP IT SHORT**
+several `×` smaller than the source; one sentence per object.
+### **DESCRIBE THE PUBLIC SURFACE, NOTHING ELSE**
+Every public function, class, attribute, method (list EVERY public method — one per line), and
+non-obvious external imports.
+### Try to Add "Consumed surface", not just real "public"
+Try to identify the "consumed surface," not just public exports. Check for non-obvious exports. Describe any symbol imported by other files from this package (even _-prefixed ones) if it acts as the effective interface. Avoid reading full files. If unsure, mark them as "Possible exports."
 
 ## Language notes
 
