@@ -13,7 +13,7 @@
 ## Что построено (суть)
 Скелет переведён на **`__`-маркер меты**: `__HQ` (мозг: roles/guides/tools/plans/vision/docs),
 `__map` (плоские данные карт), `__dev` (наша разработка). Над карточками — «вторая компиляция»:
-- **Контракт формата** — `__HQ/tools/card_format.py` (ЕДИНЫЙ источник): H1 = имя файла, сводка
+- **Контракт формата** — `__HQ/tools/CARD_FORMAT.py` (ЕДИНЫЙ источник): H1 = имя файла, сводка
   строкой 2; обязательные секции + `(none)`; deps-колонки `Import|File Path|Symbols|Why|Kind`
   (ребро = **File Path**, root-relative); **тип карточки** module vs package/node (`## Package layout`);
   `### Re-exports` (там `_`-имена ок); `ALIASES` (RU/легаси → канон); `canon()`, `is_empty()`,
@@ -55,4 +55,4 @@
 - ProjectStarter и memohood — РАЗНЫЕ репо; не путать при git.
 - Свипы путей — гард `(?<!_)` (perl), чтобы `__` не стало `___`; исходник `_engine/_core/_lab` НЕ трогать.
 - Тулы читают git-вывод как UTF-8 (memohood-коммиты кириллические); Windows-консоль cp1251 иначе давится.
-- `__pycache__` в `.gitignore` (тулы импортят друг друга — `bundle`/`validate` тянут `rebuild_graph`/`card_format`).
+- `__pycache__` в `.gitignore` (тулы импортят друг друга — `bundle`/`validate` тянут `rebuild_graph`/`CARD_FORMAT`).

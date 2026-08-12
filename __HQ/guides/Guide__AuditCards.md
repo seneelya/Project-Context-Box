@@ -12,7 +12,7 @@ Two layers of checking, cheapest first:
   (signatures + `consumers N` + deps); the author fills prose. Used to (re)create a card.
 - **`validate_cards.py --project-root .`** — the validator (below).
 - **`check_freshness.py --project-root .`** — which cards are stale vs their source (git/mtime) and orphans.
-- **`card_format.py`** — (not a CLI) the format contract every tool reads; its docstring is the card skeleton.
+- **`CARD_FORMAT.py`** — (not a CLI) the format contract every tool reads; its docstring is the card skeleton.
 
 ## The card schema (what "valid" is)
 

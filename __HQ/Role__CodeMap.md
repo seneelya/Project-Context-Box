@@ -38,7 +38,7 @@ Then run the **validator over ALL cards** — it is your programmatic gate:
 ```
 python __HQ/tools/validate_cards.py --project-root .
 ```
-It checks each card against the `card_format.py` contract and prints, for every INVALID card, the
+It checks each card against the `CARD_FORMAT.py` contract and prints, for every INVALID card, the
 file and **exactly what is wrong** (missing/again non-canonical section, empty summary, a `File Path`
 that resolves to no card, a private `_name` outside `Re-exports`/`Consumed internals`, an orphan).
 Read those reasons and **re-run card creation for just those files** (re-stamp with

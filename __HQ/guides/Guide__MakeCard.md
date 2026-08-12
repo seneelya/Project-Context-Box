@@ -7,7 +7,7 @@ You are given **ONE source file**. Produce its **card**.
 A card is a **HINT, not a spec** — a cheap orientation so another agent understands the module
 **WITHOUT reading the source**. **FACTS FROM THE CODE ONLY.** Target compression **4–10×**; full
 coverage of the public API matters more than saving lines. The exact format contract is
-**`__HQ/tools/card_format.py`** (its docstring is the card skeleton) — this guide is how to write to it.
+**`__HQ/tools/CARD_FORMAT.py`** (its docstring is the card skeleton) — this guide is how to write to it.
 
 Two parts:
 - **Part 1 (primary):** the stamp utility `make_interface_card.py` fills the FACTS; you fill only the prose.
@@ -105,7 +105,7 @@ Enter this ONLY if Step 1 fails: `make_interface_card.py` errors, will not run, 
 > (fallback). Facts (consumers/signatures) will be hand-derived and may be less complete."
 
 ### Manual recipe
-Author the card by hand to the **`__HQ/tools/card_format.py`** contract (its docstring = the skeleton)
+Author the card by hand to the **`__HQ/tools/CARD_FORMAT.py`** contract (its docstring = the skeleton)
 and the **RULES** above: H1 = the file name only; next non-empty line = one-line summary; then all H2
 sections in order (empty → `(none)`). Build the deps table `| Import | File Path | Symbols | Why | Kind |`
 with root-relative `File Path`s. Prefer the **consumed surface** (what other files actually import) over
