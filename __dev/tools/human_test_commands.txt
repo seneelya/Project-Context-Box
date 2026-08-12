@@ -109,3 +109,62 @@ py get_codeblock.py --file "Accounts/User.cs" --line 80 --query --project-root "
 # C#: Unity test project
 py get_codeblock.py --file "Code/Core/Common/Commands/HttpCmd.cs" --line 100 --project-root "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/test_Unity"
 
+
+# ============================================================
+# SESSION 2026-08-13 — card stamp / validate / graph pipeline
+# Run from a __HQ/tools/ dir (same as above). Target = memohood in the container.
+# MH   = Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood
+# MAP  = Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood/__map
+# ============================================================
+
+# --- make_interface_card: facts come from AST (#2/#3 fixes) ---
+# expect: Dependencies Internal lists submodule FILES (config.py, db.py, _engine/embed.py, ...),
+#         NOT everything lumped under __init__.py; External has ONLY real libs
+#         (no docstring garbage like "import weight for it.")
+py make_interface_card.py cli.py --project-root "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood"
+
+# --- make_interface_card: MERGE on an existing card (re-stamp keeps prose) ---
+# expect: stderr "[make_interface_card] merged ..." + "prose kept: N entries ...";
+#         facts refreshed, hand-written prose preserved, removed entries go to "## Salvage"
+py make_interface_card.py cli.py --project-root "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood" --out "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood/__map/cli.py.md"
+
+# --- make_interface_card: --all bulk-stamp the whole tree (maintainer one-shot) ---
+# expect: "--all: N files -> X new, Y merged, 0 errors"; skips tests/ (TEST_DIRS), __HQ, __map, .git
+py make_interface_card.py --all --project-root "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood"
+
+# --- make_interface_card: --help shows the new flags ---
+# expect: --all documented; --force = "discard & write a FRESH stamp" (default on existing = MERGE)
+py make_interface_card.py --help
+
+# --- validate_cards: full set; pending (#1) is NOT an error ---
+# expect: "checked N cards, 0 with issues"; a dep whose SOURCE exists but card not built yet is listed
+#         under "pending (...)" and keeps exit 0 (never delete a real dep to go green).
+#         Only a File Path resolving to NEITHER a card NOR a source is a real issue (exit 1).
+py validate_cards.py --project-root "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood"
+
+# --- validate_cards: "(none) - reason" tolerance (is_empty fix) — manual mini-check ---
+# In any card, set a section body to e.g. "(none) - trivial, no consumers" and re-run validate:
+# expect: still clean (the annotated marker counts as empty; only "(nonexistent)"-like text does not).
+
+# --- graph_from_cards: full flat topology ---
+# expect: "# map: N modules", each module + "-> deps", entry-points & leaves slices, 0 unresolved
+py graph_from_cards.py --cards-dir "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood/__map"
+
+# --- graph_from_cards: ZONE (focus slice for zoning) ---
+# expect: center "uses -> ..." + "used-by <- ..."; downstream & upstream lists within --depth
+py graph_from_cards.py --cards-dir "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood/__map" --zone _engine/embed.py --depth 1
+py graph_from_cards.py --cards-dir "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood/__map" --zone cli.py --depth 2
+
+# --- graph_from_cards: CYCLES (circular deps as A -> B -> C -> A) ---
+# expect: chains like "_core/__init__.py -> _core/registry.py -> _core/legacy.py -> _core/__init__.py"
+py graph_from_cards.py --cards-dir "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood/__map" --cycles
+
+# --- graph_from_cards: --help shows the new flags ---
+# expect: --zone, --depth, --cycles documented
+py graph_from_cards.py --help
+
+# --- check_cards_freshness: git-based staleness (no change this session, sanity check) ---
+# expect: "mode=git ... total=N fresh=... outdated=... orphan=..."; outdated entries list the commits
+#         that touched the source AFTER the card (so you know what to re-read)
+py check_cards_freshness.py --project-root "Y:/Hermess/body/sandboxes/docker/default/workspace/SRC/memohood"
+
