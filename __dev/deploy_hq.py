@@ -47,7 +47,7 @@ _ROOT_ENTRY = {"START.md", "CONTEXT_RESTORE.md", "AGENTS.md"}
 # create-if-absent scaffolds for --init (never overwrite; establish empty structure)
 _INIT_FILES = ["__HQ/DECISIONS.md", "__HQ/TRACKER.md", "__HQ/plans/INDEX.md",
                "__HQ/docs/.gitkeep", "__HQ/vision/.gitkeep",
-               "__HQ/tools/tools_config.py"]  # per-project config: seed once, then project-owned
+               "__HQ/tools/CONFIG__TOOLS.py"]  # per-project config: seed once, then project-owned
 _INIT_DIRS = ["__HQ/plans/deferred", "__HQ/plans/done", "__HQ/plans/superseded"]
 
 
@@ -60,7 +60,7 @@ def is_template(rel):
         return True
     if rel.startswith("__HQ/guides/") and rel.endswith(".md"):
         return True
-    if rel == "__HQ/tools/tools_config.py":
+    if rel == "__HQ/tools/CONFIG__TOOLS.py":
         return False  # per-project config (PROJECT_ROOT/LANGUAGE/DECL_BACKEND) — project-owned
     if rel.startswith(_TOOLS_PREFIX):
         if any(p in _TOOLS_EXCLUDE_PARTS for p in parts) or rel.endswith((".pyc", ".tmp")):

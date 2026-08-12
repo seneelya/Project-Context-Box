@@ -45,4 +45,4 @@ NAME/NUMBER/OP; fail-open при ошибке разбора). `used_symbols` т
   И `import re` во входном файле (был NameError, молча съеденный broad-except, глушивший fast-filter).
 
 ## Архитектура (справочно)
-`LanguageHandler(ABC)` + хендлеры по языкам (`python_handler` / `ts_handler` / `csharp_handler`), реестр `get_handler(lang)`. regex, не AST. Языки: Python / TypeScript-JS / C#. Дефолты из `tools_config.py` (`PROJECT_ROOT`, `LANGUAGE`, `TEST_DIRS`), CLI перекрывает.
+`LanguageHandler(ABC)` + хендлеры по языкам (`python_handler` / `ts_handler` / `csharp_handler`), реестр `get_handler(lang)`. regex, не AST. Языки: Python / TypeScript-JS / C#. Дефолты из `CONFIG__TOOLS.py` (`PROJECT_ROOT`, `LANGUAGE`, `TEST_DIRS`), CLI перекрывает.

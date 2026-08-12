@@ -19,7 +19,7 @@ WHAT GETS DEPLOYED (template-owned — overwritten):
 
 WHAT IS NEVER TOUCHED (project-owned — by omission):
     DECISIONS.md, TRACKER.md, HowTo__*.md, plans/**, vision/**, docs/**
-    __HQ/tools/tools_config.py   (per-project config; seeded once on --init)
+    __HQ/tools/CONFIG__TOOLS.py   (per-project config; seeded once on --init)
 
 DRIFT DETECTION (per file, no state file in the project — git history IS the baseline):
     known versions of a file = ALL its historical git blob-ids in the OWNING repo

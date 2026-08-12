@@ -82,11 +82,11 @@ python codebase_import_search.py --file "source/CoreSharp/Interfaces/IGlobalStop
 ```
 
 Expected: same results as when passing `--language` explicitly. Priority order:
-`CLI flag > auto-detect from extension > tools_config.LANGUAGE default`.
+`CLI flag > auto-detect from extension > CONFIG__TOOLS.LANGUAGE default`.
 
 ## Test TEST_DIRS exclusion and --tests-only flag
 
-1. Configure test directories in `/project/tools/tools_config.py`:
+1. Configure test directories in `/project/tools/CONFIG__TOOLS.py`:
 
 ```python
 TEST_DIRS = [
@@ -146,19 +146,19 @@ python codebase_import_search.py --file "foo.py" --language invalidlang; echo "e
 
 Expected: both commands print error to stderr and return non-zero exit code.
 
-## Test tools_config.py optional dependency
+## Test CONFIG__TOOLS.py optional dependency
 
 Temporarily rename the config file and verify tool falls back gracefully:
 
 ```bash
 cd /project/tools
-mv tools_config.py tools_config.py.bak
+mv CONFIG__TOOLS.py CONFIG__TOOLS.py.bak
 python codebase_import_search.py --file "_engine/backends/__init__.py" \
   --project-root "/workspace/SRC/memohood" | head -3
-mv tools_config.py.bak tools_config.py
+mv CONFIG__TOOLS.py.bak CONFIG__TOOLS.py
 ```
 
-Expected: prints `Warning: tools_config.py missing — using defaults.` to stderr but still works with hardcoded defaults (`PROJECT_ROOT="."`, `LANGUAGE="python"`).
+Expected: prints `Warning: CONFIG__TOOLS.py missing — using defaults.` to stderr but still works with hardcoded defaults (`PROJECT_ROOT="."`, `LANGUAGE="python"`).
 
 ## Test TTY-only colored summary line
 
