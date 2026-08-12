@@ -41,12 +41,18 @@ The card comes with the **FACT** sections already filled:
 - `## Dependencies Internal/External`; `## Package layout` (for a package/index file).
 - Prose slots are **directives** `<Agent: …>` — that is YOUR job (Step 3).
 
-### Step 1b — if the card ALREADY exists
-`make_interface_card --out` refuses to overwrite (exit 2, `card already exists`). Decide:
-- an **unfilled stamp** (still full of `<Agent: …>` lines) → re-run with **`--force`**;
-- a card with **real prose** → do NOT `--force` (you would delete descriptions). Instead run WITHOUT
-  `--out` (to stdout) and update only the changed FACT sections into the existing card by hand, keeping
-  the prose. (`python __HQ/tools/check_cards_freshness.py` shows which cards are stale.)
+### Step 1b — if the card ALREADY exists → it MERGES (just re-run)
+Re-running `make_interface_card --out` on an existing card **merges**: it refreshes the FACTS from the
+code and **keeps your prose** (matched by symbol/section name — reordered headings and changed
+signatures do not lose the one-liner attached to a name). stderr prints only the **DELTA**:
+- `prose kept: …` — carried over untouched;
+- `NEW — fill prose: <names>` — new entries: write a one-liner for each (Step 3);
+- `SALVAGED — moved to '## Salvage': <names>` — entries no longer in the code; their old prose is
+  parked in a `## Salvage` block at the very bottom — move anything still useful up, then delete the block.
+
+So the normal move after the code changed is simply **re-run the stamp and fill only the delta** — you
+never re-type a signature. Use **`--force`** ONLY to discard the card and start clean (drops ALL prose).
+(`python __HQ/tools/check_cards_freshness.py` shows which cards are stale.)
 
 ### Step 2 — if stderr shows the tree-sitter WARNING → REPORT UP
 `WARNING: … REGEX FALLBACK … pip install tree-sitter …` means the high-fidelity parser is not
@@ -67,7 +73,10 @@ Meanwhile continue on the fallback unless told otherwise.
 ```
 python __HQ/tools/validate_cards.py --project-root .
 ```
-Fix what it flags for your card (missing section, empty summary, unresolved `File Path`). Green = done.
+Fix what it flags **as an issue** for your card (missing section, empty summary, a `File Path` that
+resolves to **neither a card nor a source file**). A **`pending`** line — a dependency whose SOURCE
+file exists but whose card is not built yet — is **NOT an error**: leave those rows in place, **never
+delete a real dependency to make the validator green**. Green (exit 0) = done.
 
 ---
 
@@ -84,6 +93,17 @@ one section and reshapes Public API (other sections as for a module card):
 
 ## RULES  (apply when filling prose — Part 1 Step 3 — and in the Part 2 fallback)
 
+- **THE MACHINE WRITES THE FACTS — YOU DO NOT TOUCH THEM.** Signatures (`#### …`), the `consumers N: …`
+  lines, the `## Dependencies` import lists, and the deps table's **column labels**
+  (`Import | File Path | Symbols | Why | Kind`) are stamped by the tool. Leave them EXACTLY as generated:
+  do NOT rename or reorder columns, do NOT rewrite a signature or a `consumers` line, do NOT rename a
+  section heading, do NOT add / remove / reorder sections. You edit only the slots Step 3 names
+  (summary, the one-liner under each `####`, the `Why` cells, the prose sections).
+- **A FACT LOOKS WRONG → REPORT UP, DO NOT FIX IT BY HAND.** If a signature, a dependency row, a
+  `consumers` count, or an import looks wrong or garbled (e.g. a stray line that is not really an
+  import, or a dep pointing at the wrong file), that is a **tool** problem — not something you patch
+  inside the card. Tell your caller: the file, what looks wrong, and the exact stamped text. They
+  decide. (Hand-"fixing" facts drifts the card from the code and makes you fight the validator.)
 - **FACTS FROM THE CODE ONLY.** No "key / main / important / core". Do NOT guess architectural role.
   Do NOT invent dependencies that are not in the imports.
 - **SKIP** helpers used only inside this file. (Re-exports/aliases → `### Re-exports`; a `_`-private
