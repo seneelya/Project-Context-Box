@@ -5,7 +5,10 @@ INSTEAD of the source) by delegating to weak local subagents — **one file at a
 per-file prompt. For a STRONG agent, use `Role__CodeMap` instead (batch by context, no subagent-per-file).
 
 A card is a HINT, not a spec. The card format and rules live in the pass instruction files; you just
-drive the subagents.
+drive the subagents. Card creation is **STAMP-FIRST**: each subagent first runs
+`__HQ/tools/card_api.py` (fills the FACTS — signatures, `consumers N`, dependencies) and then only
+writes the prose (see `Guide__MakeCard.md`). This is what keeps a WEAK local model on-track — it fills
+descriptions, it does not invent structure.
 
 ## How you delegate (explicit)
 
@@ -28,8 +31,15 @@ prompt inlined into the goal (paste the instructions + a format example).
    4. move to the next file.
    No parallel batches.
 3. If a subagent produced nothing twice → write the card yourself.
-4. After the pass: run `python __HQ/tools/validate_cards.py`; re-run Pass 1 for any card it flags
-   (contract violation). This cheap programmatic check runs BEFORE the Pass-2 LLM audit.
+4. After the pass: run the **validator over ALL cards** — your programmatic gate, BEFORE the Pass-2 LLM audit:
+   ```
+   python __HQ/tools/validate_cards.py --project-root .
+   ```
+   For every INVALID card it prints the file and **exactly what is wrong** (missing/non-canonical
+   section, empty summary, a `File Path` resolving to no card, a private `_name` outside
+   `Re-exports`/`Consumed internals`, an orphan). Read the reason and **re-run Pass 1 for just those
+   files** (the subagent re-stamps with `card_api.py … --force`). Loop until the validator is green
+   (exit 0). The card schema is documented in `Guide__AuditCards.md`.
 
 ## Pass 2 — audit (ONE reviewer subagent)
 
