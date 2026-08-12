@@ -42,10 +42,11 @@ python __HQ/tools/validate_cards.py --project-root .
 ```
 It checks each card against the `CARD_FORMAT.py` contract and prints, for every INVALID card, the
 file and **exactly what is wrong** (missing/again non-canonical section, empty summary, a `File Path`
-that resolves to no card, a private `_name` outside `Re-exports`/`Consumed internals`, an orphan).
-Read those reasons and **re-run card creation for just those files** (re-stamp with
-`make_interface_card.py … --force` or re-assign the file), then re-validate. Loop until the validator is green
-(exit 0). The card schema itself is documented in `Guide__AuditCards.md`.
+that resolves to neither a card nor a source, a private `_name` outside `Re-exports`/`Consumed
+internals`, an orphan). A **`pending`** dep (source exists, card not built yet) is NOT an issue — do
+not drop the row. Read the real reasons and **re-run card creation for just those files** (re-stamp —
+it **merges**: facts refresh, prose kept — or re-assign the file), then re-validate. Loop until the
+validator is green (exit 0). The card schema itself is documented in `Guide__AuditCards.md`.
 
 ## No Pass 2
 

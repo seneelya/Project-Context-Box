@@ -43,13 +43,15 @@ python __HQ/tools/validate_cards.py --project-root .
 ```
 It checks every card against the schema above and, for each INVALID card, prints the file and **exactly
 what is wrong**: H1 name ≠ file, empty summary, a missing/non-canonical required section, a deps table
-with wrong columns, a `File Path` that resolves to no card, a private `_name` outside the allowed
-subsections, or an orphan card (no source). Exit code 1 if anything is wrong, 0 if all clean.
+with wrong columns, a `File Path` that resolves to **neither a card nor a source**, a private `_name`
+outside the allowed subsections, or an orphan card (no source). Exit code 1 if anything is wrong, 0 if
+all clean. A **`pending`** line (dep whose source exists but whose card is not built yet) is NOT a
+failure — never drop the dependency to clear it.
 
-**The loop:** read each reason → **re-run card creation for just those files** (re-stamp with
-`python __HQ/tools/make_interface_card.py <file> --project-root . --out <card-path> --force`, then have the author
-re-fill the prose per `Guide__MakeCard.md`; or fix a trivial contract slip by hand) → re-validate.
-Repeat until the validator exits 0. Only then start Layer 2.
+**The loop:** read each reason → **re-run card creation for just those files** (re-stamp:
+`python __HQ/tools/make_interface_card.py <file> --project-root . --out <card-path>` — it **merges**,
+so facts refresh and the existing prose is kept; use `--force` only to rebuild from scratch; or fix a
+trivial contract slip by hand) → re-validate. Repeat until the validator exits 0. Only then start Layer 2.
 
 ---
 

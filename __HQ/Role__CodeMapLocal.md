@@ -38,10 +38,11 @@ prompt inlined into the goal (paste the instructions + a format example).
    python __HQ/tools/validate_cards.py --project-root .
    ```
    For every INVALID card it prints the file and **exactly what is wrong** (missing/non-canonical
-   section, empty summary, a `File Path` resolving to no card, a private `_name` outside
-   `Re-exports`/`Consumed internals`, an orphan). Read the reason and **re-run Pass 1 for just those
-   files** (the subagent re-stamps with `make_interface_card.py … --force`). Loop until the validator is green
-   (exit 0). The card schema is documented in `Guide__AuditCards.md`.
+   section, empty summary, a `File Path` resolving to neither a card nor a source, a private `_name`
+   outside `Re-exports`/`Consumed internals`, an orphan). A **`pending`** dep (source exists, card not
+   built yet) is NOT an issue — do not drop the row. Read the real reason and **re-run Pass 1 for just
+   those files** (the subagent re-stamps — it **merges**: facts refresh, prose kept). Loop until the
+   validator is green (exit 0). The card schema is documented in `Guide__AuditCards.md`.
 
 ## Pass 2 — audit (ONE reviewer subagent)
 
