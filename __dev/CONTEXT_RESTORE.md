@@ -19,7 +19,7 @@
   `### Re-exports` (там `_`-имена ок); `ALIASES` (RU/легаси → канон); `canon()`, `is_empty()`,
   `sections_for()`.
 - **Рецепт** — `__HQ/guides/Guide__MakeCard.md` (+ `Guide__AuditCards/BatchCards/SplitLargeFiles`).
-- **Тулы `__HQ/tools/`:** `rebuild_graph.py` (плоская топология + `--json`), `bundle.py`
+- **Тулы `__HQ/tools/`:** `graph_from_cards.py` (плоская топология + `--json`), `collect_card_bundle.py`
   (карточка цели + Public API её deps, `--depth`), `validate_cards.py` (проверка по контракту),
   `check_cards_freshness.py` (актуальность, git/mtime, UTF-8), `replace_in_files.py` (find/replace: `-r` простое,
   `-m EXPR` гард, `-R` рекурсия, escape `\n \t \r \\`), `py_api.py`. Все форсируют UTF-8 stdout.
@@ -44,7 +44,7 @@
 2. Vision02 NOW остаток: свод `Discrepancies` со всех карточек; **причёсывалка вывода `git`** (шум↓).
 3. FUTURE за гейтами (Vision02): структурный слайсер строка→объект (раньше векторов), вектора-по-
    докстрингам, зонирование графа `subgraph(point,depth)`, нарезка больших файлов, диаграмма оператору.
-4. **rebuild_graph — развести два вывода под ДВЕ аудитории** (решено, делаем в след. сессию):
+4. **graph_from_cards — развести два вывода под ДВЕ аудитории** (решено, делаем в след. сессию):
    - `--json` = цель под **визуализатор структуры для оператора** (программа рисует красиво; связано с
      Vision02 FUTURE «диаграмма оператору»). Сейчас беднее текста → **дополнить** entry-points/leaves/
      in-degree. НЕ удалять `--json` — он переназначен под визуализатор.
@@ -55,4 +55,4 @@
 - ProjectStarter и memohood — РАЗНЫЕ репо; не путать при git.
 - Свипы путей — гард `(?<!_)` (perl), чтобы `__` не стало `___`; исходник `_engine/_core/_lab` НЕ трогать.
 - Тулы читают git-вывод как UTF-8 (memohood-коммиты кириллические); Windows-консоль cp1251 иначе давится.
-- `__pycache__` в `.gitignore` (тулы импортят друг друга — `bundle`/`validate` тянут `rebuild_graph`/`CARD_FORMAT`).
+- `__pycache__` в `.gitignore` (тулы импортят друг друга — `collect_card_bundle`/`validate` тянут `graph_from_cards`/`CARD_FORMAT`).
