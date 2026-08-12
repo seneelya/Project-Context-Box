@@ -1,4 +1,4 @@
-# How to Test codebase_import_search
+# How to Test find_code_usage
 
 ## Golden test commands (fixtures in `test/`)
 
@@ -9,30 +9,30 @@ changing detection logic.
 ### Python — `test/pythonSRC/backends/`
 ```bash
 # downstream: who consumes _http.py's symbols (expect __init__, chat, embed_driver, rerank_driver)
-py codebase_import_search.py --file backends/_http.py --project-root test/pythonSRC
-py codebase_import_search.py --file backends/_http.py --project-root test/pythonSRC --verbose
+py find_code_usage.py --file backends/_http.py --project-root test/pythonSRC
+py find_code_usage.py --file backends/_http.py --project-root test/pythonSRC --verbose
 # incoming: what __init__ pulls (expect _http/resolve/chat/embed_driver/rerank_driver + external)
-py codebase_import_search.py --incoming --file backends/__init__.py --project-root test/pythonSRC
-py codebase_import_search.py --incoming --file backends/__init__.py --project-root test/pythonSRC --verbose
+py find_code_usage.py --incoming --file backends/__init__.py --project-root test/pythonSRC
+py find_code_usage.py --incoming --file backends/__init__.py --project-root test/pythonSRC --verbose
 # --symbol filter (only BackendError across the fixture)
-py codebase_import_search.py --file backends/_http.py --project-root test/pythonSRC --symbol BackendError
+py find_code_usage.py --file backends/_http.py --project-root test/pythonSRC --symbol BackendError
 ```
 
 ### TypeScript — `test/tsSRC/`
 ```bash
 # downstream of analyzer.ts (expect runner.ts uses 'analyze')
-py codebase_import_search.py --file src/analyzer.ts --project-root test/tsSRC
-py codebase_import_search.py --file src/analyzer.ts --project-root test/tsSRC --verbose
+py find_code_usage.py --file src/analyzer.ts --project-root test/tsSRC
+py find_code_usage.py --file src/analyzer.ts --project-root test/tsSRC --verbose
 # incoming of analyzer.ts (expect 6 resolved: configurator/constants/util·3/utils/common)
-py codebase_import_search.py --incoming --file src/analyzer.ts --project-root test/tsSRC --verbose
+py find_code_usage.py --incoming --file src/analyzer.ts --project-root test/tsSRC --verbose
 ```
 
 ### C# — `test/csharpSRC/`
 ```bash
 # downstream of the interface (expect GlobalStopWatchInstance uses IGlobalStopWatch)
-py codebase_import_search.py --file IGlobalStopWatch.cs --project-root test/csharpSRC
+py find_code_usage.py --file IGlobalStopWatch.cs --project-root test/csharpSRC
 # incoming of the impl (expect IGlobalStopWatch resolved + System.* external)
-py codebase_import_search.py --incoming --file GlobalStopWatchInstance.cs --project-root test/csharpSRC
+py find_code_usage.py --incoming --file GlobalStopWatchInstance.cs --project-root test/csharpSRC
 ```
 
 ### Hand-verify (oracle)
@@ -51,15 +51,15 @@ py codebase_import_search.py --incoming --file GlobalStopWatchInstance.cs --proj
 cd /project/tools
 
 # Python handler — memohood project
-python codebase_import_search.py --file "_engine/backends/__init__.py" \
+python find_code_usage.py --file "_engine/backends/__init__.py" \
   --project-root "/workspace/SRC/memohood" | head -3
 
 # TypeScript handler (explicit flag) — ts-prune project  
-python codebase_import_search.py --file "src/state.ts" --language typescript \
+python find_code_usage.py --file "src/state.ts" --language typescript \
   --project-root "/workspace/SRC/ts-prune" | head -3
 
 # C# handler — CoreSharp project
-python codebase_import_search.py --file "source/CoreSharp/Interfaces/IGlobalStopWatch.cs" \
+python find_code_usage.py --file "source/CoreSharp/Interfaces/IGlobalStopWatch.cs" \
   --language csharp --project-root "/workspace/SRC/CoreSharp" | head -3
 ```
 
@@ -73,11 +73,11 @@ Auto-detect should work when using `--file` without explicit `--language`:
 cd /project/tools
 
 # .ts → typescript (compare output to explicit --language typescript)
-python codebase_import_search.py --file "src/analyzer.ts" \
+python find_code_usage.py --file "src/analyzer.ts" \
   --project-root "/workspace/SRC/ts-prune" | head -3
 
 # .cs → csharp
-python codebase_import_search.py --file "source/CoreSharp/Interfaces/IGlobalStopWatch.cs" \
+python find_code_usage.py --file "source/CoreSharp/Interfaces/IGlobalStopWatch.cs" \
   --project-root "/workspace/SRC/CoreSharp" | head -3
 ```
 
@@ -100,11 +100,11 @@ TEST_DIRS = [
 cd /project/tools
 
 # Production only (tests excluded by default) — should show fewer files
-python codebase_import_search.py --file "/workspace/SRC/hermes-agent-src/agent/__init__.py" \
+python find_code_usage.py --file "/workspace/SRC/hermes-agent-src/agent/__init__.py" \
   --project-root "/workspace/SRC/hermes-agent-src" | head -1
 
 # Tests only — shows what public API is covered by tests
-python codebase_import_search.py --file "/workspace/SRC/hermes-agent-src/agent/__init__.py" \
+python find_code_usage.py --file "/workspace/SRC/hermes-agent-src/agent/__init__.py" \
   --project-root "/workspace/SRC/hermes-agent-src" --tests-only | head -5
 ```
 
@@ -116,7 +116,7 @@ Run on a module that exercises all import kinds:
 
 ```bash
 cd /project/tools
-python codebase_import_search.py --file "_lab/backends_cfg.py" \
+python find_code_usage.py --file "_lab/backends_cfg.py" \
   --project-root "/workspace/SRC/memohood" | head -5
 ```
 
@@ -126,7 +126,7 @@ Expected output includes tags like `[lazy: ...]`, `[conditional: ...]`, `[fallba
 
 ```bash
 cd /project/tools
-python codebase_import_search.py --file "/workspace/SRC/hermes-agent-src/agent/__init__.py" \
+python find_code_usage.py --file "/workspace/SRC/hermes-agent-src/agent/__init__.py" \
   --project-root "/workspace/SRC/hermes-agent-src" | head -1
 ```
 
@@ -138,10 +138,10 @@ Expected: header shows `( +N with dynamic access )` indicating files that use st
 cd /project/tools
 
 # Missing file should exit with error code and message
-python codebase_import_search.py --file "nonexistent.py" --project-root "/workspace/SRC/memohood"; echo "exit=$?"
+python find_code_usage.py --file "nonexistent.py" --project-root "/workspace/SRC/memohood"; echo "exit=$?"
 
 # Invalid language should exit with error
-python codebase_import_search.py --file "foo.py" --language invalidlang; echo "exit=$?"
+python find_code_usage.py --file "foo.py" --language invalidlang; echo "exit=$?"
 ```
 
 Expected: both commands print error to stderr and return non-zero exit code.
@@ -153,7 +153,7 @@ Temporarily rename the config file and verify tool falls back gracefully:
 ```bash
 cd /project/tools
 mv CONFIG__TOOLS.py CONFIG__TOOLS.py.bak
-python codebase_import_search.py --file "_engine/backends/__init__.py" \
+python find_code_usage.py --file "_engine/backends/__init__.py" \
   --project-root "/workspace/SRC/memohood" | head -3
 mv CONFIG__TOOLS.py.bak CONFIG__TOOLS.py
 ```
@@ -166,11 +166,11 @@ Expected: prints `Warning: CONFIG__TOOLS.py missing — using defaults.` to stde
 cd /project/tools
 
 # Piped output — should be plain text (no ANSI codes)
-python codebase_import_search.py --file "_engine/backends/__init__.py" \
+python find_code_usage.py --file "_engine/backends/__init__.py" \
   --project-root "/workspace/SRC/memohood" | head -1 | cat -v
 
 # Direct terminal — should show yellow color (visually check)
-python codebase_import_search.py --file "_engine/backends/__init__.py" \
+python find_code_usage.py --file "_engine/backends/__init__.py" \
   --project-root "/workspace/SRC/memohood" | head -1
 ```
 
@@ -186,7 +186,7 @@ New flag `--incoming` shows where a target file's imports come from within proje
 cd /project/tools
 
 # Show upstream deps of _engine/embed.py
-python codebase_import_search.py --incoming --file "_engine/embed.py" \
+python find_code_usage.py --incoming --file "_engine/embed.py" \
   --project-root "/workspace/SRC/memohood"
 ```
 
@@ -201,7 +201,7 @@ Expected:
 cd /project/tools
 
 # Show upstream deps of src/analyzer.ts
-python codebase_import_search.py --incoming --file "src/analyzer.ts" \
+python find_code_usage.py --incoming --file "src/analyzer.ts" \
   --project-root "/workspace/SRC/ts-prune"
 ```
 
@@ -216,7 +216,7 @@ Expected:
 cd /project/tools
 
 # Show upstream deps of GlobalStopWatchInstance.cs
-python codebase_import_search.py --incoming --file "source/CoreSharp/Utilities/GlobalStopWatchInstance.cs" \
+python find_code_usage.py --incoming --file "source/CoreSharp/Utilities/GlobalStopWatchInstance.cs" \
   --project-root "/workspace/SRC/CoreSharp"
 ```
 
@@ -232,15 +232,15 @@ Language should be auto-detected from file extension in incoming mode too:
 cd /project/tools
 
 # .py auto-detect
-python codebase_import_search.py --incoming --file "_engine/embed.py" \
+python find_code_usage.py --incoming --file "_engine/embed.py" \
   --project-root "/workspace/SRC/memohood" | head -1
 
 # .ts auto-detect  
-python codebase_import_search.py --incoming --file "src/state.ts" \
+python find_code_usage.py --incoming --file "src/state.ts" \
   --project-root "/workspace/SRC/ts-prune" | head -1
 
 # .cs auto-detect
-python codebase_import_search.py --incoming --file "source/CoreSharp/Utilities/CommonConverters.cs" \
+python find_code_usage.py --incoming --file "source/CoreSharp/Utilities/CommonConverters.cs" \
   --project-root "/workspace/SRC/CoreSharp" | head -1
 ```
 
@@ -254,15 +254,15 @@ After testing incoming mode, verify default downstream consumers mode unchanged:
 cd /project/tools
 
 # Python — should match known result: "# 10 files, 16 unique symbols"
-python codebase_import_search.py --file "_engine/backends/__init__.py" \
+python find_code_usage.py --file "_engine/backends/__init__.py" \
   --project-root "/workspace/SRC/memohood" | head -1
 
 # TypeScript — should match known result: "# 5 files, 1 unique symbol"  
-python codebase_import_search.py --file "src/state.ts" \
+python find_code_usage.py --file "src/state.ts" \
   --project-root "/workspace/SRC/ts-prune" | head -1
 
 # C# — should match known result: "# 1 file, 1 unique symbol"
-python codebase_import_search.py --file "source/CoreSharp/Interfaces/IGlobalStopWatch.cs" \
+python find_code_usage.py --file "source/CoreSharp/Interfaces/IGlobalStopWatch.cs" \
   --project-root "/workspace/SRC/CoreSharp" | head -1
 ```
 
@@ -275,7 +275,7 @@ New flag `--verbose` groups default mode output by symbol instead of file, showi
 ```bash
 cd /project/tools
 
-python codebase_import_search.py --file "_engine/backends/__init__.py" \
+python find_code_usage.py --file "_engine/backends/__init__.py" \
   --project-root "/workspace/SRC/memohood" --verbose | head -25
 ```
 
@@ -300,7 +300,7 @@ backends:
 ```bash
 cd /project/tools
 
-python codebase_import_search.py --file "src/state.ts" \
+python find_code_usage.py --file "src/state.ts" \
   --project-root "/workspace/SRC/ts-prune" --verbose
 ```
 
@@ -311,7 +311,7 @@ Expected: State symbol listed with line numbers from test files where it's used 
 ```bash
 cd /project/tools
 
-python codebase_import_search.py --file "source/CoreSharp/Interfaces/IGlobalStopWatch.cs" \
+python find_code_usage.py --file "source/CoreSharp/Interfaces/IGlobalStopWatch.cs" \
   --project-root "/workspace/SRC/CoreSharp" --verbose
 ```
 
@@ -325,7 +325,7 @@ After testing --verbose, verify default file-grouped format still works correctl
 cd /project/tools
 
 # Should show "file: [symbols]" format (NOT per-symbol grouping)
-python codebase_import_search.py --file "_engine/backends/__init__.py" \
+python find_code_usage.py --file "_engine/backends/__init__.py" \
   --project-root "/workspace/SRC/memohood" | head -5
 ```
 

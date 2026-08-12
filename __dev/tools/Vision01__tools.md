@@ -28,7 +28,7 @@ tool <arguments>
 Для каждого tool — **одна строка**:
 
 ```text
-codebase_import_search — finds where symbols from a target module are used across the project.
+find_code_usage — finds where symbols from a target module are used across the project.
 ```
 
 Никаких флагов, примеров, подробностей и описания режимов.
@@ -111,9 +111,9 @@ Each tool has a corresponding <tool>__TLDR.md with usage guidance and exposes it
 Дать:
 
 ```text
-codebase_import_search.py
+find_code_usage.py
 Find where symbols from a target module are imported or used across the project.
-Usage: codebase_import_search.py --file PATH [--module-names N1,N2,...] [--incoming|--verbose] [options]
+Usage: find_code_usage.py --file PATH [--module-names N1,N2,...] [--incoming|--verbose] [options]
 Current PROJECT_ROOT="path to root"
 
 Full help with --help
@@ -142,7 +142,7 @@ tool <arguments>
 Не надо:
 
 ```text
-Running codebase_import_search...
+Running find_code_usage...
 Mode: default
 Target: ...
 Options:
