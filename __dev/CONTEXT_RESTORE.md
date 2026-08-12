@@ -22,7 +22,7 @@
 - **Тулы `__HQ/tools/`:** `graph_from_cards.py` (плоская топология + `--json`), `collect_card_bundle.py`
   (карточка цели + Public API её deps, `--depth`), `validate_cards.py` (проверка по контракту),
   `check_cards_freshness.py` (актуальность, git/mtime, UTF-8), `replace_in_files.py` (find/replace: `-r` простое,
-  `-m EXPR` гард, `-R` рекурсия, escape `\n \t \r \\`), `py_api.py`. Все форсируют UTF-8 stdout.
+  `-m EXPR` гард, `-R` рекурсия, escape `\n \t \r \\`), `show_pyfile_api.py`. Все форсируют UTF-8 stdout.
   Фикстуры — `__HQ/tools/test/{graph_cards,valid_cards}/`.
 
 ## Состояние memohood (полигон)

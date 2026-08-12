@@ -18,7 +18,7 @@
 - ✅ Большой рефактор именования (D1–D6 в DECISIONS): `__`-маркер меты → `__HQ`/`__map`/`__dev`;
   `__HQ`=мозг (управление+`Guide`-скилы+`__HQ/tools/`), `__map`=плоские данные карт (без `cards/`);
   упразднён тип `Skill`→`Guide`; `helpers/`→`tools/`; правило идентичности путей залочено. Скилы
-  мапинга → `__HQ/guides/Guide__MakeCard|AuditCards|BatchCards`; тулы (`check_cards_freshness`, `py_api`,
+  мапинга → `__HQ/guides/Guide__MakeCard|AuditCards|BatchCards`; тулы (`check_cards_freshness`, `show_pyfile_api`,
   `replace_in_files`) → `__HQ/tools/`; `file-size-and-splits`→`Guide__SplitLargeFiles`. Все рефы
   переписаны (perl-свип, verify чисто); `check_cards_freshness` дефолты поправлены и проверены на новом
   дереве (карты=`__map`, exit 0). Нейминг подтверждён вслепую на 3 холодных ЛЛМ.
