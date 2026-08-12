@@ -19,7 +19,7 @@
   `__HQ`=мозг (управление+`Guide`-скилы+`__HQ/tools/`), `__map`=плоские данные карт (без `cards/`);
   упразднён тип `Skill`→`Guide`; `helpers/`→`tools/`; правило идентичности путей залочено. Скилы
   мапинга → `__HQ/guides/Guide__MakeCard|AuditCards|BatchCards`; тулы (`check_freshness`, `py_api`,
-  `mask_replace`) → `__HQ/tools/`; `file-size-and-splits`→`Guide__SplitLargeFiles`. Все рефы
+  `replace_in_files`) → `__HQ/tools/`; `file-size-and-splits`→`Guide__SplitLargeFiles`. Все рефы
   переписаны (perl-свип, verify чисто); `check_freshness` дефолты поправлены и проверены на новом
   дереве (карты=`__map`, exit 0). Нейминг подтверждён вслепую на 3 холодных ЛЛМ.
 - ✅ Инструменты Vision02 NOW (в `__HQ/tools/`, проверены на живых 83 карточках memohood):
@@ -33,7 +33,7 @@
 - ✅ Контракт формата карточки залочен: `__HQ/tools/card_format.py` (единый источник) — H1=имя,
   сводка строкой 2; обязательные секции + `(none)`; deps-колонки `Import|File Path|Symbols|Why|Kind`
   (ребро = File Path); **тип карточки** module vs package/node (`## Package layout`); `Re-exports`;
-  ALIASES (RU/легаси → канон). `Guide__MakeCard` переписан под контракт. `mask_replace` научен
+  ALIASES (RU/легаси → канон). `Guide__MakeCard` переписан под контракт. `replace_in_files` научен
   escape `\n \t \r \\`.
 - ✅ `validate_cards.py` — проверка по контракту (H1==файл · сводка · все секции по типу ·
   deps-таблица/`(none)` · File Path резолвится · private=подсказка · сироты). Чисто на фикстурах
@@ -41,9 +41,9 @@
 - ✅ Майнинг «непрошедших» memohood → 4 находки внесены в контракт: package/node тип + `Package
   layout` (подмодули со ссылками) · re-exports-by-origin · ссылки между карточками · «consumed
   surface» вместо «public surface».
-- → next: (d) **механическая миграция карточек memohood** (гардированный `mask_replace`: заголовки/
+- → next: (d) **механическая миграция карточек memohood** (гардированный `replace_in_files`: заголовки/
   колонки RU→канон на якорных строках · H1-split · From-file→File Path). Правит РЕПО memohood массово
-  → нужен рекурсивный glob в `mask_replace`; после — ре-валидация, остаток на ручной разбор. Затем
+  → нужен рекурсивный glob в `replace_in_files`; после — ре-валидация, остаток на ручной разбор. Затем
   свод ⚠️ discrepancies + причёсывалка git.
 - ✅ Фикс тула: `check_freshness` читает git-вывод как UTF-8 (вскрыто кириллицей коммитов memohood).
 - ✅ ВЕХА: memohood переведён на новый скелет (`__HQ`/`__map` + новый тулинг), коммит memohood

@@ -21,14 +21,14 @@
 - **Рецепт** — `__HQ/guides/Guide__MakeCard.md` (+ `Guide__AuditCards/BatchCards/SplitLargeFiles`).
 - **Тулы `__HQ/tools/`:** `rebuild_graph.py` (плоская топология + `--json`), `bundle.py`
   (карточка цели + Public API её deps, `--depth`), `validate_cards.py` (проверка по контракту),
-  `check_freshness.py` (актуальность, git/mtime, UTF-8), `mask_replace.py` (find/replace: `-r` простое,
+  `check_freshness.py` (актуальность, git/mtime, UTF-8), `replace_in_files.py` (find/replace: `-r` простое,
   `-m EXPR` гард, `-R` рекурсия, escape `\n \t \r \\`), `py_api.py`. Все форсируют UTF-8 stdout.
   Фикстуры — `__HQ/tools/test/{graph_cards,valid_cards}/`.
 
 ## Состояние memohood (полигон)
 1) **Layout** — коммит memohood **`f60b3f6`**: `__HQ`/`__map` flatten + новый тулинг + пути.
 2) **Формат карточек, МЕХАНИЧЕСКИЙ проход** — коммит **`7ffec8d`**: H1-split (`# name — summary` →
-   имя + сводка) + канон общих H2-заголовков (`mask_replace -R`, гард по точной строке-заголовку).
+   имя + сводка) + канон общих H2-заголовков (`replace_in_files -R`, гард по точной строке-заголовку).
    Результат: legacy-H1 83→0, non-canonical-header 155→1.
 Тулы работают (дефолт / `--cards-dir`). НО карточки ещё НЕ валидны (`validate_cards`: 83/83) — остаток
 **не механический** (см. Next #1).
