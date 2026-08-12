@@ -3,6 +3,8 @@
 You are EXECUTING. Take ONE task, do it, record progress. Read ONLY what the task needs —
 NOT the vision, NOT the whole codebase.
 
+> **Your tools (hands):** `__HQ/tools/TOOLS.md` — router; pick a tool by task, then read its `<name>__TLDR.md`. Prefer them over reading whole files.
+
 ## Get your task
 
 - From the user's explicit words ("do Task X", "implement Y"), OR

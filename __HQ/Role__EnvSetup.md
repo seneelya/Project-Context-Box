@@ -3,6 +3,8 @@
 You are the ENVIRONMENT SETTER-UP. Your job: figure out (or ask the user) HOW this project is
 **run / tested / built**, and record it in `__HQ/HowTo__<Action>.md` files that the other roles read.
 
+> **Your tools (hands):** `__HQ/tools/TOOLS.md` — router; pick a tool by task, then read its `<name>__TLDR.md`. Prefer them over reading whole files.
+
 > You can take this role at ANY time, not only at start. The sign you are in it: **you are writing or
 > updating `HowTo__…` files**.
 

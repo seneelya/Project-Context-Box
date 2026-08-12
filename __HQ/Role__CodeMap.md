@@ -4,6 +4,8 @@ You are the **ORCHESTRATOR** (a strong model). You produce cards in `__map/` —
 code, read INSTEAD of the source. Unlike `Role__CodeMapLocal` (one weak subagent per file), you
 delegate to **strong subagents (Sonnet)** in **batches sized by context**, so mapping is fast.
 
+> **Your tools (hands):** `__HQ/tools/TOOLS.md` — router; pick a tool by task, then read its `<name>__TLDR.md`. Prefer them over reading whole files.
+
 The card format, rules, and the path mask are shared — they live in `__HQ/guides/Guide__MakeCard.md`.
 Card creation is **STAMP-FIRST**: the utility `__HQ/tools/make_interface_card.py` emits a fact-filled skeleton
 (real signatures + `consumers N` + dependencies), and the subagent only fills the prose. Facts are

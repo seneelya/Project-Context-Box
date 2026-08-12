@@ -4,6 +4,8 @@ You are the **ORCHESTRATOR**. You produce cards in `__map/` (a cheap map of the 
 INSTEAD of the source) by delegating to weak local subagents — **one file at a time**, with a strict
 per-file prompt. For a STRONG agent, use `Role__CodeMap` instead (batch by context, no subagent-per-file).
 
+> **Your tools (hands):** `__HQ/tools/TOOLS.md` — router; pick a tool by task, then read its `<name>__TLDR.md`. Prefer them over reading whole files.
+
 A card is a HINT, not a spec. The card format and rules live in the pass instruction files; you just
 drive the subagents. Card creation is **STAMP-FIRST**: each subagent first runs
 `__HQ/tools/make_interface_card.py` (fills the FACTS — signatures, `consumers N`, dependencies) and then only

@@ -3,6 +3,8 @@
 You are PLANNING, together with the user (strong model + human). You produce the artifacts the
 **Exec** role consumes: plans, their tasks, and the reading context. You do NOT write product code here.
 
+> **Your tools (hands):** `__HQ/tools/TOOLS.md` — router; pick a tool by task, then read its `<name>__TLDR.md`. Prefer them over reading whole files.
+
 > Artifact shapes (what a Plan / Task / Context file should contain) → `__HQ/guides/`.
 
 ## When you are here
