@@ -10,7 +10,7 @@ coverage of the public API matters more than saving lines. The exact format cont
 **`__HQ/tools/card_format.py`** (its docstring is the card skeleton) — this guide is how to write to it.
 
 Two parts:
-- **Part 1 (primary):** the stamp utility `card_api.py` fills the FACTS; you fill only the prose.
+- **Part 1 (primary):** the stamp utility `make_interface_card.py` fills the FACTS; you fill only the prose.
 - **Part 2 (fallback):** used ONLY if the utility does not work — and you MUST tell your caller first.
 
 ## WHERE THE CARD GOES — exact path mask
@@ -30,7 +30,7 @@ Examples: `_engine/retrieve.py` → `__map/_engine/retrieve.py.md` · `src/main.
 ### Step 1 — generate the card file
 Run from the project root:
 ```
-python __HQ/tools/card_api.py <path>/<name><ext> --project-root . --out __map/<path>/<name><ext>.md
+python __HQ/tools/make_interface_card.py <path>/<name><ext> --project-root . --out __map/<path>/<name><ext>.md
 ```
 `--out` writes the card file directly (creating folders). Without `--out` it PRINTS to stdout —
 then YOU redirect it (`… > __map/<path>/<name><ext>.md`). Prefer `--out`.
@@ -42,7 +42,7 @@ The card comes with the **FACT** sections already filled:
 - Prose slots are **directives** `<Agent: …>` — that is YOUR job (Step 3).
 
 ### Step 1b — if the card ALREADY exists
-`card_api --out` refuses to overwrite (exit 2, `card already exists`). Decide:
+`make_interface_card --out` refuses to overwrite (exit 2, `card already exists`). Decide:
 - an **unfilled stamp** (still full of `<Agent: …>` lines) → re-run with **`--force`**;
 - a card with **real prose** → do NOT `--force` (you would delete descriptions). Instead run WITHOUT
   `--out` (to stdout) and update only the changed FACT sections into the existing card by hand, keeping
@@ -78,7 +78,7 @@ one section and reshapes Public API (other sections as for a module card):
 - **`## Package layout`** — the submodules, each a **link to its card** + a one-line role.
 - Public API there = the dispatchers the file defines + `### Re-exports`.
 
-(`card_api` already emits `## Package layout` and `### Re-exports` for these files.)
+(`make_interface_card` already emits `## Package layout` and `### Re-exports` for these files.)
 
 ---
 
@@ -98,10 +98,10 @@ one section and reshapes Public API (other sections as for a module card):
 
 ## Part 2 — FALLBACK  (the utility is NOT working)
 
-Enter this ONLY if Step 1 fails: `card_api.py` errors, will not run, or prints nothing.
+Enter this ONLY if Step 1 fails: `make_interface_card.py` errors, will not run, or prints nothing.
 
 ### Step 0 — REPORT TO YOUR CALLER FIRST (do not switch silently)
-> "`card_api.py` is not working (`<paste the exact error>`). Switching to MANUAL card authoring
+> "`make_interface_card.py` is not working (`<paste the exact error>`). Switching to MANUAL card authoring
 > (fallback). Facts (consumers/signatures) will be hand-derived and may be less complete."
 
 ### Manual recipe
@@ -110,4 +110,4 @@ and the **RULES** above: H1 = the file name only; next non-empty line = one-line
 sections in order (empty → `(none)`). Build the deps table `| Import | File Path | Symbols | Why | Kind |`
 with root-relative `File Path`s. Prefer the **consumed surface** (what other files actually import) over
 a bare "public" list; if unsure who uses a symbol, mark it "possible export" rather than guessing.
-Then run `validate_cards.py` (it is independent of `card_api.py`); if the whole toolchain is down, tell the caller.
+Then run `validate_cards.py` (it is independent of `make_interface_card.py`); if the whole toolchain is down, tell the caller.

@@ -5,7 +5,7 @@ code, read INSTEAD of the source. Unlike `Role__CodeMapLocal` (one weak subagent
 delegate to **strong subagents (Sonnet)** in **batches sized by context**, so mapping is fast.
 
 The card format, rules, and the path mask are shared — they live in `__HQ/guides/Guide__MakeCard.md`.
-Card creation is **STAMP-FIRST**: the utility `__HQ/tools/card_api.py` emits a fact-filled skeleton
+Card creation is **STAMP-FIRST**: the utility `__HQ/tools/make_interface_card.py` emits a fact-filled skeleton
 (real signatures + `consumers N` + dependencies), and the subagent only fills the prose. Facts are
 extracted by tooling, not guessed — this is what makes weak/batched subagents reliable.
 
@@ -42,7 +42,7 @@ It checks each card against the `card_format.py` contract and prints, for every 
 file and **exactly what is wrong** (missing/again non-canonical section, empty summary, a `File Path`
 that resolves to no card, a private `_name` outside `Re-exports`/`Consumed internals`, an orphan).
 Read those reasons and **re-run card creation for just those files** (re-stamp with
-`card_api.py … --force` or re-assign the file), then re-validate. Loop until the validator is green
+`make_interface_card.py … --force` or re-assign the file), then re-validate. Loop until the validator is green
 (exit 0). The card schema itself is documented in `Guide__AuditCards.md`.
 
 ## No Pass 2

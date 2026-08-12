@@ -6,7 +6,7 @@ per-file prompt. For a STRONG agent, use `Role__CodeMap` instead (batch by conte
 
 A card is a HINT, not a spec. The card format and rules live in the pass instruction files; you just
 drive the subagents. Card creation is **STAMP-FIRST**: each subagent first runs
-`__HQ/tools/card_api.py` (fills the FACTS — signatures, `consumers N`, dependencies) and then only
+`__HQ/tools/make_interface_card.py` (fills the FACTS — signatures, `consumers N`, dependencies) and then only
 writes the prose (see `Guide__MakeCard.md`). This is what keeps a WEAK local model on-track — it fills
 descriptions, it does not invent structure.
 
@@ -38,7 +38,7 @@ prompt inlined into the goal (paste the instructions + a format example).
    For every INVALID card it prints the file and **exactly what is wrong** (missing/non-canonical
    section, empty summary, a `File Path` resolving to no card, a private `_name` outside
    `Re-exports`/`Consumed internals`, an orphan). Read the reason and **re-run Pass 1 for just those
-   files** (the subagent re-stamps with `card_api.py … --force`). Loop until the validator is green
+   files** (the subagent re-stamps with `make_interface_card.py … --force`). Loop until the validator is green
    (exit 0). The card schema is documented in `Guide__AuditCards.md`.
 
 ## Pass 2 — audit (ONE reviewer subagent)

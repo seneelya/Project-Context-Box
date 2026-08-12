@@ -8,7 +8,7 @@ Two layers of checking, cheapest first:
 
 ## The card utilities (all under `__HQ/tools/`)
 
-- **`card_api.py <file> --project-root . [--out P] [--force]`** — the STAMP: emits a fact-filled card
+- **`make_interface_card.py <file> --project-root . [--out P] [--force]`** — the STAMP: emits a fact-filled card
   (signatures + `consumers N` + deps); the author fills prose. Used to (re)create a card.
 - **`validate_cards.py --project-root .`** — the validator (below).
 - **`check_freshness.py --project-root .`** — which cards are stale vs their source (git/mtime) and orphans.
@@ -47,7 +47,7 @@ with wrong columns, a `File Path` that resolves to no card, a private `_name` ou
 subsections, or an orphan card (no source). Exit code 1 if anything is wrong, 0 if all clean.
 
 **The loop:** read each reason → **re-run card creation for just those files** (re-stamp with
-`python __HQ/tools/card_api.py <file> --project-root . --out <card-path> --force`, then have the author
+`python __HQ/tools/make_interface_card.py <file> --project-root . --out <card-path> --force`, then have the author
 re-fill the prose per `Guide__MakeCard.md`; or fix a trivial contract slip by hand) → re-validate.
 Repeat until the validator exits 0. Only then start Layer 2.
 
