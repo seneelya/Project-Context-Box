@@ -21,6 +21,19 @@
 `is_empty(text)`, `is_package(filename)`, `sections_for(filename)`. Импортится другими тулами.
 
 ## Создание и проверка карточек (сторона CodeMap / Guide__MakeCard)
+### `card_api.py <file> --project-root . [--out P] [--force]`  ← ШТЕМПЕЛЬ (основной путь)
+Одна команда — готовый скелет карточки с ФАКТАМИ: объявленный API + реальные сигнатуры,
+`consumers N` (кто реально импортит — обратный индекс), зависимости; проза — директивы
+`<Agent: …>`, их дописывает ЛЛМ по исходнику. Мультиязычно (py/ts/cs). `--out` пишет файл
+(не перезапишет без `--force`). Бэкенд объявлений — `tools_config.DECL_BACKEND` (auto|treesitter|regex);
+tree-sitter опционален, при отсутствии — stderr-WARNING и regex-фолбэк. Оркеструет
+`py_api`(ast) / `get_codeblock` / `codebase_import_search` под контракт `card_format.py`.
+```
+python __HQ/tools/card_api.py capture.py --project-root . --out __map/capture.py.md
+```
+Рецепт заполнения — `../guides/Guide__MakeCard.md`. Источники-анализаторы (`get_codeblock`,
+`codebase_import_search`) лежат тут же пакетами — их использует `card_api`, можно звать и отдельно.
+
 ### `py_api.py <file.py>`
 ast-подсказка писателю карточки: публичные функции/классы/методы с сигнатурами + импорты
 (эвристика внутренние/внешние) + 1-я строка docstring. Только Python, ничего не пишет, не гейт.

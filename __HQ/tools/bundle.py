@@ -67,7 +67,7 @@ def main():
     ap.add_argument("--depth", type=int, default=1, help="глубина транзитивных зависимостей (по умолч. 1)")
     args = ap.parse_args()
 
-    cards_dir = args.cards_dir.resolve() if args.cards_dir else (Path(__file__).parents[2] / "__map")
+    cards_dir = args.cards_dir.resolve() if args.cards_dir else (Path.cwd() / "__map")
     if not cards_dir.exists():
         print(f"cards dir not found: {cards_dir}", file=sys.stderr)
         sys.exit(1)

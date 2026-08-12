@@ -166,8 +166,8 @@ def main():
     if args.cards_dir:
         cards_dir = args.cards_dir.resolve()
     else:
-        # скрипт в __HQ/tools/, карточки в <project>/__map/
-        cards_dir = Path(__file__).parents[2] / "__map"
+        # карточки в <project>/__map/ (запускай из корня проекта)
+        cards_dir = Path.cwd() / "__map"
     project_root = args.project_root.resolve() if args.project_root else cards_dir.parent
 
     mode = "git" if is_git_repo(project_root) else "mtime"

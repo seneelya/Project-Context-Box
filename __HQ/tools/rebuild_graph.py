@@ -150,7 +150,7 @@ def main():
     ap.add_argument("--json", action="store_true", help="выдать граф как JSON вместо плоского текста")
     args = ap.parse_args()
 
-    cards_dir = args.cards_dir.resolve() if args.cards_dir else (Path(__file__).parents[2] / "__map")
+    cards_dir = args.cards_dir.resolve() if args.cards_dir else (Path.cwd() / "__map")
     if not cards_dir.exists():
         print(f"cards dir not found: {cards_dir}", file=sys.stderr)
         sys.exit(1)
