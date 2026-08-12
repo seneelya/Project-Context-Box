@@ -46,7 +46,7 @@ The card comes with the **FACT** sections already filled:
 - an **unfilled stamp** (still full of `<Agent: …>` lines) → re-run with **`--force`**;
 - a card with **real prose** → do NOT `--force` (you would delete descriptions). Instead run WITHOUT
   `--out` (to stdout) and update only the changed FACT sections into the existing card by hand, keeping
-  the prose. (`python __HQ/tools/check_freshness.py` shows which cards are stale.)
+  the prose. (`python __HQ/tools/check_cards_freshness.py` shows which cards are stale.)
 
 ### Step 2 — if stderr shows the tree-sitter WARNING → REPORT UP
 `WARNING: … REGEX FALLBACK … pip install tree-sitter …` means the high-fidelity parser is not

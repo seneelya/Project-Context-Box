@@ -11,7 +11,7 @@ Two layers of checking, cheapest first:
 - **`make_interface_card.py <file> --project-root . [--out P] [--force]`** — the STAMP: emits a fact-filled card
   (signatures + `consumers N` + deps); the author fills prose. Used to (re)create a card.
 - **`validate_cards.py --project-root .`** — the validator (below).
-- **`check_freshness.py --project-root .`** — which cards are stale vs their source (git/mtime) and orphans.
+- **`check_cards_freshness.py --project-root .`** — which cards are stale vs their source (git/mtime) and orphans.
 - **`CARD_FORMAT.py`** — (not a CLI) the format contract every tool reads; its docstring is the card skeleton.
 
 ## The card schema (what "valid" is)

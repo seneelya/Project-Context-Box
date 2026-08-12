@@ -18,12 +18,12 @@
 - ✅ Большой рефактор именования (D1–D6 в DECISIONS): `__`-маркер меты → `__HQ`/`__map`/`__dev`;
   `__HQ`=мозг (управление+`Guide`-скилы+`__HQ/tools/`), `__map`=плоские данные карт (без `cards/`);
   упразднён тип `Skill`→`Guide`; `helpers/`→`tools/`; правило идентичности путей залочено. Скилы
-  мапинга → `__HQ/guides/Guide__MakeCard|AuditCards|BatchCards`; тулы (`check_freshness`, `py_api`,
+  мапинга → `__HQ/guides/Guide__MakeCard|AuditCards|BatchCards`; тулы (`check_cards_freshness`, `py_api`,
   `replace_in_files`) → `__HQ/tools/`; `file-size-and-splits`→`Guide__SplitLargeFiles`. Все рефы
-  переписаны (perl-свип, verify чисто); `check_freshness` дефолты поправлены и проверены на новом
+  переписаны (perl-свип, verify чисто); `check_cards_freshness` дефолты поправлены и проверены на новом
   дереве (карты=`__map`, exit 0). Нейминг подтверждён вслепую на 3 холодных ЛЛМ.
 - ✅ Инструменты Vision02 NOW (в `__HQ/tools/`, проверены на живых 83 карточках memohood):
-  `check_freshness` — токен-опт (убраны рамки/эмодзи → cp1251-краш ушёл; отставание числом;
+  `check_cards_freshness` — токен-опт (убраны рамки/эмодзи → cp1251-краш ушёл; отставание числом;
   +коммиты, тронувшие исходник после карточки); `rebuild_graph` — плоская топология (модули+сводки+
   deps, точки входа, листья, unresolved-рефы; `--json`); `bundle` — полная карточка цели + Public API
   зависимостей (`--depth`). Все тулы форсируют UTF-8 stdout. Фикстуры в `__HQ/tools/test/graph_cards/`.
@@ -45,7 +45,7 @@
   колонки RU→канон на якорных строках · H1-split · From-file→File Path). Правит РЕПО memohood массово
   → нужен рекурсивный glob в `replace_in_files`; после — ре-валидация, остаток на ручной разбор. Затем
   свод ⚠️ discrepancies + причёсывалка git.
-- ✅ Фикс тула: `check_freshness` читает git-вывод как UTF-8 (вскрыто кириллицей коммитов memohood).
+- ✅ Фикс тула: `check_cards_freshness` читает git-вывод как UTF-8 (вскрыто кириллицей коммитов memohood).
 - ✅ ВЕХА: memohood переведён на новый скелет (`__HQ`/`__map` + новый тулинг), коммит memohood
   `f60b3f6`; тулы валидированы на живом репо (freshness 83 fresh; rebuild_graph db.py 7, ...). Формат
   карточек memohood ещё легаси (validate: 83/83) → миграция ФОРМАТА = отдельный шаг.

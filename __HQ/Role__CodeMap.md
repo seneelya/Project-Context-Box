@@ -11,7 +11,7 @@ extracted by tooling, not guessed — this is what makes weak/batched subagents 
 
 ## Batch by context size
 
-1. List the source files to map. Skip already-carded/fresh ones — run `python __HQ/tools/check_freshness.py`.
+1. List the source files to map. Skip already-carded/fresh ones — run `python __HQ/tools/check_cards_freshness.py`.
 2. Estimate each file's tokens (**≈ chars ÷ 4**).
 3. Pack files into batches whose source totals **~100–120k tokens** each. That leaves the rest of the
    subagent's ~200k window for reading the spec and writing the cards. Prefer grouping files from the
@@ -57,4 +57,4 @@ open just that card (and, if needed, its source) and fix it directly.
 
 ## Restore (interrupted)
 
-Run `python __HQ/tools/check_freshness.py` → see which files already have cards; resume batching the rest.
+Run `python __HQ/tools/check_cards_freshness.py` → see which files already have cards; resume batching the rest.

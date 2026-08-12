@@ -23,7 +23,7 @@ prompt inlined into the goal (paste the instructions + a format example).
 
 ## Pass 1 — make cards (STRICTLY sequential, 1 subagent = 1 file)
 
-1. (optional) run `python __HQ/tools/check_freshness.py` to see which cards already exist and which are stale.
+1. (optional) run `python __HQ/tools/check_cards_freshness.py` to see which cards already exist and which are stale.
 2. For each source file, in order:
    1. launch one subagent with the goal above,
    2. wait for it,
@@ -64,5 +64,5 @@ It patches what it can in place and reports the rest. If it returns `>> RERUN_PA
 
 ## Restore (interrupted)
 
-Run `python __HQ/tools/check_freshness.py`; a source file with no non-zero card at the mask = not done yet.
+Run `python __HQ/tools/check_cards_freshness.py`; a source file with no non-zero card at the mask = not done yet.
 Resume from there.
