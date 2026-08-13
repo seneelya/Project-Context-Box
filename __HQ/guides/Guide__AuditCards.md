@@ -72,14 +72,15 @@ Read every card under `__map/`. Do not skip any — even a tiny one.
 - **A. Broken link** — a dependency `File Path` names a file/card not in the tree (check existence, don't open source).
 - **B. Junk in internal deps** — stdlib/external packages under Dependencies Internal (they belong under External).
 - **C. Self-reference** — a card lists itself as a dependency.
-- **D. Placeholder / empty** — `<Agent: …>` left unfilled, `(not processed)`, `...`, or an empty required section.
+- **D. Placeholder / empty** — `<|Agent: … |>` left unfilled (validator flags this as *awaiting agent*),
+  `(not processed)`, `...`, or an empty required section.
 - **E. Structural mismatch** — an object in `## Discrepancies` that is not in the Public API.
 - **F. Private in public** — a leading-`_` object in Public API outside `Re-exports`/`Consumed internals`.
 - **G. Typos / inconsistent terminology.**
 
 ### Fix vs report
 - **Fix in place** the mechanical ones (junk lines, typos, self-refs, misplaced deps, private-in-API,
-  leftover `<Agent: …>` directives, stray placeholders).
+  leftover `<|Agent: … |>` directives, stray placeholders).
 - **Cannot fix** without re-generating (card broken/empty) → report it for the orchestrator to re-run creation.
 - **Never** change the card TEMPLATE, and **never** add information that isn't there.
 

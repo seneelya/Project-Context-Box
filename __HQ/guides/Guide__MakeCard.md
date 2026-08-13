@@ -39,7 +39,9 @@ The card comes with the **FACT** sections already filled:
 - `## Public API` — real signatures grouped by kind (`### Functions/Classes/…`); under each entry a
   fact line `consumers N: file1, file2` (who really imports it; `consumers 0` = nobody).
 - `## Dependencies Internal/External`; `## Package layout` (for a package/index file).
-- Prose slots are **directives** `<Agent: …>` — that is YOUR job (Step 3).
+- Prose slots are **directives** `<|Agent: … |>` — that is YOUR job (Step 3). Any card that still
+  holds a `<|Agent: … |>` marker is reported by the validator as **awaiting agent** (a status, not an
+  error): it means the prose pass isn't done yet. Fill or delete every directive.
 
 ### Step 1b — if the card ALREADY exists → it MERGES (just re-run)
 Re-running `make_interface_card --out` on an existing card **merges**: it refreshes the FACTS from the
