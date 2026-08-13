@@ -56,7 +56,8 @@ open just that card (and, if needed, its source) and fix it directly.
 ## Where things go
 
 - Cards → `__map/<path>/<name><ext>.md`.
-- Instruction files hold ONLY instructions — progress/reports go to separate files.
+- Instruction files hold ONLY instructions — progress/reports go to `__HQ/reports/<YYYY-MM-DD>_<kind>.md`
+  (dated), never into `__map/`.
 
 ## Restore (interrupted)
 

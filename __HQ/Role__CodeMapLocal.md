@@ -63,7 +63,8 @@ It patches what it can in place and reports the rest. If it returns `>> RERUN_PA
   (exact mask in `Guide__MakeCard.md`). Verify each card at that path.
 - **Instruction files** (`Guide__MakeCard.md`, `Guide__AuditCards.md`) hold ONLY instructions
   — never write progress/reports into them.
-- **Progress / reports** → separate files (e.g. `__map/pass2-report.md`, a session log).
+- **Progress / reports** → `__HQ/reports/<YYYY-MM-DD>_<kind>.md` (dated; e.g. `2026-08-13_audit.md`).
+  NEVER into `__map/` (cards only) or into instruction files. Create `__HQ/reports/` if missing.
 
 ## Restore (interrupted)
 

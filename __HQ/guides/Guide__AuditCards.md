@@ -85,7 +85,9 @@ Read every card under `__map/`. Do not skip any — even a tiny one.
 - **Never** change the card TEMPLATE, and **never** add information that isn't there.
 
 ### Report + status
-Write findings to `__map/pass2-report.md` (issue · file · what's wrong · recommendation). End with ONE status line:
+Write findings to `__HQ/reports/<YYYY-MM-DD>_audit.md` (issue · file · what's wrong · recommendation) —
+create `__HQ/reports/` if it does not exist; date the filename (e.g. `2026-08-13_audit.md`). Do **NOT**
+write into `__map/` — that folder is cards only. End with ONE status line:
 - `>> ALL_FIXED` — everything was fixable by patch and is done.
 - `>> RERUN_PASS1: <files>` — some cards must be re-generated (re-stamp + re-fill).
 - `>> DONE` — no issues found.
