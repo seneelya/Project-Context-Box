@@ -3,31 +3,38 @@
 Пошаговый план превращения get_codeblock в универсальный ридер со сменными backend'ами. Идеология —
 `Vision03__get_codeblock.md`. Каждая фаза самостоятельна, проверяема и коммитится отдельно.
 
-## ⭐ СТАТУС на 2026-08-19 (снимок перед компактом)
+## ⭐ СТАТУС на 2026-08-20 (снимок)
 
-**Сделано и закоммичено** (репо `Project-Context-Box-Tools`, `__HQ/tools/get_codeblock/reader/`):
-- Слой `reader/` целиком: `ir.py` (Block+Role+description), `protocol.py` (RNode/Backend/Spec/Analyzer),
-  `registry.py` (единый `resolve(ext)`), `backends/{treesitter,markdown,python_ast}.py`, `classify.py`,
-  `reader.py` (фасад-вход). Контракт «как добавить слой» — `reader/CONTRACT.md`.
-- **Приложение ходит через `Reader`** (core.py во всех 3 местах), проверенные режимы делегируются
-  старым хендлерам (паритет), **оракул 88/88 зелёный**.
-- **`.0` доступен из CLI**: `--dot [--depth N]` — универсальная карта (landmark по имени + filler-точки
-  + frames), на код (tree-sitter) и markdown. Старый дубль `handlers/dot_classify.py` удалён.
-- **Arrow/function-bound const → landmark** (`NAME = () => {}`) — функции-хелперы не теряются (как в outline).
-- **Python ast-фолбек** при отсутствии `tree_sitter_python` (громкий English-нотис), + фикс Windows
-  cp1251-краша (utf-8 stdout, ASCII `x`/`-`).
-- **Формат вывода**: отступ = глубина, `.` = уровень/скоуп (filler+frames), число = именованный блок,
-  выровнено, ASCII.
+**База (ранее, закоммичено):** слой `reader/` целиком (`ir/protocol/registry/backends/classify/reader`),
+приложение ходит через `Reader`, `.0` из CLI, arrow-const→landmark, ast-фолбек, фикс Windows-краша.
 
-**НЕ сделано (следующее):**
-- **Итерация 2 — именованные КОНСТАНТЫ-ДАННЫЕ → landmark по имени** (dict/list/строка: `DEFAULT_CONFIG`,
-  `READ_FILE_SCHEMA`). Делать СИНХРОННО в `TreeSitterSpec` И `PythonAstSpec`, иначе degraded-режим
-  покажет больше полного. Открытый под-вопрос: все именованные присваивания или только многострочные
-  литералы (одностройные — полосой). Рекомендация — только многострочные.
-- Outline из IR (Фаза 3 ниже), Python на tree-sitter как основной (сейчас старый отступной хендлер
-  обслуживает outline/ladder, tree-sitter-python — только для `.0`), core2 docx (Фаза 4).
+**Сделано ЭТОЙ сессией (закоммичено+запушено):**
+- **Профили-плагины** `reader/profiles/<lang>.py` (по файлу на язык) + `presets.py` (общие наборы,
+  C-подобные не копипастятся). `TreeSitterSpec` — тонкий движок над профилем.
+- **`label(band)`** — filler-полоса теперь ОГЛАВЛЕНИЕ имён: `imports: a, b, …`, `assign: NAME`,
+  `const:/export:/decl: …`, `+multiType` при разнотипье. Синхронно tree-sitter+ast (`reader/label.py`).
+- **Огрубление импортов** — `import`+`from-import` в ОДНУ полосу (было дробление по типу узла).
+- **Unified `--outline` = `.0`-at-depth**: адаптивная глубина (та же логика в core.py), landmark'и
+  вглубь, filler только на уровне файла; `--dot` = тот же рендер + filler на ВСЕХ уровнях (диагностика).
+- **Преамбула-склейка вернулась**: коммент над landmark вливается (граница вверх + первая содержательная
+  строка в подпись). Декоративные `#===/---/___` — пропускаются (язык-независимо: строка без букв).
+- **`.N`-маркер** безымянных уровней (`.2`/`.3`), на файловом уровне — голая `.` (без шума `.1`).
+- **`--line` лесенкой** (staircase: номер уходит вправо с глубиной, `[s-e]` в столбец).
+- **Утечка имени-токена рамки без тела** (`#ifndef NAME`, C# `qualified_name`) — отсеяна.
+- **Лейблы C/C++ `declaration`** (`decl: NAME, …`).
+- **Тесты на НОВОМ пути**: `check.py` ходит через `Reader` (outline=`.0`-рендер; ladder/query/levels/
+  declarations делегируются). `expected.py` OUTLINE перегенерён (регресс-эталон). **Оракул 88/88.**
+- Golden-эталон старых хендлеров — `test/parity/` (для будущих сверок).
 
-**Как воспроизвести/проверить:** `python test/check.py` (оракул) · `python get_codeblock.py --file F --dot [--depth N]`.
+**НЕ сделано (следующее, по убыванию ценности):**
+- **Итерация 2** — многострочные именованные литералы → landmark (сейчас идут `assign: NAME` полосой;
+  band-лейблы во многом закрыли исходную мотивацию, так что приоритет упал). СИНХРОННО в оба спека.
+- **Паркинг**: C# file-scoped `namespace X;` (перекрытие диапазонов); SCSS (`~ERROR` — нужен
+  `tree_sitter_scss` ИЛИ принять деградацию — решение за пользователем); preproc end-row bleed.
+- **core2 docx** (Фаза 4) — заглавная цель Vision03 (не-код backend через готовые контракты).
+- Аналайзеры (пласт 2): license/docstring-детектор → `Block.description`.
+
+**Как проверить:** `python test/check.py` (оракул, новый путь) · `python get_codeblock.py --file F --outline|--dot|--line N`.
 
 ## Фаза 1 — Единый реестр (router seam) ⭐ первый, дёшево, высокий рычаг
 
