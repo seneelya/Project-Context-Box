@@ -3,6 +3,32 @@
 Пошаговый план превращения get_codeblock в универсальный ридер со сменными backend'ами. Идеология —
 `Vision03__get_codeblock.md`. Каждая фаза самостоятельна, проверяема и коммитится отдельно.
 
+## ⭐ СТАТУС на 2026-08-19 (снимок перед компактом)
+
+**Сделано и закоммичено** (репо `Project-Context-Box-Tools`, `__HQ/tools/get_codeblock/reader/`):
+- Слой `reader/` целиком: `ir.py` (Block+Role+description), `protocol.py` (RNode/Backend/Spec/Analyzer),
+  `registry.py` (единый `resolve(ext)`), `backends/{treesitter,markdown,python_ast}.py`, `classify.py`,
+  `reader.py` (фасад-вход). Контракт «как добавить слой» — `reader/CONTRACT.md`.
+- **Приложение ходит через `Reader`** (core.py во всех 3 местах), проверенные режимы делегируются
+  старым хендлерам (паритет), **оракул 88/88 зелёный**.
+- **`.0` доступен из CLI**: `--dot [--depth N]` — универсальная карта (landmark по имени + filler-точки
+  + frames), на код (tree-sitter) и markdown. Старый дубль `handlers/dot_classify.py` удалён.
+- **Arrow/function-bound const → landmark** (`NAME = () => {}`) — функции-хелперы не теряются (как в outline).
+- **Python ast-фолбек** при отсутствии `tree_sitter_python` (громкий English-нотис), + фикс Windows
+  cp1251-краша (utf-8 stdout, ASCII `x`/`-`).
+- **Формат вывода**: отступ = глубина, `.` = уровень/скоуп (filler+frames), число = именованный блок,
+  выровнено, ASCII.
+
+**НЕ сделано (следующее):**
+- **Итерация 2 — именованные КОНСТАНТЫ-ДАННЫЕ → landmark по имени** (dict/list/строка: `DEFAULT_CONFIG`,
+  `READ_FILE_SCHEMA`). Делать СИНХРОННО в `TreeSitterSpec` И `PythonAstSpec`, иначе degraded-режим
+  покажет больше полного. Открытый под-вопрос: все именованные присваивания или только многострочные
+  литералы (одностройные — полосой). Рекомендация — только многострочные.
+- Outline из IR (Фаза 3 ниже), Python на tree-sitter как основной (сейчас старый отступной хендлер
+  обслуживает outline/ladder, tree-sitter-python — только для `.0`), core2 docx (Фаза 4).
+
+**Как воспроизвести/проверить:** `python test/check.py` (оракул) · `python get_codeblock.py --file F --dot [--depth N]`.
+
 ## Фаза 1 — Единый реестр (router seam) ⭐ первый, дёшево, высокий рычаг
 
 **Что:** собрать 5 мест диспетчеризации в один источник правды.
