@@ -21,6 +21,55 @@ Reader → REGISTRY[ext] → (Spec-декоратор → core1 tree-sitter → 
                        → (pdf-декоратор  → core3 …)                           ┘   (DotEntry)  (outline/query/.0)
 ```
 
+## Целевая схема (что ДЕЛАЕМ)
+
+Это карта того, куда идём (в `reader/CONTRACT.md` — карта того, что уже сделано). Ключевая идея:
+**язык = ПРОФИЛЬ-плагин** — один файл на язык, который отвечает за две вещи: (1) какой backend
+подключить и (2) как назвать то, что backend отдал (промоушен `~name → именованный landmark`).
+
+```mermaid
+flowchart TB
+  F["file (.py .ts .md .docx …)"] --> R["Reader · registry.resolve(ext)"]
+  R --> P["PROFILE — язык/формат как ПЛАГИН<br/>(1 файл на язык: backend + правила имён)"]
+
+  P -->|"1. какой backend"| BK
+  P -->|"2. правила role/name/promote"| SP["Spec-движок<br/>(тонкий, читает профиль)"]
+
+  subgraph BK["Backends / cores (структура)"]
+    TS["core1 tree-sitter"]
+    MD["core2 markdown (не-TS эталон)"]
+    DOC["core3 docx (позже)"]
+    AST["ast (legacy-фолбек)"]
+  end
+
+  TS --> N["RNode — адаптер узла"]
+  MD --> N
+  DOC --> N
+  AST --> N
+
+  N --> C["Classifier (backend-agnostic)"]
+  SP -. "промоушен ~name → именованный landmark<br/>происходит ЗДЕСЬ, во время классификации" .-> C
+
+  C --> IR["IR: дерево Block"]
+  IR --> OUT["Renderers: outline / query / .0 / ladder"]
+  IR -. "опц., ПОСТ-IR" .-> AN["Analyzer → block.description<br/>(license / docstring / смысл)"]
+  AN -. "смысл" .-> OUT
+```
+
+**Два разных «языковых» действия — не путать:**
+- **Промоушен / имя** (`~expression_statement` → `DEFAULT_CONFIG`): МЕНЯЕТ структуру (разрывает
+  filler-полосу, добавляет именованный узел) → обязан идти ВО ВРЕМЯ классификации, живёт в **профиле
+  (Spec)**. Прецедент — `_arrow_binding_value` (`NAME = () => {}`).
+- **Описание / смысл** («license-блок», «docstring»): структуру НЕ меняет → строго **пост-IR
+  Analyzer**, только `block.description`.
+
+**Профиль (плагин языка) как plug-and-play.** Сейчас весь язык-нюанс свален в один `TreeSitterSpec`
+(`_arrow_binding_value`, `_EXTRA_FRAME_TYPES`) — по мере роста это свалка `if language == X`. Цель:
+per-language модули `profiles/<lang>.py`, декларативно объявляющие extra-frames / binder-типы /
+value-типы / «многострочный литерал → landmark»; `TreeSitterSpec` становится тонким движком над
+профилем. Новый язык = новый файл-профиль (Vision03 «новый язык = запись данных»). Первое правило,
+которое ложится в профиль, — const-промоушен из Итерации 2.
+
 **Слои и общий словарь:**
 - **Reader (роутер, единый путь):** файл → определить формат → выбрать (backend, spec). ОДИН вход.
 - **Backend / Core:** превращает файл в нормализованное дерево. core1 = tree-sitter (код),
