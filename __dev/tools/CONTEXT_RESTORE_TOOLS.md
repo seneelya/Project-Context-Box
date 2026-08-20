@@ -39,42 +39,40 @@ ast) → `Classifier` → IR (`Block`) → `render`. Дальше:
 
 ## Нюансы следующих шагов (то, что легко сделать неправильно)
 
-### ⭐ МИГРАЦИЯ адресации на reader — СЛЕДУЮЩАЯ БОЛЬШАЯ ЗАДАЧА (делать на СВЕЖЕМ контексте)
+### ⭐ МИГРАЦИЯ адресации на reader — brace-семейство СДЕЛАНО; остался Python/MD
 
-**Цель:** ОДИН источник правды «какой блок на строке N». Сейчас сплит: адресация
-(`get_blocks`/`line_level`/`query`/ladder) = СТАРЫЕ хендлеры (делегация через `Reader`),
-карты (`outline`/`dot`/`--outline --line`-фокус) = reader. Две реализации РАСХОДЯТСЯ.
+**Цель:** ОДИН источник правды «какой блок на строке N» — чтобы карта (outline) и адресация
+(`get_blocks`/`line_level`/`query`/ladder) давали ОДНИ границы/уровни.
 
-**80% уже готово в reader:** `_containing_chain(root, spec, line)` + `_owning_block(spec, children, line)`
-в `reader/classify.py` УЖЕ корректно находят объемлющие блоки С УЧЁТОМ ПРЕАМБУЛЫ (тычок в
-doc-коммент → его блок). Это и есть ядро нового `get_blocks`. Плюс focus уже даёт РЕАЛЬНУЮ глубину
-(база = позиция в цепочке).
+**✅ Сделано (commit «Migrate brace-language addressing…»):** brace-языки (ts/tsx/js/jsx/cs/cpp/
+css) адресуются reader-нативным движком `reader/address.py`. Python и Markdown ПОКА делегируют
+старым хендлерам (`Reader.get_blocks`/`line_level` ветвят по `address.supports(path)` —
+whitelist `_BRACE_EXTS`). Оракул 88/88, CLI-лесенка проверена, outline↔ladder границы совпадают
+(Edge.cs: `Widget [3-55]` lvl1 в обоих; namespace прозрачен в обоих).
 
-**Построить (в reader):**
-1. `get_blocks(line) → [{level,start,end,label}]` outer→inner: пройти `_containing_chain`, level =
-   позиция в цепочке, range = start..end С ПРЕАМБУЛА-glue (start поднять над doc-комментами — как в
-   landmark-склейке; focus head сейчас даёт RAW-range без склейки → доработать общий helper).
-2. `line_level(line)` = глубина тела на строке (не заголовка) — свериться с семантикой старого.
-3. `resolve()` — оставить (работает на списке {level,start,end}); `query` = get_blocks+resolve+срез.
+**Ключевой инсайт (не потерять):** набор узлов АДРЕСАЦИИ ≠ набор outline. `.0`/focus
+(`_is_focus_block` = def+frame) — это КАРТА. Адресация богаче: рунги = **named_def+body,
+braced-control (`for`/`if`/`while`)+body, standalone-тела (arrow/`{…}`/object/array)** —
+порт `_ladder_nodes`. Transparent-рамки (namespace/extern "C") ПРОЗРАЧНЫ для уровня
+(`_level_of_row`: не считаются; frame-дети на том же level). Поэтому `address.py` НЕ строится
+на `_containing_chain`/`_owning_block` (та цепочка — про landmark-карту), а воспроизводит
+`_ladder_nodes`+`_bounds`+`_level_of_row` на RNode (parent известен по ходу рекурсии; склейка
+преамбулы — `_comment_rows`/`_preamble_start`, как в старом хендлере → те же границы).
 
-**Parity / оракул:**
-- Эталон СТАРЫХ хендлеров — `test/parity/golden_old.txt` (diff против reader-версий).
-- reader НЕ совпадёт побайтово со старым python (reader ЧИНИТ баги; напр. sibling-ladder уже пофикшен
-  в старом `_build_hierarchy_for_header`). Расхождения = УЛУЧШЕНИЯ → осознанно ребейзлайн, не подгонять.
-- Оракул: перенацелить LADDER/QUERY/LEVELS на `Reader` (как уже сделали для OUTLINE), ребейзлайн где лучше.
+**Осталось:**
+1. **Python (гоча — обернуть в backend).** `.py`-адресация на reader требует tree-sitter-python
+   ИЛИ ast; на `py`/3.12 грамматики НЕТ. Плюс отступной `python_handler` даёт СВОИ уровни (оракул
+   на них). Решение: обернуть `python_handler` как reader-backend (RNode поверх отступного парсера),
+   чтобы `.py` НЕ зависел от грамматики и адресация=карта была одинаковой. До этого — делегация (сейчас).
+2. **Markdown** — аналогично: беsparser `markdown_handler`; обернуть в backend или оставить делегацию.
+3. **Снять делегацию в `Reader`** когда py/md обёрнуты → удалить ветку `address.supports`.
 
-**Сохранить (внешний контракт наружу):** `get_codeblock()` dict {level,start,end,text};
-`get_line_levels()` {line:level}; `resolve()` семантику (0=внутр, +N от верха, -N вверх);
+**Parity:** `test/parity/golden_old.txt` — эталон старых. reader ЧИНИТ баги (sibling-ladder) →
+расхождения = улучшения, ребейзлайн осознанно. Оракул LADDER/QUERY/LEVELS уже на `Reader`.
+
+**Сохранить (внешний контракт):** `get_codeblock()` dict {level,start,end,text};
+`get_line_levels()` {line:level}; `resolve()` (0=внутр, +N от верха, -N вверх);
 `--ancestor-level`/`--numbered`; staircase-рендер `--line`.
-
-**Гоча Python (решить ПЕРВЫМ):** ladder на reader = `.py`-адресация требует tree-sitter-python или
-ast-фолбек. На `py`/3.12 грамматики НЕТ → ladder уйдёт в ast (без комментов/склейки). Рекомендация:
-обернуть `python_handler` как reader-backend (RNode поверх отступного парсера), чтобы `.py` НЕ зависел
-от грамматики и адресация была одинаковой везде.
-
-**Порядок:** (1) get_blocks на reader + preamble-glue range → diff vs golden; (2) line_level; (3) решить
-Python (backend-wrapper vs grammar); (4) перенацелить оракул; (5) снять делегацию в `Reader`.
-Заменяет прежнее «Ладдер на RNode НЕ делаем» — теперь ЕСТЬ причина (две расходящиеся адресации).
 
 ### Итерация 2 (константы) — КАК делать
 - **Синхронно в ОБА спека**: `TreeSitterSpec` (`backends/treesitter.py`) И `PythonAstSpec`
