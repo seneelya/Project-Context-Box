@@ -24,8 +24,11 @@
 | **`__HQ/Role__CodeMapLocal.md`** | you are a **local agent** and we are building the project map |
 | **`__HQ/Role__EnvSetup.md`** | "set up the environment", "how to run / test this", taking a new/foreign project |
 | **`__HQ/Role__Doc.md`** | "the plan is done, update the docs", "reconcile the as-built docs", "document what changed" |
+| **`__HQ/Role__Recon.md`** | "investigate/map how [the foreign system] does X", "research the target system", "how does <host app> handle …" |
 
-**Restoring** ("we stopped at …", "continue") → first open **`CONTEXT_RESTORE.md`**.
+**Restoring** ("we stopped at …", "continue") → first open **`CONTEXT_RESTORE.md`**. If you were in
+the **Recon** role, its own journal `__HQ/recon/CONTEXT_RESTORE_RECON.md` is the more specific entry
+point — that role accumulates state outside the tracker.
 
 ## Universal rules (language-independent)
 
@@ -70,6 +73,13 @@ Full addressing rules — in your role file.
   emerge once such a pattern stabilises. Distinct from `__HQ/guides/` (recipes for the SCHEME's own
   artifacts). **Link each new HowTo here in START** as it appears.
 - **Authoring recipes** → `__HQ/guides/` — how to shape a Plan / Task / Context (used by the Plan role).
+- **Investigating the foreign system** (the thing we're embedding into, not our own code) → `__HQ/recon/`
+  — verified facts about it, each with a reproduction path; per-subject raw data/tooling in
+  `recon/subjects/`. Owned by the **Recon** role. Not Vision (ours, should-be) or Doc (ours, as-built) —
+  a third tense: THEIRS, as-observed.
+- **Open questions bridging recon ↔ product** → `__HQ/OPEN-QUESTIONS.md` — live discussion of what a
+  recon finding implies for our design, not yet a settled call. Resolves into `DECISIONS.md` (our
+  choice) or `recon/DECISIONS-RECON.md` (their settled fact).
 
 ---
 

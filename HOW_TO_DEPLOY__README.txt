@@ -14,11 +14,12 @@ Example:
 
 WHAT GETS DEPLOYED (template-owned — overwritten):
     START.md, CONTEXT_RESTORE.md, AGENTS.md
-    __HQ/WORKFLOW.md, __HQ/Role__*.md, __HQ/guides/**
+    __HQ/WORKFLOW.md, __HQ/Role__*.md (incl. Role__Recon), __HQ/guides/**
     __HQ/tools/**  (minus .git / __delme / __pycache__ / test / *.tmp / *.pyc)
 
 WHAT IS NEVER TOUCHED (project-owned — by omission):
     DECISIONS.md, TRACKER.md, HowTo__*.md, plans/**, vision/**, docs/**
+    OPEN-QUESTIONS.md, recon/**  (the Recon role FINDINGS — evidence, never overwritten)
     __HQ/tools/CONFIG__TOOLS.py   (per-project config; seeded once on --init)
 
 DRIFT DETECTION (per file, no state file in the project — git history IS the baseline):

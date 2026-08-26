@@ -47,8 +47,15 @@ _ROOT_ENTRY = {"START.md", "CONTEXT_RESTORE.md", "AGENTS.md"}
 # create-if-absent scaffolds for --init (never overwrite; establish empty structure)
 _INIT_FILES = ["__HQ/DECISIONS.md", "__HQ/TRACKER.md", "__HQ/plans/INDEX.md",
                "__HQ/docs/.gitkeep", "__HQ/vision/.gitkeep",
+               # Recon role's homes. Project-owned like every scaffold here: the
+               # ROLE file is template-owned and keeps getting updates, its
+               # FINDINGS never are — a deploy must not touch evidence.
+               "__HQ/OPEN-QUESTIONS.md", "__HQ/recon/INDEX.md",
+               "__HQ/recon/DECISIONS-RECON.md",
                "__HQ/tools/CONFIG__TOOLS.py"]  # per-project config: seed once, then project-owned
-_INIT_DIRS = ["__HQ/plans/deferred", "__HQ/plans/done", "__HQ/plans/superseded"]
+_INIT_DIRS = ["__HQ/plans/deferred", "__HQ/plans/done", "__HQ/plans/superseded",
+              "__HQ/recon/subjects", "__HQ/recon/draft-research/subjects",
+              "__HQ/recon/superseded"]
 
 
 def is_template(rel):
