@@ -11,7 +11,7 @@ The ONLY blessed way to push template updates into a project — replaces hand-d
 WHAT IS DEPLOYED (template-owned; everything else in the project is left untouched):
   - root entry files: START.md, CONTEXT_RESTORE.md, AGENTS.md
   - __HQ/WORKFLOW.md, __HQ/Role__*.md, __HQ/guides/**
-  - __HQ/tools/**   (minus .git / __delme / __pycache__ / test / *.pyc)
+  - __HQ/tools/**   (minus .git / __delme / __dev / __pycache__ / test / *.pyc)
 
 Project-owned files are defined by OMISSION — DECISIONS.md, TRACKER.md, HowTo__*.md,
 plans/**, vision/**, docs/** never match the template set, so they are never touched.
@@ -32,6 +32,7 @@ is the undo — after --apply, review `git status`/`git diff` there and commit o
 import argparse
 import fnmatch
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -41,7 +42,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 # --- template membership -----------------------------------------------------
 
 _TOOLS_PREFIX = "__HQ/tools/"
-_TOOLS_EXCLUDE_PARTS = {".git", "__delme", "__pycache__", "test"}
+_TOOLS_EXCLUDE_PARTS = {".git", "__delme", "__dev", "__pycache__", "test"}
 _ROOT_ENTRY = {"START.md", "CONTEXT_RESTORE.md", "AGENTS.md"}
 
 # create-if-absent scaffolds for --init (never overwrite; establish empty structure)
@@ -176,6 +177,27 @@ def main():
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         shutil.copy2(src, dst)
 
+    def seed_config_tools(rel):
+        """Сеет CONFIG__TOOLS.py с PROJECT_ROOT, вписанным как реальный АБСОЛЮТНЫЙ путь ЭТОГО
+        деплоя — не статичный список путей-кандидатов «повезёт/не повезёт» (REQ-002-C: список
+        кандидатов может молча подобрать ЧУЖОЙ существующий каталог на диске). Делает card-тулов
+        неявный дефолт (`--project-root` не задан -> `CONFIG__TOOLS.PROJECT_ROOT`, см.
+        __HQ/tools/__dev/vision/Vision01__path-and-flag-conventions.md) безопасным."""
+        src, dst = os.path.join(source, rel), os.path.join(target, rel)
+        text = open(src, encoding="utf-8").read()
+        pattern = re.compile(r'PROJECT_ROOT = _resolve_root\(\[.*?\]\) or "\."', re.DOTALL)
+        target_abs = os.path.abspath(target)
+        replacement = (f"PROJECT_ROOT = {target_abs!r}  "
+                       f"# written by deploy_hq.py --init for THIS project — don't copy elsewhere")
+        new_text, n = pattern.subn(replacement, text, count=1)
+        if n == 0:
+            raise RuntimeError(
+                "deploy_hq.py: CONFIG__TOOLS.py template's PROJECT_ROOT block wasn't found in the "
+                "expected shape — update seed_config_tools()'s pattern before using --init.")
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        with open(dst, "w", encoding="utf-8") as f:
+            f.write(new_text)
+
     written = 0
     print(f"deploy  source={source}\n        target={target}\n")
 
@@ -210,9 +232,14 @@ def main():
         for rel in _INIT_FILES:
             src, dst = os.path.join(source, rel), os.path.join(target, rel)
             if os.path.isfile(src) and not os.path.exists(dst):
-                print(f"  SCAFFOLD  {rel}")
+                print(f"  SCAFFOLD  {rel}" + ("  (PROJECT_ROOT <- this deploy's path)"
+                                               if rel == "__HQ/tools/CONFIG__TOOLS.py" else ""))
                 if args.apply:
-                    copy(rel); written += 1
+                    if rel == "__HQ/tools/CONFIG__TOOLS.py":
+                        seed_config_tools(rel)
+                    else:
+                        copy(rel)
+                    written += 1
 
     n_conflict = len([r for r in buckets["CONFLICT"] if not forced(r)])
     print(f"\n  summary: NEW {len(buckets['NEW'])}  UPDATE {len(buckets['UPDATE'])}  "
