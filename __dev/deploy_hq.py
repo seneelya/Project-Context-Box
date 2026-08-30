@@ -70,6 +70,9 @@ def is_template(rel):
         return True
     if rel == "__HQ/tools/CONFIG__TOOLS.py":
         return False  # per-project config (PROJECT_ROOT/LANGUAGE/DECL_BACKEND) — project-owned
+    if rel == "__HQ/tools/CLONE_TOOLS_HERE.md":
+        return False  # outer-repo-only setup note (explains the nested-repo clone step),
+                       # not part of the tools repo's own content
     if rel.startswith(_TOOLS_PREFIX):
         if any(p in _TOOLS_EXCLUDE_PARTS for p in parts) or rel.endswith((".pyc", ".tmp")):
             return False
