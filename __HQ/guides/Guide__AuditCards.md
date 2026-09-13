@@ -24,7 +24,9 @@ Two layers of checking, cheapest first:
 ## <H2 section>                   all required H2, in order; empty section body → (none)
 ### <H3 subsection>               only inside Public API: group by kind
 #### `<signature | name>`         one entry per public symbol
-consumers N: a.py, b.py           machine FACT (who imports it); consumers 0 = nobody
+consumers N:                      machine FACT (who imports it), one file per line below
+- a.py
+- b.py
 <one-line description>            the author's prose
 ```
 - Required H2 (module card, in order): **Public API · Dependencies Internal · Dependencies External ·
@@ -32,7 +34,8 @@ consumers N: a.py, b.py           machine FACT (who imports it); consumers 0 = n
   `mod.rs`, …) additionally has **Package layout** first.
 - Public API H3 by kind: `Functions · Classes · Interfaces · Enums · Types · Constants · Re-exports ·
   Consumed internals` (only those that apply).
-- **Dependencies Internal** = `(none)` OR a table `| Import | File Path | Symbols | Why | Kind |`; every
+- **Dependencies Internal** = `(none)` OR a table `| Import | File Path | Symbols | Kind |` (one row per
+  symbol) plus a `### Why these imports are used` bullet list below it (one line per import); every
   `File Path` must resolve to an existing card.
 - A leading-`_` (private) name is allowed in Public API **only** under `Re-exports` or `Consumed internals`.
 
@@ -73,7 +76,8 @@ Read every card under `__map/`. Do not skip any — even a tiny one.
 - **B. Junk in internal deps** — stdlib/external packages under Dependencies Internal (they belong under External).
 - **C. Self-reference** — a card lists itself as a dependency.
 - **D. Placeholder / empty** — `<|Agent: … |>` left unfilled (validator flags this as *awaiting agent*),
-  `(not processed)`, `...`, or an empty required section.
+  `(not processed)`, `...`, or an empty required section. `(none)` in `Discrepancies` or the
+  `Dependencies External` note is a valid, machine-readable answer, NOT a placeholder — never flag or delete it.
 - **E. Structural mismatch** — an object in `## Discrepancies` that is not in the Public API.
 - **F. Private in public** — a leading-`_` object in Public API outside `Re-exports`/`Consumed internals`.
 - **G. Typos / inconsistent terminology.**

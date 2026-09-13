@@ -37,7 +37,7 @@ then YOU redirect it (`… > __map/<path>/<name><ext>.md`). Prefer `--out`.
 
 The card comes with the **FACT** sections already filled:
 - `## Public API` — real signatures grouped by kind (`### Functions/Classes/…`); under each entry a
-  fact line `consumers N: file1, file2` (who really imports it; `consumers 0` = nobody).
+  fact line `consumers N:` + one file per line below it (who really imports it; `consumers 0` = nobody).
 - `## Dependencies Internal/External`; `## Package layout` (for a package/index file).
 - Prose slots are **directives** `<|Agent: … |>` — that is YOUR job (Step 3). Any card that still
   holds a `<|Agent: … |>` marker is reported by the validator as **awaiting agent** (a status, not an
@@ -68,7 +68,8 @@ Meanwhile continue on the fallback unless told otherwise.
 - summary line under the H1 → one line: what the module does;
 - each `#### <symbol>` → one concise sentence (what it does + its role), OR **delete the directive
   line** if trivial;
-- `## Dependencies Internal` "why" cells; `## How it works`; `## Discrepancies`; `## Package layout`.
+- `## Dependencies Internal`'s `### Why these imports are used` bullets; `## How it works`;
+  `## Discrepancies`; `## Package layout`.
 - **KEEP the fact lines** (`consumers N: …`) — verified; never invent or alter them.
 
 ### Step 4 — validate
@@ -95,12 +96,16 @@ one section and reshapes Public API (other sections as for a module card):
 
 ## RULES  (apply when filling prose — Part 1 Step 3 — and in the Part 2 fallback)
 
-- **THE MACHINE WRITES THE FACTS — YOU DO NOT TOUCH THEM.** Signatures (`#### …`), the `consumers N: …`
-  lines, the `## Dependencies` import lists, and the deps table's **column labels**
-  (`Import | File Path | Symbols | Why | Kind`) are stamped by the tool. Leave them EXACTLY as generated:
-  do NOT rename or reorder columns, do NOT rewrite a signature or a `consumers` line, do NOT rename a
-  section heading, do NOT add / remove / reorder sections. You edit only the slots Step 3 names
-  (summary, the one-liner under each `####`, the `Why` cells, the prose sections).
+- **THE MACHINE WRITES THE FACTS — YOU DO NOT TOUCH THEM.** Signatures (`#### …`), the `consumers N:`
+  lines and their bullet list, the `## Dependencies` import lists, the deps table's **column labels**
+  (`Import | File Path | Symbols | Kind`), and the trailing `<!-- card-format: … -->` line are stamped
+  by the tool. Leave them EXACTLY as generated: do NOT rename or reorder columns, do NOT rewrite a
+  signature or a `consumers` line, do NOT rename a section heading, do NOT add / remove / reorder
+  sections. You edit only the slots Step 3 names (summary, the one-liner under each `####`, the `Why`
+  bullets, the prose sections).
+- **`(none)` IS A VALID ANSWER, NOT EMPTY** — for `Discrepancies` and the optional note under
+  `Dependencies External`, write `(none)` when nothing applies; it is machine-readable and must stay,
+  don't delete the line instead.
 - **A FACT LOOKS WRONG → REPORT UP, DO NOT FIX IT BY HAND.** If a signature, a dependency row, a
   `consumers` count, or an import looks wrong or garbled (e.g. a stray line that is not really an
   import, or a dep pointing at the wrong file), that is a **tool** problem — not something you patch
@@ -129,7 +134,8 @@ Enter this ONLY if Step 1 fails: `make_interface_card.py` errors, will not run, 
 ### Manual recipe
 Author the card by hand to the **`__HQ/tools/CARD_FORMAT.py`** contract (its docstring = the skeleton)
 and the **RULES** above: H1 = the file name only; next non-empty line = one-line summary; then all H2
-sections in order (empty → `(none)`). Build the deps table `| Import | File Path | Symbols | Why | Kind |`
-with root-relative `File Path`s. Prefer the **consumed surface** (what other files actually import) over
+sections in order (empty → `(none)`). Build the deps table `| Import | File Path | Symbols | Kind |`
+(one row per symbol) with root-relative `File Path`s, plus a `### Why these imports are used` bullet
+list below it (one line per import). Prefer the **consumed surface** (what other files actually import) over
 a bare "public" list; if unsure who uses a symbol, mark it "possible export" rather than guessing.
 Then run `validate_cards.py` (it is independent of `make_interface_card.py`); if the whole toolchain is down, tell the caller.
