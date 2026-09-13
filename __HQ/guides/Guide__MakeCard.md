@@ -38,7 +38,7 @@ then YOU redirect it (`… > __map/<path>/<name><ext>.md`). Prefer `--out`.
 The card comes with the **FACT** sections already filled:
 - `## Public API` — real signatures grouped by kind (`### Functions/Classes/…`); under each entry a
   fact line `consumers N:` + one file per line below it (who really imports it; `consumers 0` = nobody).
-- `## Dependencies Internal/External`; `## Package layout` (for a package/index file).
+- `## In-Project Dependencies`/`External Dependencies`; `## Package layout` (for a package/index file).
 - Prose slots are **directives** `<|Agent: … |>` — that is YOUR job (Step 3). Any card that still
   holds a `<|Agent: … |>` marker is reported by the validator as **awaiting agent** (a status, not an
   error): it means the prose pass isn't done yet. Fill or delete every directive.
@@ -68,9 +68,18 @@ Meanwhile continue on the fallback unless told otherwise.
 - summary line under the H1 → one line: what the module does;
 - each `#### <symbol>` → one concise sentence (what it does + its role), OR **delete the directive
   line** if trivial;
-- `## Dependencies Internal`'s `### Why these imports are used` bullets; `## How it works`;
+- `## In-Project Dependencies`'s `### Why these imports are used` bullets; `## How it works`;
   `## Discrepancies`; `## Package layout`.
 - **KEEP the fact lines** (`consumers N: …`) — verified; never invent or alter them.
+- **`## Runtime seams`** — a connection the import graph can't see (dynamic load by path, a
+  separate process it launches, a file/store shared with another process, an event bus). The
+  stamp never invents this section; if you notice a REAL one while reading the source in this
+  step, add it yourself: `| Target | Symbol | Kind | Shape | Why |` table, `Kind`/`Shape` from
+  the closed vocab in `python __HQ/tools/make_interface_card.py --help-seams`, one row per
+  connection. If unsure where to look, `<file> --info-seams` greps known dynamic-call patterns
+  first — it only points at candidate lines, YOU still decide Kind/Shape/Why. If the section
+  ALREADY exists, don't touch its table (same rule as the fact sections below) — only its
+  `Contract: ...` line is machine-written and refreshed on every stamp.
 
 ### Step 4 — validate
 ```
@@ -98,14 +107,16 @@ one section and reshapes Public API (other sections as for a module card):
 
 - **THE MACHINE WRITES THE FACTS — YOU DO NOT TOUCH THEM.** Signatures (`#### …`), the `consumers N:`
   lines and their bullet list, the `## Dependencies` import lists, the deps table's **column labels**
-  (`Import | File Path | Symbols | Kind`), and the trailing `<!-- card-format: … -->` line are stamped
-  by the tool. Leave them EXACTLY as generated: do NOT rename or reorder columns, do NOT rewrite a
-  signature or a `consumers` line, do NOT rename a section heading, do NOT add / remove / reorder
-  sections. You edit only the slots Step 3 names (summary, the one-liner under each `####`, the `Why`
-  bullets, the prose sections).
+  (`Import | File Path | Symbols | Kind`), the `Runtime seams` table's `Contract: ...` line, and the
+  trailing `<!-- card-format: … -->` line are stamped by the tool. Leave them EXACTLY as generated: do
+  NOT rename or reorder columns, do NOT rewrite a signature or a `consumers` line, do NOT rename a
+  section heading, do NOT add / remove / reorder sections. You edit only the slots Step 3 names
+  (summary, the one-liner under each `####`, the `Why` bullets, the prose sections, and the `Runtime
+  seams` table's ROWS — those are yours to write, only the `Contract:` line above them is not).
 - **`(none)` IS A VALID ANSWER, NOT EMPTY** — for `Discrepancies` and the optional note under
-  `Dependencies External`, write `(none)` when nothing applies; it is machine-readable and must stay,
-  don't delete the line instead.
+  `External Dependencies`, write `(none)` when nothing applies; it is machine-readable and must stay,
+  don't delete the line instead. A MISSING `## Runtime seams` section is not the same thing — it's
+  optional, don't add an empty one "to be safe".
 - **A FACT LOOKS WRONG → REPORT UP, DO NOT FIX IT BY HAND.** If a signature, a dependency row, a
   `consumers` count, or an import looks wrong or garbled (e.g. a stray line that is not really an
   import, or a dep pointing at the wrong file), that is a **tool** problem — not something you patch

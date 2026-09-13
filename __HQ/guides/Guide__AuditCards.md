@@ -29,14 +29,21 @@ consumers N:                      machine FACT (who imports it), one file per li
 - b.py
 <one-line description>            the author's prose
 ```
-- Required H2 (module card, in order): **Public API · Dependencies Internal · Dependencies External ·
+- Required H2 (module card, in order): **Public API · In-Project Dependencies · External Dependencies ·
   How it works · Doc links · Discrepancies**. A **package/index** card (`__init__.py`, `index.ts`,
-  `mod.rs`, …) additionally has **Package layout** first.
+  `mod.rs`, …) additionally has **Package layout** first. Old headers (`Dependencies Internal/External`)
+  still read fine via `CARD_FORMAT.canon()` — flagged as non-canonical, not broken.
 - Public API H3 by kind: `Functions · Classes · Interfaces · Enums · Types · Constants · Re-exports ·
   Consumed internals` (only those that apply).
-- **Dependencies Internal** = `(none)` OR a table `| Import | File Path | Symbols | Kind |` (one row per
+- **In-Project Dependencies** = `(none)` OR a table `| Import | File Path | Symbols | Kind |` (one row per
   symbol) plus a `### Why these imports are used` bullet list below it (one line per import); every
   `File Path` must resolve to an existing card.
+- **`## Runtime seams`** (OPTIONAL — not in the required list above; a connection the import graph
+  can't see: dynamic load by path, a separate process, a shared file, an event bus). Present only when
+  there's something to declare — the stamp never invents it empty. When present: a table
+  `| Target | Symbol | Kind | Shape | Why |`, `Kind`/`Shape` from `CARD_FORMAT`'s closed vocabularies,
+  a `Contract: ...` fact-line above the table (refreshed by the stamp, not authored prose). Full
+  contract: `python __HQ/tools/make_interface_card.py --help-seams`.
 - A leading-`_` (private) name is allowed in Public API **only** under `Re-exports` or `Consumed internals`.
 
 ## Layer 1 — run the validator on ALL cards (orchestrator)
@@ -47,9 +54,11 @@ python __HQ/tools/validate_cards.py --project-root .
 It checks every card against the schema above and, for each INVALID card, prints the file and **exactly
 what is wrong**: H1 name ≠ file, empty summary, a missing/non-canonical required section, a deps table
 with wrong columns, a `File Path` that resolves to **neither a card nor a source**, a private `_name`
-outside the allowed subsections, or an orphan card (no source). Exit code 1 if anything is wrong, 0 if
-all clean. A **`pending`** line (dep whose source exists but whose card is not built yet) is NOT a
-failure — never drop the dependency to clear it.
+outside the allowed subsections, or an orphan card (no source). If `## Runtime seams` is present, it
+also checks each row's `Kind`/`Shape` against the closed vocabulary and resolves a path-like `Target`
+the same way as `File Path` (free text that isn't path-like, e.g. a URL or external bus name, is never
+flagged). Exit code 1 if anything is wrong, 0 if all clean. A **`pending`** line (dep whose source
+exists but whose card is not built yet) is NOT a failure — never drop the dependency to clear it.
 
 **The loop:** read each reason → **re-run card creation for just those files** (re-stamp:
 `python __HQ/tools/make_interface_card.py <file> --project-root . --out <card-path>` — it **merges**,
@@ -73,11 +82,13 @@ Read every card under `__map/`. Do not skip any — even a tiny one.
 
 ### Errors to find (all checkable WITHOUT source)
 - **A. Broken link** — a dependency `File Path` names a file/card not in the tree (check existence, don't open source).
-- **B. Junk in internal deps** — stdlib/external packages under Dependencies Internal (they belong under External).
+- **B. Junk in internal deps** — stdlib/external packages under In-Project Dependencies (they belong under External).
 - **C. Self-reference** — a card lists itself as a dependency.
 - **D. Placeholder / empty** — `<|Agent: … |>` left unfilled (validator flags this as *awaiting agent*),
   `(not processed)`, `...`, or an empty required section. `(none)` in `Discrepancies` or the
-  `Dependencies External` note is a valid, machine-readable answer, NOT a placeholder — never flag or delete it.
+  `External Dependencies` note is a valid, machine-readable answer, NOT a placeholder — never flag or
+  delete it. A MISSING `## Runtime seams` is never a placeholder either — it's optional and the stamp
+  never creates it empty; don't ask for one to be added.
 - **E. Structural mismatch** — an object in `## Discrepancies` that is not in the Public API.
 - **F. Private in public** — a leading-`_` object in Public API outside `Re-exports`/`Consumed internals`.
 - **G. Typos / inconsistent terminology.**
