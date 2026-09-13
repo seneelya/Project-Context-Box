@@ -27,6 +27,11 @@ HOW DRIFT IS DETECTED (answers "did the project change this file?"):
 
 No state file is stored in the project: git history IS the baseline. The consumer's own git
 is the undo — after --apply, review `git status`/`git diff` there and commit or revert.
+
+CONFIG__TOOLS.py is project-owned and NEVER auto-merged (see above) — its own
+CONFIG_SCHEMA_VERSION is compared instead: project's < template's prints a STALE-CONFIG
+line (which settings changed lives in the template's own file, diff it by hand) and flips
+the exit code, same as an unresolved CONFLICT.
 """
 
 import argparse
@@ -145,6 +150,36 @@ def classify(source, target, rel):
     return "CONFLICT", th, ph
 
 
+_CONFIG_TOOLS_REL = "__HQ/tools/CONFIG__TOOLS.py"
+_SCHEMA_VER_RE = re.compile(r"^CONFIG_SCHEMA_VERSION\s*=\s*(\d+)", re.MULTILINE)
+
+
+def config_schema_version(path):
+    """CONFIG_SCHEMA_VERSION from a CONFIG__TOOLS.py, read by REGEX (never imported — it's a
+    project file, importing it would run arbitrary project-owned code). None if the file is
+    absent or predates this constant."""
+    if not os.path.isfile(path):
+        return None
+    text = open(path, encoding="utf-8").read()
+    m = _SCHEMA_VER_RE.search(text)
+    return int(m.group(1)) if m else None
+
+
+def config_drift(source, target):
+    """CONFIG__TOOLS.py is project-owned (never overwritten, see is_template()) — this is the
+    ONLY signal a project gets that its copy is missing settings the template has since grown.
+    Returns None if the project's copy is current or the file doesn't exist yet (--init's job),
+    else (project_version_or_None, template_version) to report as STALE-CONFIG."""
+    tmpl_ver = config_schema_version(os.path.join(source, _CONFIG_TOOLS_REL))
+    proj_path = os.path.join(target, _CONFIG_TOOLS_REL)
+    if not os.path.isfile(proj_path) or tmpl_ver is None:
+        return None
+    proj_ver = config_schema_version(proj_path)
+    if proj_ver is not None and proj_ver >= tmpl_ver:
+        return None
+    return proj_ver, tmpl_ver
+
+
 # --- main --------------------------------------------------------------------
 
 def main():
@@ -223,6 +258,13 @@ def main():
     if buckets["UPTODATE"]:
         print(f"  UPTODATE  {len(buckets['UPTODATE'])} file(s) already current")
 
+    drift = config_drift(source, target)
+    if drift:
+        proj_ver, tmpl_ver = drift
+        proj_str = f"v{proj_ver}" if proj_ver is not None else "no version (predates this check)"
+        print(f"  STALE-CONFIG  {_CONFIG_TOOLS_REL}   project {proj_str} < template v{tmpl_ver}"
+              f" — never auto-merged, compare and copy in the new settings by hand")
+
     # --init: create-if-absent scaffolds (never overwrite)
     if args.init:
         print("\n  -- init scaffolds (create-if-absent) --")
@@ -246,12 +288,13 @@ def main():
 
     n_conflict = len([r for r in buckets["CONFLICT"] if not forced(r)])
     print(f"\n  summary: NEW {len(buckets['NEW'])}  UPDATE {len(buckets['UPDATE'])}  "
-          f"UPTODATE {len(buckets['UPTODATE'])}  CONFLICT {n_conflict}")
+          f"UPTODATE {len(buckets['UPTODATE'])}  CONFLICT {n_conflict}"
+          + ("  STALE-CONFIG 1" if drift else ""))
     if args.apply:
         print(f"  wrote {written} file(s). Review in the target's git: git -C \"{target}\" status")
     else:
         print("  DRY-RUN — nothing written. Add --apply to write.")
-    sys.exit(1 if n_conflict else 0)
+    sys.exit(1 if (n_conflict or drift) else 0)
 
 
 if __name__ == "__main__":

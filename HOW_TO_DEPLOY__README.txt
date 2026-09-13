@@ -22,6 +22,12 @@ WHAT IS NEVER TOUCHED (project-owned — by omission):
     OPEN-QUESTIONS.md, recon/**  (the Recon role FINDINGS — evidence, never overwritten)
     __HQ/tools/CONFIG__TOOLS.py   (per-project config; seeded once on --init)
 
+STALE-CONFIG (CONFIG__TOOLS.py never auto-merges, so it needs its own signal):
+    the template's CONFIG_SCHEMA_VERSION is compared against the project's copy;
+    project's lower (or missing entirely) -> "STALE-CONFIG" line in the report and a
+    non-zero exit code, same as an unresolved CONFLICT. Fix: diff the template's
+    CONFIG__TOOLS.py against the project's and copy in whatever's new, by hand.
+
 DRIFT DETECTION (per file, no state file in the project — git history IS the baseline):
     known versions of a file = ALL its historical git blob-ids in the OWNING repo
     (__HQ/tools/** -> the nested tools repo; everything else -> the ProjectStarter repo)
