@@ -92,3 +92,11 @@
   — посмотреть, что это, спросить владельца, не затирать.
 
 — Опус5.5 (Claude Opus 5.5), 2026-09-29, по обсуждению с Натальей
+
+## CARRY — deviations · smells · next-gen TODO
+
+- Отклонение: generic-тулы (get_codeblock/ind_code_usage/show_pyfile_api) тоже пересмотрены — относительный путь сначала от PROJECT_ROOT (решение владельца); моста AGENTS.md в корне нет вообще (сначала планировался опциональный).
+- Попутно найдено и починено: check_cards_freshness не видел новую незакоммиченную карточку (git status схлопывал папку, фикс --untracked-files=all); deploy_hq портил обратные слэши PROJECT_ROOT (e.sub) и ложно метил чужой AGENTS.md как ORPHAN.
+- Смелл (не тронут): 	est__replace_in_files 15/21 (UnicodeDecodeError, старое) и при падении УДАЛЯЕТ закоммиченные фикстуры — после прогона git checkout -- test/test__replace_in_files/fixtures.
+- Не проверено вживую: холодный старт агента по __HQ/START.md (раздел Paths) — первая реальная сессия на llama.cpp_mix.
+- Next-gen: C/C++/CUDA в штемпеле и ind_code_usage; правило выборочного картирования большого дерева; миграция своих проектов (корневой __map → __HQ/__map, MAP_DIR, схема 2) — когда понадобится.
