@@ -1,7 +1,7 @@
 # reports
 
 Run artifacts written by roles/guides — **audit findings, pass logs, session notes**.
-They are NOT cards and must never be written into `__map/` (that folder is cards only,
+They are NOT cards and must never be written into `__HQ/__map/` (that folder is cards only,
 and mixing a report in there pollutes the map tools).
 
 ## Naming — date-first, sortable

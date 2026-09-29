@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deploy the ProjectStarter template (__HQ brain + entry files) into a consumer project.
+"""Deploy the ProjectStarter template (the __HQ brain, entry files included) into a consumer project.
 
 The ONLY blessed way to push template updates into a project — replaces hand-diffing.
 
@@ -9,9 +9,13 @@ The ONLY blessed way to push template updates into a project — replaces hand-d
     py __dev/deploy_hq.py --target <project> --apply --force '__HQ/tools/**'  # override a CONFLICT
 
 WHAT IS DEPLOYED (template-owned; everything else in the project is left untouched):
-  - root entry files: START.md, CONTEXT_RESTORE.md, AGENTS.md
+  - entry + rules, all INSIDE the HQ (Vision08 — nothing of ours outside __HQ/):
+    __HQ/START.md, __HQ/CONTEXT_RESTORE.md, __HQ/RITUAL__session_end.md, __HQ/RULE_sessionRestore.md
   - __HQ/WORKFLOW.md, __HQ/Role__*.md, __HQ/guides/**
-  - __HQ/tools/**   (minus .git / __delme / __dev / __pycache__ / test / *.pyc)
+  - __HQ/tools/**   (minus .git / __delme / __dev / __pycache__ / test / _logs / .pytest_cache /
+                     *.pyc / *.tmp / *.bak)
+  Old root entry files (START.md, CONTEXT_RESTORE.md, AGENTS.md) are reported as ORPHAN — delete
+  them by hand; the tool never deletes.
 
 Project-owned files are defined by OMISSION — DECISIONS.md, TRACKER.md, HowTo__*.md,
 plans/**, vision/**, docs/** never match the template set, so they are never touched.
@@ -47,11 +51,18 @@ sys.stdout.reconfigure(encoding="utf-8")
 # --- template membership -----------------------------------------------------
 
 _TOOLS_PREFIX = "__HQ/tools/"
-_TOOLS_EXCLUDE_PARTS = {".git", "__delme", "__dev", "__pycache__", "test"}
-_ROOT_ENTRY = {"START.md", "CONTEXT_RESTORE.md", "AGENTS.md"}
+_TOOLS_EXCLUDE_PARTS = {".git", "__delme", "__dev", "__pycache__", "test", "_logs", ".pytest_cache"}
+_HQ_ENTRY = {"__HQ/START.md", "__HQ/CONTEXT_RESTORE.md", "__HQ/RITUAL__session_end.md",
+             "__HQ/RULE_sessionRestore.md", "__HQ/WORKFLOW.md"}
+# Entry files that used to live in the project ROOT (before Vision08 moved them into __HQ/):
+# their old-path history counts as "known versions" of the new path (a stale unedited copy is an
+# UPDATE, not a CONFLICT), and a leftover root copy is reported as ORPHAN.
+_MOVED_FROM = {"__HQ/START.md": "START.md", "__HQ/CONTEXT_RESTORE.md": "CONTEXT_RESTORE.md"}
+_ROOT_ORPHANS = ["START.md", "CONTEXT_RESTORE.md", "AGENTS.md"]
 
 # create-if-absent scaffolds for --init (never overwrite; establish empty structure)
 _INIT_FILES = ["__HQ/DECISIONS.md", "__HQ/TRACKER.md", "__HQ/plans/INDEX.md",
+               "__HQ/__map/.gitkeep",   # cards: CONFIG__TOOLS.MAP_DIR = "__map", relative to the HQ
                "__HQ/docs/.gitkeep", "__HQ/vision/.gitkeep",
                # Recon role's homes. Project-owned like every scaffold here: the
                # ROLE file is template-owned and keeps getting updates, its
@@ -66,7 +77,7 @@ _INIT_DIRS = ["__HQ/plans/deferred", "__HQ/plans/done", "__HQ/plans/superseded",
 
 def is_template(rel):
     """rel = posix path relative to the source (ProjectStarter) root."""
-    if rel in _ROOT_ENTRY or rel == "__HQ/WORKFLOW.md":
+    if rel in _HQ_ENTRY:
         return True
     parts = rel.split("/")
     if len(parts) == 2 and parts[0] == "__HQ" and fnmatch.fnmatch(parts[1], "Role__*.md"):
@@ -79,7 +90,7 @@ def is_template(rel):
         return False  # outer-repo-only setup note (explains the nested-repo clone step),
                        # not part of the tools repo's own content
     if rel.startswith(_TOOLS_PREFIX):
-        if any(p in _TOOLS_EXCLUDE_PARTS for p in parts) or rel.endswith((".pyc", ".tmp")):
+        if any(p in _TOOLS_EXCLUDE_PARTS for p in parts) or rel.endswith((".pyc", ".tmp", ".bak")):
             return False
         return True
     return False
@@ -88,7 +99,7 @@ def is_template(rel):
 def template_files(source):
     out = []
     for root, dirs, files in os.walk(source):
-        dirs[:] = [d for d in dirs if d not in (".git", "__pycache__")]
+        dirs[:] = [d for d in dirs if d not in (".git", "__pycache__", ".pytest_cache", "_logs")]
         for name in files:
             rel = os.path.relpath(os.path.join(root, name), source).replace(os.sep, "/")
             if is_template(rel):
@@ -121,10 +132,19 @@ def repo_for(source, rel):
 
 
 def known_ids(source, rel, current):
-    """All historical blob-ids of rel in its owning repo, plus the current one."""
+    """All historical blob-ids of rel in its owning repo (plus its pre-move path, see
+    _MOVED_FROM), plus the current one."""
+    ids = {current} if current else set()
+    for path in (rel, _MOVED_FROM.get(rel)):
+        if path:
+            ids |= _history_ids(source, path)
+    return ids
+
+
+def _history_ids(source, rel):
     repo, inpath = repo_for(source, rel)
     commits = [c for c in _git(repo, "log", "--all", "--pretty=%H", "--", inpath).split() if c]
-    ids = {current} if current else set()
+    ids = set()
     if commits:
         spec = "".join(f"{c}:{inpath}\n" for c in commits)
         r = subprocess.run(["git", "-C", repo, "cat-file", "--batch-check"],
@@ -227,7 +247,10 @@ def main():
         target_abs = os.path.abspath(target)
         replacement = (f"PROJECT_ROOT = {target_abs!r}  "
                        f"# written by deploy_hq.py --init for THIS project — don't copy elsewhere")
-        new_text, n = pattern.subn(replacement, text, count=1)
+        # lambda, not a string: re.sub parses backslashes in a string replacement, which turned
+        # repr's 'y:\\SRC' back into 'y:\SRC' (an invalid-escape warning, or a silently broken
+        # path for \t \n \b ...). A function's return value is inserted verbatim.
+        new_text, n = pattern.subn(lambda _m: replacement, text, count=1)
         if n == 0:
             raise RuntimeError(
                 "deploy_hq.py: CONFIG__TOOLS.py template's PROJECT_ROOT block wasn't found in the "
@@ -257,6 +280,10 @@ def main():
             print(f"            diff: git diff --no-index \"{os.path.join(target, rel)}\" \"{os.path.join(source, rel)}\"")
     if buckets["UPTODATE"]:
         print(f"  UPTODATE  {len(buckets['UPTODATE'])} file(s) already current")
+    for rel in _ROOT_ORPHANS:
+        if os.path.isfile(os.path.join(target, rel)):
+            print(f"  ORPHAN    {rel}   <- old root entry file; the template keeps everything in "
+                  f"__HQ/ now — delete by hand after review (never auto-deleted)")
 
     drift = config_drift(source, target)
     if drift:

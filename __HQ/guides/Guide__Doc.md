@@ -5,7 +5,7 @@ lasting consequence of landed plans. Written by the **Plan** role (it holds the 
 executor does not). Distinct from its neighbours:
 
 - **Vision** = WHY / how it *should* work (intent).  **Doc** = how it *does* work (reality).
-- **Cards** (`__map/`) = per-file mechanical map.  **Doc** = the woven, cross-cutting picture.
+- **Cards** (`__HQ/__map/`) = per-file mechanical map.  **Doc** = the woven, cross-cutting picture.
 
 ## What goes in
 

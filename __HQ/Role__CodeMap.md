@@ -1,6 +1,6 @@
 # Role: CodeMap — build the code map with a STRONG agent (batched)
 
-You are the **ORCHESTRATOR** (a strong model). You produce cards in `__map/` — a cheap map of the
+You are the **ORCHESTRATOR** (a strong model). You produce cards in `__HQ/__map/` — a cheap map of the
 code, read INSTEAD of the source. Unlike `Role__CodeMapLocal` (one weak subagent per file), you
 delegate to **strong subagents (Sonnet)** in **batches sized by context**, so mapping is fast.
 
@@ -32,13 +32,13 @@ The subagent reads the shared spec and produces ONE card per file at the mask pa
 
 ## Verify
 
-After each batch: check that every expected card exists at `__map/<path>/<name><ext>.md` and is
+After each batch: check that every expected card exists at `__HQ/__map/<path>/<name><ext>.md` and is
 **non-zero in size** (check the size, do NOT read the file). Missing/empty → re-assign that file
 (a smaller batch, or do it yourself).
 
 Then run the **validator over ALL cards** — it is your programmatic gate:
 ```
-python __HQ/tools/validate_cards.py --project-root .
+python __HQ/tools/validate_cards.py
 ```
 It checks each card against the `CARD_FORMAT.py` contract and prints, for every INVALID card, the
 file and **exactly what is wrong** (missing/again non-canonical section, empty summary, a `File Path`
@@ -55,9 +55,9 @@ open just that card (and, if needed, its source) and fix it directly.
 
 ## Where things go
 
-- Cards → `__map/<path>/<name><ext>.md`.
+- Cards → `__HQ/__map/<path>/<name><ext>.md`.
 - Instruction files hold ONLY instructions — progress/reports go to `__HQ/reports/<YYYY-MM-DD>_<kind>.md`
-  (dated), never into `__map/`.
+  (dated), never into `__HQ/__map/`.
 
 ## Restore (interrupted)
 

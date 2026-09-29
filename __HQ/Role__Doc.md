@@ -14,7 +14,7 @@ You are the DOCUMENTOR. A plan is **done** — the system now works differently.
 ## What a Doc is (and is NOT)
 
 - **Doc** = how it *does* work now (reality). **Vision** = WHY / how it *should* (intent) — not yours.
-- **Doc** = the woven, cross-cutting picture. **Cards** (`__map/`) = per-file mechanical map.
+- **Doc** = the woven, cross-cutting picture. **Cards** (`__HQ/__map/`) = per-file mechanical map.
 - Docs are **keyed by SUBJECT, not by plan/version** (`Doc__config.md`, not `Doc__scheme2.md`) and are
   **mutable** — no generations, no `superseded/`. You overwrite; git keeps the history.
 

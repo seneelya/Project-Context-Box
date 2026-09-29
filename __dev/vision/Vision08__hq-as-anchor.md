@@ -49,7 +49,7 @@ y:\SRC\                         ← тут стартует агент (cwd — 
   llama.cpp_mix\                ← PROJECT_ROOT, git llama.cpp (ветка mix)
     ggml\ src\ tools\server\ …
     __HQ\                       ← HQ, свой git, скрыт .git/info/exclude
-      START.md                  ← вход; жёсткие абсолютные пути HQ и PROJECT_ROOT
+      START.md                  ← вход (открывается по полному пути)
       CONTEXT_RESTORE.md
       __map\                    ← MAP_DIR (два подчёркивания остаются)
       plans\ recon\ docs\ DECISIONS.md TRACKER.md …
@@ -83,9 +83,11 @@ y:\SRC\                         ← тут стартует агент (cwd — 
    это git штаба). `%ct` — часы, не номер коммита, поэтому сравнение между репо осмысленно. Сторона
    без git → её mtime. Режим выбирается **попарно**, а не один на весь прогон. Работает на всех
    трёх раскладках: один git (memohood), два (llama.cpp_mix), штаб без git.
-6. **Вход — внутри штаба.** `START.md` и `CONTEXT_RESTORE.md` живут в `__HQ/`; `START.md` содержит
-   жёсткие абсолютные пути `HQ` и `PROJECT_ROOT` (пишет `deploy_hq.py`, как пишет `PROJECT_ROOT`).
-   Команды в ролях/гайдах не должны зависеть от того, где стоит агент.
+6. **Вход — внутри штаба, снаружи НИЧЕГО.** `START.md`, `CONTEXT_RESTORE.md`, `RITUAL__session_end.md`,
+   `RULE_sessionRestore.md` живут в `__HQ/`; моста в корне (`AGENTS.md`) нет ни в своих, ни в чужих
+   проектах — везде один путь (решение владельца 2026-09-29). `__HQ/…` в доках = папка штаба;
+   абсолютных путей в `START.md` нет (он template-owned): штаб агент знает по пути, которым открыл
+   `START.md`, исходники — `PROJECT_ROOT` конфига.
 
 ## 4. Совместимость
 

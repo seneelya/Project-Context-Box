@@ -15,13 +15,13 @@ Two parts:
 
 ## WHERE THE CARD GOES — exact path mask
 
-Mirror the source's full path under `__map/`, keep the source filename **including its extension**,
+Mirror the source's full path under `__HQ/__map/`, keep the source filename **including its extension**,
 add `.md`:
 ```
 source:   <path>/<name><ext>
-card:     __map/<path>/<name><ext>.md
+card:     __HQ/__map/<path>/<name><ext>.md
 ```
-Examples: `_engine/retrieve.py` → `__map/_engine/retrieve.py.md` · `src/main.cpp` → `__map/src/main.cpp.md`.
+Examples: `_engine/retrieve.py` → `__HQ/__map/_engine/retrieve.py.md` · `src/main.cpp` → `__HQ/__map/src/main.cpp.md`.
 
 ---
 
@@ -30,10 +30,10 @@ Examples: `_engine/retrieve.py` → `__map/_engine/retrieve.py.md` · `src/main.
 ### Step 1 — generate the card file
 Run from the project root:
 ```
-python __HQ/tools/make_interface_card.py <path>/<name><ext> --project-root . --out __map/<path>/<name><ext>.md
+python __HQ/tools/make_interface_card.py <path>/<name><ext> --out __HQ/__map/<path>/<name><ext>.md
 ```
 `--out` writes the card file directly (creating folders). Without `--out` it PRINTS to stdout —
-then YOU redirect it (`… > __map/<path>/<name><ext>.md`). Prefer `--out`.
+then YOU redirect it (`… > __HQ/__map/<path>/<name><ext>.md`). Prefer `--out`.
 
 The card comes with the **FACT** sections already filled:
 - `## Public API` — real signatures grouped by kind (`### Functions/Classes/…`); under each entry a
@@ -83,7 +83,7 @@ Meanwhile continue on the fallback unless told otherwise.
 
 ### Step 4 — validate
 ```
-python __HQ/tools/validate_cards.py --project-root .
+python __HQ/tools/validate_cards.py
 ```
 Fix what it flags **as an issue** for your card (missing section, empty summary, a `File Path` that
 resolves to **neither a card nor a source file**). A **`pending`** line — a dependency whose SOURCE

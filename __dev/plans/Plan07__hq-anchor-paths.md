@@ -14,8 +14,14 @@
 ## Scope
 
 - **Этап A — код тулов** (репо `__HQ/tools`): A1–A7 ниже.
-- **Этап B — раскладка, доки, деплой** (репо ProjectStarter): только после того, как A проверен
-  вживую. Детализируется отдельно по итогам A.
+- **Этап B — раскладка, доки, деплой** (репо ProjectStarter): после проверки A.
+  B1 `START.md`/`CONTEXT_RESTORE.md` → `__HQ/`, `AGENTS.md` удалён, `__map/.gitkeep` → `__HQ/__map/`;
+  B2 ссылки во всех шаблонных доках (`__map/` → `__HQ/__map/`, вход → `__HQ/…`, `--project-root .`
+  убран из команд) + раздел «Paths» в `START.md`; B3 из hermes-filetools: `RITUAL__session_end.md`,
+  `RULE_sessionRestore.md`, `Guide__Contracts_candidate.md` (обобщены), правило про субагентов в
+  `WORKFLOW.md`; B4 `deploy_hq.py`: раскладка в `__HQ/`, история старых путей как known, ORPHAN для
+  корневых входов, скаффолд `__HQ/__map/`, фикс `re.sub`-слэшей (lambda), исключение `_logs`/
+  `.pytest_cache`/`*.bak`; B5 передеплой `llama.cpp_mix`.
 - Вне scope: C/C++ в штемпеле, правило выборочного картирования (Vision08 §7).
 
 ## Контракты (in → out)

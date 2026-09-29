@@ -8,10 +8,10 @@ Two layers of checking, cheapest first:
 
 ## The card utilities (all under `__HQ/tools/`)
 
-- **`make_interface_card.py <file> --project-root . [--out P] [--force]`** — the STAMP: emits a fact-filled card
+- **`make_interface_card.py <file> [--out P] [--force]`** — the STAMP: emits a fact-filled card
   (signatures + `consumers N` + deps); the author fills prose. Used to (re)create a card.
-- **`validate_cards.py --project-root .`** — the validator (below).
-- **`check_cards_freshness.py --project-root .`** — which cards are stale vs their source (git/mtime) and orphans.
+- **`validate_cards.py`** — the validator (below).
+- **`check_cards_freshness.py`** — which cards are stale vs their source (git/mtime) and orphans.
 - **`CARD_FORMAT.py`** — (not a CLI) the format contract every tool reads; its docstring is the card skeleton.
 
 ## The card schema (what "valid" is)
@@ -49,7 +49,7 @@ consumers N:                      machine FACT (who imports it), one file per li
 ## Layer 1 — run the validator on ALL cards (orchestrator)
 
 ```
-python __HQ/tools/validate_cards.py --project-root .
+python __HQ/tools/validate_cards.py
 ```
 It checks every card against the schema above and, for each INVALID card, prints the file and **exactly
 what is wrong**: H1 name ≠ file, empty summary, a missing/non-canonical required section, a deps table
@@ -61,7 +61,7 @@ flagged). Exit code 1 if anything is wrong, 0 if all clean. A **`pending`** line
 exists but whose card is not built yet) is NOT a failure — never drop the dependency to clear it.
 
 **The loop:** read each reason → **re-run card creation for just those files** (re-stamp:
-`python __HQ/tools/make_interface_card.py <file> --project-root . --out <card-path>` — it **merges**,
+`python __HQ/tools/make_interface_card.py <file> --out <card-path>` — it **merges**,
 so facts refresh and the existing prose is kept; use `--force` only to rebuild from scratch; or fix a
 trivial contract slip by hand) → re-validate. Repeat until the validator exits 0. Only then start Layer 2.
 
@@ -78,7 +78,7 @@ You are a card **REVIEWER**, launched after the validator is green to catch what
 - If you are not SURE something is an error, it is NOT an error — leave it.
 
 ### Read
-Read every card under `__map/`. Do not skip any — even a tiny one.
+Read every card under `__HQ/__map/`. Do not skip any — even a tiny one.
 
 ### Errors to find (all checkable WITHOUT source)
 - **A. Broken link** — a dependency `File Path` names a file/card not in the tree (check existence, don't open source).
@@ -102,7 +102,7 @@ Read every card under `__map/`. Do not skip any — even a tiny one.
 ### Report + status
 Write findings to `__HQ/reports/<YYYY-MM-DD>_audit.md` (issue · file · what's wrong · recommendation) —
 create `__HQ/reports/` if it does not exist; date the filename (e.g. `2026-08-13_audit.md`). Do **NOT**
-write into `__map/` — that folder is cards only. End with ONE status line:
+write into `__HQ/__map/` — that folder is cards only. End with ONE status line:
 - `>> ALL_FIXED` — everything was fixable by patch and is done.
 - `>> RERUN_PASS1: <files>` — some cards must be re-generated (re-stamp + re-fill).
 - `>> DONE` — no issues found.

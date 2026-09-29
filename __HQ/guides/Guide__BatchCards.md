@@ -5,8 +5,8 @@ your context) and this file. Produce **ONE card per file** in your list — do t
 
 **The card format, the rules, and the exact path mask are in `__HQ/guides/Guide__MakeCard.md` — read it FIRST
 and follow it for every file.** In short: a card is a HINT not a spec, facts from the code only, and it
-mirrors the source path under `__map/` keeping the extension:
-`__map/<path>/<name><ext>.md`.
+mirrors the source path under `__HQ/__map/` keeping the extension:
+`__HQ/__map/<path>/<name><ext>.md`.
 
 ## Steps
 

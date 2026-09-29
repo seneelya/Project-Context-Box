@@ -7,6 +7,21 @@
 > ⚠️ **Don't know your task/role? — ASK the user** ("what is my task?"), get the answer, and come
 > back to this file.
 
+## Paths — read this first
+
+Everything of OURS lives in ONE folder, the **HQ** (`__HQ/`) — this file's own folder: roles,
+guides, tools, cards (`__HQ/__map/`), plans, tracker, this entry. Nothing of ours lies outside it.
+The project's **sources** are elsewhere: `PROJECT_ROOT` in `__HQ/tools/CONFIG__TOOLS.py`
+(absolute). Usually the HQ sits inside the sources, but it doesn't have to, and you may be started
+anywhere — the owner tells you the full path of this file.
+
+- **`__HQ/…` in every doc = this folder** (the one holding this `START.md`), whatever your cwd.
+- **Commands** are written as `python __HQ/tools/<tool>.py …`. Standing elsewhere → replace
+  `__HQ/` with the HQ's real path. Tools don't care about cwd: they find their HQ themselves and
+  take the sources from the config, so project-relative paths work from anywhere
+  (`--file src/x.cpp`). Details → `__HQ/tools/TOOLS.md`.
+- **Source files** in docs (`src/x.cpp`, `tools/server/…`) are relative to `PROJECT_ROOT`.
+
 ## How to use (step by step)
 
 1. From the user's words, pick the role from the table (look at "when you take it" — meaning-aliases).
@@ -26,14 +41,18 @@
 | **`__HQ/Role__Doc.md`** | "the plan is done, update the docs", "reconcile the as-built docs", "document what changed" |
 | **`__HQ/Role__Recon.md`** | "investigate/map how [the foreign system] does X", "research the target system", "how does <host app> handle …" |
 
-**Restoring** ("we stopped at …", "continue") → first open **`CONTEXT_RESTORE.md`**. If you were in
+**Restoring** ("we stopped at …", "continue") → first open **`__HQ/CONTEXT_RESTORE.md`**; HOW to read
+while restoring (outline → block, never whole) → **`__HQ/RULE_sessionRestore.md`**. If you were in
 the **Recon** role, its own journal `__HQ/recon/CONTEXT_RESTORE_RECON.md` is the more specific entry
 point — that role accumulates state outside the tracker.
+
+**Ending a session** (or a compaction is near) → **`__HQ/RITUAL__session_end.md`** — what to check
+and leave behind.
 
 ## Universal rules (language-independent)
 
 - Edit a source file (`*.py`, `*.cpp`, `*.ts`, `*.go`, …) → in the SAME pass update its card in
-  `__map/` (cards are a cheap map of the code instead of reading the source).
+  `__HQ/__map/` (cards are a cheap map of the code instead of reading the source).
 - Record progress by **appending to the TAIL** of `__HQ/TRACKER.md` (`✅ done … → next …`); when
   reading, look only at the **TAIL** (last lines = where we are).
 
@@ -53,7 +72,7 @@ Full addressing rules — in your role file.
 
 ## Where things live (map — don't load extra)
 
-- **Code map** → `__map/` — compact per-file cards (descriptive headers). **Read these INSTEAD
+- **Code map** → `__HQ/__map/` — compact per-file cards (descriptive headers). **Read these INSTEAD
   of the source** to understand code cheaply. Missing a card? → the **CodeMap** role builds it.
 - **Dev tools (your hands)** → `__HQ/tools/` — small CLIs (reverse usage index, code blocks, the
   card stamp, …). Catalog + how to run → **`__HQ/tools/TOOLS.md`** (router: pick a tool by task,
@@ -62,7 +81,7 @@ Full addressing rules — in your role file.
 - **Plan index** → `__HQ/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
 - **Settled decisions** → `__HQ/DECISIONS.md` — locked calls + one-line why; **read before (re)designing, don't relitigate**. Owned by the **Plan** role.
 - **Lessons from closed plans** → grep `^## CARRY` in `__HQ/plans/done/` (deviations · smells · next-gen TODO — jump to the line, don't read whole plans). **Open contract-drift** → grep `KICKBACK` in `__HQ/` (Exec kicked a wrong contract back to Plan).
-- **Context restore** → `CONTEXT_RESTORE.md` + the TAIL of `__HQ/TRACKER.md`.
+- **Context restore** → `__HQ/CONTEXT_RESTORE.md` + the TAIL of `__HQ/TRACKER.md`.
 - **How the whole scheme works** (roles, flow, naming — the big picture) → `__HQ/WORKFLOW.md`. Read this to understand how the project is organised.
 - **Intent / design (product)** → `__HQ/vision/` — WHY this *product* should work as it does; needed by the **Plan** role; NOT by a task executor.
 - **As-built docs** → `__HQ/docs/` — how the system works **NOW** (where things live, example configs, the real flow). A landed plan's lasting consequence, reconciled by the **Doc** role.
@@ -72,7 +91,8 @@ Full addressing rules — in your role file.
   HowTos (e.g. "how to write a module/harness of this project's kind", for weak local models to follow)
   emerge once such a pattern stabilises. Distinct from `__HQ/guides/` (recipes for the SCHEME's own
   artifacts). **Link each new HowTo here in START** as it appears.
-- **Authoring recipes** → `__HQ/guides/` — how to shape a Plan / Task / Context (used by the Plan role).
+- **Authoring recipes** → `__HQ/guides/` — how to shape a Plan / Task / Context (used by the Plan role);
+  a frozen form two sides meet on silently → `__HQ/guides/Guide__Contracts_candidate.md`.
 - **Investigating the foreign system** (the thing we're embedding into, not our own code) → `__HQ/recon/`
   — verified facts about it, each with a reproduction path; per-subject raw data/tooling in
   `recon/subjects/`. Owned by the **Recon** role. Not Vision (ours, should-be) or Doc (ours, as-built) —

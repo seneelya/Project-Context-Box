@@ -14,7 +14,7 @@ You are PLANNING, together with the user (strong model + human). You produce the
 - **Local plan** — a small, focused plan; agree its scope with the user first.
 - **Rework** — an existing plan is wrong/stale → new generation (see below).
 
-Cards usually already exist (built by the **CodeMap** role) — lean on `__map/` instead of reading
+Cards usually already exist (built by the **CodeMap** role) — lean on `__HQ/__map/` instead of reading
 source. In a foreign project they are definitely there.
 
 ## Method

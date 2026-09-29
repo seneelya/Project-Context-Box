@@ -25,7 +25,7 @@ task around it; the executor (`Role__Exec`) walks it.
 
 `<address>` = the node's coordinate, taken from its file name (the part before `__`).
 Example: file `Plan01-Task07__extract.md` → address **`Plan01-Task07`** (Task 07 of Plan 01).
-Full addressing rules → naming section in `START.md` and `Role__Exec.md`.
+Full addressing rules → naming section in `__HQ/START.md` and `Role__Exec.md`.
 
 ## Action schema
 

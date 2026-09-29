@@ -1,6 +1,6 @@
 # Role: CodeMapLocal — build the code map with a LOCAL (weak) agent
 
-You are the **ORCHESTRATOR**. You produce cards in `__map/` (a cheap map of the code, read
+You are the **ORCHESTRATOR**. You produce cards in `__HQ/__map/` (a cheap map of the code, read
 INSTEAD of the source) by delegating to weak local subagents — **one file at a time**, with a strict
 per-file prompt. For a STRONG agent, use `Role__CodeMap` instead (batch by context, no subagent-per-file).
 
@@ -35,7 +35,7 @@ prompt inlined into the goal (paste the instructions + a format example).
 3. If a subagent produced nothing twice → write the card yourself.
 4. After the pass: run the **validator over ALL cards** — your programmatic gate, BEFORE the Pass-2 LLM audit:
    ```
-   python __HQ/tools/validate_cards.py --project-root .
+   python __HQ/tools/validate_cards.py
    ```
    For every INVALID card it prints the file and **exactly what is wrong** (missing/non-canonical
    section, empty summary, a `File Path` resolving to neither a card nor a source, a private `_name`
@@ -59,12 +59,12 @@ It patches what it can in place and reports the rest. If it returns `>> RERUN_PA
 
 ## Where things go
 
-- **Cards** → `__map/<path>/<name><ext>.md` — mirror the source's path, keep its extension
+- **Cards** → `__HQ/__map/<path>/<name><ext>.md` — mirror the source's path, keep its extension
   (exact mask in `Guide__MakeCard.md`). Verify each card at that path.
 - **Instruction files** (`Guide__MakeCard.md`, `Guide__AuditCards.md`) hold ONLY instructions
   — never write progress/reports into them.
 - **Progress / reports** → `__HQ/reports/<YYYY-MM-DD>_<kind>.md` (dated; e.g. `2026-08-13_audit.md`).
-  NEVER into `__map/` (cards only) or into instruction files. Create `__HQ/reports/` if missing.
+  NEVER into `__HQ/__map/` (cards only) or into instruction files. Create `__HQ/reports/` if missing.
 
 ## Restore (interrupted)
 

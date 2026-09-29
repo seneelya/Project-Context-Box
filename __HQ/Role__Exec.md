@@ -25,7 +25,7 @@ NOT the vision, NOT the whole codebase.
 ## Do it
 
 - Follow the task's decomposed steps in order (they are sized for your grade).
-- Edit source (`*.py`, `*.cpp`, `*.ts`, …) → in the SAME pass update its card in `__map/`.
+- Edit source (`*.py`, `*.cpp`, `*.ts`, …) → in the SAME pass update its card in `__HQ/__map/`.
 - Keep the trunk green: small, verifiable steps.
 
 ## Contract wrong → KICKBACK to Plan (do NOT silently redesign)
