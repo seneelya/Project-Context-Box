@@ -13,13 +13,16 @@ Example:
     py __dev/deploy_hq.py --target T:\AgentsWork\memohood
 
 WHAT GETS DEPLOYED (template-owned — overwritten):
-    START.md, CONTEXT_RESTORE.md, AGENTS.md
+    everything lives INSIDE __HQ/ (Vision08) — nothing is written to the project root:
+    __HQ/START.md, __HQ/CONTEXT_RESTORE.md, __HQ/RITUAL__session_end.md, __HQ/RULE_sessionRestore.md
     __HQ/WORKFLOW.md, __HQ/Role__*.md (incl. Role__Recon), __HQ/guides/**
-    __HQ/tools/**  (minus .git / __delme / __pycache__ / test / *.tmp / *.pyc)
+    __HQ/tools/**  (minus .git / __delme / __pycache__ / test / _logs / .pytest_cache / *.tmp / *.pyc / *.bak)
+    old root START.md / CONTEXT_RESTORE.md / AGENTS.md -> reported as ORPHAN, delete by hand
 
 WHAT IS NEVER TOUCHED (project-owned — by omission):
     DECISIONS.md, TRACKER.md, HowTo__*.md, plans/**, vision/**, docs/**
     OPEN-QUESTIONS.md, recon/**  (the Recon role FINDINGS — evidence, never overwritten)
+    __HQ/__map/**  (cards; scaffolded empty on --init)
     __HQ/tools/CONFIG__TOOLS.py   (per-project config; seeded once on --init)
 
 STALE-CONFIG (CONFIG__TOOLS.py never auto-merges, so it needs its own signal):
