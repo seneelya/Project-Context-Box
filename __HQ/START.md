@@ -53,8 +53,9 @@ and leave behind.
 
 - Edit a source file (`*.py`, `*.cpp`, `*.ts`, `*.go`, …) → in the SAME pass update its card in
   `__HQ/__map/` (cards are a cheap map of the code instead of reading the source).
-- Record progress by **appending to the TAIL** of `__HQ/TRACKER.md` (`✅ done … → next …`); when
-  reading, look only at the **TAIL** (last lines = where we are).
+- Record progress as a **new file** in the folder `__HQ/TRACKER/` (`NNNN__slug.md`,
+  `✅ done … → next …`). When reading, open only the **newest entry file** in that
+  folder (skip `0000__rule.md`). How → `__HQ/guides/Guide__Tracker.md`.
 
 ## Naming system (universal)
 
@@ -81,7 +82,7 @@ Full addressing rules — in your role file.
 - **Plan index** → `__HQ/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
 - **Settled decisions** → `__HQ/DECISIONS.md` — locked calls + one-line why; **read before (re)designing, don't relitigate**. Owned by the **Plan** role.
 - **Lessons from closed plans** → grep `^## CARRY` in `__HQ/plans/done/` (deviations · smells · next-gen TODO — jump to the line, don't read whole plans). **Open contract-drift** → grep `KICKBACK` in `__HQ/` (Exec kicked a wrong contract back to Plan).
-- **Context restore** → `__HQ/CONTEXT_RESTORE.md` + the TAIL of `__HQ/TRACKER.md`.
+- **Context restore** → `__HQ/CONTEXT_RESTORE.md` + the newest entry file in `__HQ/TRACKER/`.
 - **How the whole scheme works** (roles, flow, naming — the big picture) → `__HQ/WORKFLOW.md`. Read this to understand how the project is organised.
 - **Intent / design (product)** → `__HQ/vision/` — WHY this *product* should work as it does; needed by the **Plan** role; NOT by a task executor.
 - **As-built docs** → `__HQ/docs/` — how the system works **NOW** (where things live, example configs, the real flow). A landed plan's lasting consequence, reconciled by the **Doc** role.

@@ -16,11 +16,15 @@ WHAT GETS DEPLOYED (template-owned — overwritten):
     everything lives INSIDE __HQ/ (Vision08) — nothing is written to the project root:
     __HQ/START.md, __HQ/CONTEXT_RESTORE.md, __HQ/RITUAL__session_end.md, __HQ/RULE_sessionRestore.md
     __HQ/WORKFLOW.md, __HQ/Role__*.md (incl. Role__Recon), __HQ/guides/**
+    __HQ/TRACKER/0000__rule.md   (the rule only — the folder's entry files are not template)
     __HQ/tools/**  (minus .git / __delme / __pycache__ / test / _logs / .pytest_cache / *.tmp / *.pyc / *.bak)
-    old root START.md / CONTEXT_RESTORE.md / AGENTS.md -> reported as ORPHAN, delete by hand
+    --init also creates __HQ/TRACKER/archive/
+    old root START.md / CONTEXT_RESTORE.md / AGENTS.md, and a leftover __HQ/TRACKER.md
+        -> reported as ORPHAN, delete by hand. There is no TRACKER.md in the template.
 
 WHAT IS NEVER TOUCHED (project-owned — by omission):
-    DECISIONS.md, TRACKER.md, HowTo__*.md, plans/**, vision/**, docs/**
+    DECISIONS.md, HowTo__*.md, plans/**, vision/**, docs/**
+    __HQ/TRACKER/NNNN__slug.md (every entry except 0000__rule.md), __HQ/TRACKER/archive/**
     OPEN-QUESTIONS.md, recon/**  (the Recon role FINDINGS — evidence, never overwritten)
     __HQ/__map/**  (cards; scaffolded empty on --init)
     __HQ/tools/CONFIG__TOOLS.py   (per-project config; seeded once on --init)

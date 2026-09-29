@@ -4,7 +4,8 @@ A rule, not a memo: breaking it spends the context you will need for the work.
 
 ## Markdown is read by OUTLINE, then by BLOCK — never whole
 
-Our docs grow large (`TRACKER.md` reaches thousands of lines; plans and contracts run 400–800).
+Our docs grow large (plans and contracts run 400–800). A tracker entry is one small
+file in the folder `__HQ/TRACKER/`, so the log is not one of those walls.
 Reading one in full to reach one section spends on scouting what was meant for the work.
 
 ```
@@ -29,8 +30,8 @@ short and exist to say where to go next.
 
 1. `__HQ/START.md` — in full. Name your role from the owner's words.
 2. `__HQ/CONTEXT_RESTORE.md` — in full.
-3. **TAIL** of `__HQ/TRACKER.md` — the last lines, not the file.
-   If `TRACKER2.md`… exist, the tail of the highest number.
+3. Newest **entry file** in the folder `__HQ/TRACKER/` — skip `0000__rule.md`, do not
+   open `archive/`. There is no `TRACKER.md`.
 4. Your role file (`__HQ/Role__*.md`), its Restore section.
 5. `git status` / `git log` — what is half-done, in EACH repo involved (the sources and, if it has
    its own, the HQ). Uncommitted work may be someone ELSE's: a project can have more than one

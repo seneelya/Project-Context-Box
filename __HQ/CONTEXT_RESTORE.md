@@ -5,8 +5,8 @@ the real restore method lives per-role.
 
 ## Steps
 
-1. Read the **TAIL** of `__HQ/TRACKER.md` (last lines) → what was being done and what is next.
-   If `TRACKER2.md` / `TRACKER3.md` … exist, read the tail of the **highest-numbered** one.
+1. Open the newest **entry file** in the folder `__HQ/TRACKER/` (skip `0000__rule.md`)
+   → what was being done and what is next. There is no `TRACKER.md`.
 2. Which role were you in? (`Plan` / `Exec` / `CodeMap` / `CodeMapLocal` / `EnvSetup` / `Doc`.)
    Unclear → check `__HQ/START.md`, or ask the user.
 3. Open that role file (`__HQ/Role__*.md`) and follow its **Restore** section.

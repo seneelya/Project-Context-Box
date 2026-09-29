@@ -8,7 +8,7 @@ NOT the vision, NOT the whole codebase.
 ## Get your task
 
 - From the user's explicit words ("do Task X", "implement Y"), OR
-- From the **TAIL** of `__HQ/TRACKER.md` (last lines = where we stopped → what's next).
+- From the newest **entry file** in the folder `__HQ/TRACKER/` (where we stopped → what's next). See `Guide__Tracker`.
 - Unclear which task? **ASK the user**, then proceed.
 
 ## Read only what you need (scoped)
@@ -33,7 +33,7 @@ NOT the vision, NOT the whole codebase.
 Missing context (a fact/file the manifest omitted) → you fill it / ask (see above).
 But if the task's **contract itself is wrong** — the in→out shape, a block/interface signature, or a
 design assumption the plan LOCKED no longer holds — **STOP. Do NOT redesign it in Exec** (that drifts
-from the locked decisions). Append one line to the TAIL of `__HQ/TRACKER.md`:
+from the locked decisions). Write a new file in the folder `__HQ/TRACKER/` (`Guide__Tracker`):
 
 `KICKBACK <address>: <what in the contract is wrong> → Plan`
 
@@ -42,7 +42,7 @@ Greppable: `grep -rn "KICKBACK" __HQ/` gathers every contract-drift event.
 
 ## Track progress
 
-- Log to the **TAIL** of `__HQ/TRACKER.md`: `◐ <address>` when you START, then
+- Log a **new file** in the folder `__HQ/TRACKER/` (`Guide__Tracker`): `◐ <address>` when you START, then
   `✅ <address> done → next <address>` when finished.
 - **Outcome note — only to cross a context boundary.** Write a short **Outcome** note INTO the
   task file ONLY if the next task's executor would MISS it otherwise: a tacit decision / constraint /
@@ -56,7 +56,7 @@ Greppable: `grep -rn "KICKBACK" __HQ/` gathers every contract-drift event.
 
 ## Restore (interrupted)
 
-1. **TAIL** of `__HQ/TRACKER.md` → which task you were on.
+1. Newest **entry file** in the folder `__HQ/TRACKER/` → which task you were on.
 2. The task file + `git status` → what is half-done.
 3. Decide: continue if it is clear; else roll back the uncommitted changes and restart the task.
    Unsure → **ask the user**.

@@ -1,23 +1,23 @@
-# Guide: Tracker — how to fill and read the tracker
+# Guide: Tracker — folder and file
 
-The tracker (`__HQ/TRACKER.md`) is a **tail log** of execution progress, kept **separate** from plans
-and tasks.
+The tracker is the folder `__HQ/TRACKER/`. One entry is one file. There is no `TRACKER.md`.
 
-**Read:** only the **TAIL** (last few lines) — that is where we are. Never read the whole file.
+```
+__HQ/TRACKER/0042__Plan16-Task05-closed.md
+```
 
-**Write:** append ONE line per step to the BOTTOM, newest last:
-- `◐ <address>` — in progress
-- `✅ <address> done → next <address>` — a step finished + what to take next
-- `⏸ <address> — <why>` — blocked / parked (still IN the active flow; a fully **deferred** chain is
-  moved to `__HQ/plans/deferred/` instead)
+**Name.** Four digits, zero-padded, only growing. A fifth digit would sort ahead of `9999`.
+The next number is one more than the newest entry in the root. `0000__rule.md` is not an
+entry: skip it for the number and for the tail. No entries yet → `0001`. The slug is
+Latin, address then outcome (`Plan16-Task05-closed`), not a date and not `notes` /
+`update` / `session`. Several outcomes are several files. A correction is a new file.
 
-`<address>` = the node coordinate from a file name, e.g. `Plan01-Task07` (see `Guide__Task`).
+**Inside.** One claim, short enough to read the file whole. The marker line is English:
+`◐ <address>` · `✅ <address> done → next <address>` · `⏸ <address> — <why>`.
+The last line is always `→ next <address>`, copied from the newest entry. A fully
+deferred chain goes to `__HQ/plans/deferred/`, not a `⏸` file.
 
-**Rotation:** when the file grows too large, start `TRACKER2.md`, `TRACKER3.md`, … and read the TAIL
-of the latest one.
+**Read.** Only the newest entry file in the root.
 
-**First entry:** on an empty tracker, the **Plan** role seeds it — after decomposing, it appends
-`→ next PlanNN-TaskMM` so Exec has a starting point. Exec then continues the log from there.
-
-An optional compact **phase map** may sit at the top of the tracker (it changes rarely); the moving
-state is the appended log.
+**Archive.** Past ~40 files in the root, move the oldest by number into
+`__HQ/TRACKER/archive/` unchanged. The newest entry stays. `0000__rule.md` stays.

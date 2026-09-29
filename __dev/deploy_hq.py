@@ -12,13 +12,17 @@ WHAT IS DEPLOYED (template-owned; everything else in the project is left untouch
   - entry + rules, all INSIDE the HQ (Vision08 — nothing of ours outside __HQ/):
     __HQ/START.md, __HQ/CONTEXT_RESTORE.md, __HQ/RITUAL__session_end.md, __HQ/RULE_sessionRestore.md
   - __HQ/WORKFLOW.md, __HQ/Role__*.md, __HQ/guides/**
+  - __HQ/TRACKER/0000__rule.md   (the rule only; entry files NNNN__slug.md stay project-owned)
   - __HQ/tools/**   (minus .git / __delme / __dev / __pycache__ / test / _logs / .pytest_cache /
                      *.pyc / *.tmp / *.bak)
-  Old root entry files (START.md, CONTEXT_RESTORE.md, AGENTS.md) are reported as ORPHAN — delete
-  them by hand; the tool never deletes.
+  Old root entry files (START.md, CONTEXT_RESTORE.md, AGENTS.md) and a leftover
+  __HQ/TRACKER.md are reported as ORPHAN — delete them by hand; the tool never deletes.
+  There is no TRACKER.md in the template. The tracker is the folder __HQ/TRACKER/ plus
+  one file per entry.
 
-Project-owned files are defined by OMISSION — DECISIONS.md, TRACKER.md, HowTo__*.md,
-plans/**, vision/**, docs/** never match the template set, so they are never touched.
+Project-owned files are defined by OMISSION — DECISIONS.md, HowTo__*.md, plans/**,
+vision/**, docs/**, and every tracker entry except 0000__rule.md (including
+__HQ/TRACKER/archive/**) never match the template set, so they are never touched.
 
 HOW DRIFT IS DETECTED (answers "did the project change this file?"):
   The set of "known template versions" of a file = ALL its historical git blob-ids in the
@@ -59,9 +63,12 @@ _HQ_ENTRY = {"__HQ/START.md", "__HQ/CONTEXT_RESTORE.md", "__HQ/RITUAL__session_e
 # UPDATE, not a CONFLICT), and a leftover root copy is reported as ORPHAN.
 _MOVED_FROM = {"__HQ/START.md": "START.md", "__HQ/CONTEXT_RESTORE.md": "CONTEXT_RESTORE.md"}
 _ROOT_ORPHANS = ["START.md", "CONTEXT_RESTORE.md", "AGENTS.md"]
+# The tracker is the folder. Only the rule file is template-owned; entries are not.
+_TRACKER_RULE = "__HQ/TRACKER/0000__rule.md"
+_OLD_TRACKER = "__HQ/TRACKER.md"
 
 # create-if-absent scaffolds for --init (never overwrite; establish empty structure)
-_INIT_FILES = ["__HQ/DECISIONS.md", "__HQ/TRACKER.md", "__HQ/plans/INDEX.md",
+_INIT_FILES = ["__HQ/DECISIONS.md", "__HQ/plans/INDEX.md",
                "__HQ/__map/.gitkeep",   # cards: CONFIG__TOOLS.MAP_DIR = "__map", relative to the HQ
                "__HQ/docs/.gitkeep", "__HQ/vision/.gitkeep",
                # Recon role's homes. Project-owned like every scaffold here: the
@@ -71,13 +78,14 @@ _INIT_FILES = ["__HQ/DECISIONS.md", "__HQ/TRACKER.md", "__HQ/plans/INDEX.md",
                "__HQ/recon/DECISIONS-RECON.md",
                "__HQ/tools/CONFIG__TOOLS.py"]  # per-project config: seed once, then project-owned
 _INIT_DIRS = ["__HQ/plans/deferred", "__HQ/plans/done", "__HQ/plans/superseded",
+              "__HQ/TRACKER/archive",
               "__HQ/recon/subjects", "__HQ/recon/draft-research/subjects",
               "__HQ/recon/superseded"]
 
 
 def is_template(rel):
     """rel = posix path relative to the source (ProjectStarter) root."""
-    if rel in _HQ_ENTRY:
+    if rel in _HQ_ENTRY or rel == _TRACKER_RULE:
         return True
     parts = rel.split("/")
     if len(parts) == 2 and parts[0] == "__HQ" and fnmatch.fnmatch(parts[1], "Role__*.md"):
@@ -286,6 +294,9 @@ def main():
         if ph and ph in _history_ids(source, rel):
             print(f"  ORPHAN    {rel}   <- old root entry file of the template; everything lives in "
                   f"__HQ/ now — delete by hand after review (never auto-deleted)")
+    if os.path.isfile(os.path.join(target, _OLD_TRACKER)):
+        print(f"  ORPHAN    {_OLD_TRACKER}   <- old single-file tracker; the tracker is the folder "
+              f"__HQ/TRACKER/ — delete by hand after review (never auto-deleted)")
 
     drift = config_drift(source, target)
     if drift:

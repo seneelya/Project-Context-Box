@@ -30,11 +30,11 @@ Full addressing rules → naming section in `__HQ/START.md` and `Role__Exec.md`.
 ## Action schema
 
 1. **Gather context** — read the task's `Context` (the reading manifest). Nothing more.
-2. **Log start** — append to `__HQ/TRACKER.md`: `◐ <address>`.
+2. **Log start** — one new file in `__HQ/TRACKER/` per `Guide__Tracker`, marker `◐ <address>`.
 3. **Solve** the task.
 4. **Test** — run / write tests per the task's linked `HowTo__Test`.
-5. **Log done** — append `✅ <address> done → next <address>`, noting what was verified: self-tested,
-   and user-tested if that was needed.
+5. **Log done** — one new file per `Guide__Tracker`, marker `✅ <address> done → next <address>`,
+   noting what was verified: self-tested, and user-tested if that was needed.
 
 Keep a task narrow enough to do WITHOUT holding the whole plan in mind.
 

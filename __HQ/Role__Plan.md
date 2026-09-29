@@ -34,8 +34,8 @@ source. In a foreign project they are definitely there.
 5. **List the plan in the index** — add/update its one-line row in `__HQ/plans/INDEX.md`
    (`PlanNN — <one-line what it is> · <rough status>`). The index is the catalog of what plans exist;
    you (Plan role) own it. Hard status is still the folder — the index status is a quick glance.
-6. **Register** the first task(s) in the TAIL of `__HQ/TRACKER.md` so Exec can pick them up
-   (`→ next PlanNN-TaskMM`).
+6. **Register** the first task(s) as a new file in the folder `__HQ/TRACKER/` so Exec can pick them up
+   (`→ next PlanNN-TaskMM`). See `Guide__Tracker`.
 
 ## After a plan lands → hand off to Role__Doc
 
@@ -57,8 +57,8 @@ state) and `DECISIONS` (locks) — this is *what executing taught us*. Sweep eve
 
 ### Receiving a KICKBACK
 
-If `Role__Exec` hits a WRONG CONTRACT it stops and logs `KICKBACK <address>: … → Plan` to the tail of
-`__HQ/TRACKER.md`. That comes back to YOU: fix the contract here (+ record the call in `__HQ/DECISIONS.md`),
+If `Role__Exec` hits a WRONG CONTRACT it stops and writes `KICKBACK <address>: … → Plan` as a new file in
+the folder `__HQ/TRACKER/`. That comes back to YOU: fix the contract here (+ record the call in `__HQ/DECISIONS.md`),
 then re-hand the task. Find open ones with `grep -rn "KICKBACK" __HQ/`.
 
 ## Generations (rework)
@@ -77,6 +77,6 @@ pause (that stays in-flow) — it is out of current momentum. Promote back to `_
 
 ## Restore (interrupted)
 
-Read the plan you were shaping + the TAIL of `__HQ/TRACKER.md` (and `__HQ/vision/` if you were on
+Read the plan you were shaping + the newest entry file in the folder `__HQ/TRACKER/` (and `__HQ/vision/` if you were on
 vision). Resume from the first undecided piece; do NOT re-litigate settled decisions
 (they live in `__HQ/DECISIONS.md` — read it before designing; record a call there the moment it settles).

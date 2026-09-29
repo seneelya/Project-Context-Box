@@ -31,7 +31,7 @@ Tests are deliberately NOT listed: they run constantly anyway, and the full pass
 
 ## Do
 
-- **TRACKER tail** — what was done → `next …` (facts only).
+- **Newest tracker file** — a new file in the folder `__HQ/TRACKER/` for what was done → `next …` (facts only). See `Guide__Tracker`.
 - **`__HQ/CONTEXT_RESTORE.md`** — prepare it for the next session: what to read, which role, what
   not to do. How to restore → `__HQ/RULE_sessionRestore.md`.
 - **Closed tasks/plans** → `__HQ/plans/done/`, with `## CARRY` at the end (lessons, smells,
