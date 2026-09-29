@@ -3,6 +3,45 @@
 > Это для НАШЕЙ разработки шаблона (не путать с продуктовым `CONTEXT_RESTORE.md` в корне — тот для
 > downstream-проектов). Восстанавливаемся отсюда, снизу вверх, дёшево.
 
+## START 2026-09-30 — next: C/C++ stamp (read this block first)
+
+**Where we are.** Plan07 closed (`__dev/plans/done/Plan07__hq-anchor-paths.md`, `## CARRY` inside):
+HQ is the path anchor, everything of ours lives inside `__HQ/` (entry files, `__HQ/__map`), tools take
+`PROJECT_ROOT`/`MAP_DIR` from config and run from any cwd. Next work = **C/C++ stamp + graph** —
+intent in `__dev/vision/Vision09__cpp-stamp.md` (read it whole; no plan yet → Plan08 is the first step).
+
+**Read, in order:** tail of `__dev/TRACKER.md` → `__dev/DECISIONS.md` (last 2 entries = Vision08
+calls) → `Vision09__cpp-stamp.md` → `Vision08__hq-as-anchor.md` §3 (path rules, only if touching
+paths). Tool code via `get_codeblock` (outline → block), never whole files.
+
+**Repos (3 separate gits):**
+- `t:\AgentsWork\ProjectStarter` — template (`__HQ/` docs, `__dev/`, `__dev/deploy_hq.py`).
+- `t:\AgentsWork\ProjectStarter\__HQ\tools` — nested tools repo (the code we change).
+- `y:\SRC\llama.cpp_mix` — clone of ggml-org/llama.cpp, branch `mix`, upstream HEAD `7fee17846`;
+  its `__HQ/` has its OWN git, hidden via `.git/info/exclude`. Test card there:
+  `__HQ/__map/convert_hf_to_gguf.py.md`. Sync tools into it by `deploy_hq.py --target y:\SRC\llama.cpp_mix --apply`
+  (CONFIG__TOOLS.py there is project-owned: `PROJECT_ROOT=r'y:\SRC\llama.cpp_mix'`, schema 2).
+
+**Plan08 first steps (proposal, agree with owner):** build fixture `__HQ/tools/test/cppSRC/`
+(real folder structure, files listed in Vision09 §9, frozen at `7fee17846`, + LICENSE) →
+`#include` extraction + resolution via `CPP_INCLUDE_DIRS` + condition tagging from tree-sitter preproc
+nodes → header Public API (`CPP_STRIP_MACROS`) → `.h`↔`.cpp` pairing → seam hints → optional
+`compile_commands.json`. Prose for cards is written by **Grok**, not by us.
+
+**Gotchas:**
+- Session cwd starts at `Y:\SRC`; tools must work from there (that is the point).
+- Regression: `test/check.py` 116/0, `test_cardstamp.py` 144/0, `run_restamp_fixtures.py` 21/0,
+  `test_split_monster.py` ok, `test__replace_in_files.py` 15/21 (OLD failures) — and it DELETES
+  committed fixtures when failing: after a run `git -C __HQ/tools checkout -- test/test__replace_in_files/fixtures`.
+- `tree_sitter_cpp` installed; `tree_sitter_python`/`tree_sitter_c` are NOT (python uses `ast` fallback).
+- Big edits: python scripts with exact `str.replace` + count asserts; files are LF in index.
+- Don't touch memohood/hermes-filetools (migration of our own projects is out of scope for now).
+- Subagents only with the owner's consent.
+
+---
+
+## История (2026-08) — ниже старое состояние, для справки
+
 ## Как восстановиться (по порядку)
 1. Хвост `__dev/TRACKER.md` — где остановились и что next.
 2. `__dev/DECISIONS.md` — залоченные решения (НЕ релитигировать).
