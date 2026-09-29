@@ -52,6 +52,10 @@
 - **A6. Шаблонный `CONFIG__TOOLS.py`** в tools-репо: ключи `MAP_DIR`, `LOG_DIR` с комментарием про
   якорь `HQ`, схема 2. `__TLDR.md` затронутых тулов + `TOOLS.md` — флаг `--cards-dir` у штемпеля,
   правило «явное > конфиг».
+- **A8. Generic-тулы: относительный `--file` сначала от `PROJECT_ROOT`** (`get_codeblock`,
+  `find_code_usage`, `show_pyfile_api`) — Vision08 §5, третий пересмотр: корень → cwd, двойное
+  совпадение → предупреждение, не-cwd → полный путь в `#File:`. Каждый тул у себя (generic-тулы в
+  `graph_from_cards` не лезут).
 - **A7. Проверка.**
   - Регресс tools (`check.py`, `test_cardstamp.py`, `run_restamp_fixtures.py`) — перед коммитом.
   - Легаси: прогон card-тулов на memohood без `MAP_DIR` — поведение прежнее (только чтение).
