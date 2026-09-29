@@ -8,7 +8,7 @@
 **Where we are.** Plan07 closed (`__dev/plans/done/Plan07__hq-anchor-paths.md`, `## CARRY` inside):
 HQ is the path anchor, everything of ours lives inside `__HQ/` (entry files, `__HQ/__map`), tools take
 `PROJECT_ROOT`/`MAP_DIR` from config and run from any cwd. Next work = **C/C++ stamp + graph** —
-intent in `__dev/vision/Vision09__cpp-stamp.md` (read it whole; no plan yet → Plan08 is the first step).
+intent in `__HQ/tools/__dev/vision/Vision09__cpp-stamp.md` (tool plans/visions live in the TOOLS repo `__dev/`) (read it whole; no plan yet → Plan08 is the first step).
 
 **Read, in order:** tail of `__dev/TRACKER.md` → `__dev/DECISIONS.md` (last 2 entries = Vision08
 calls) → `Vision09__cpp-stamp.md` → `Vision08__hq-as-anchor.md` §3 (path rules, only if touching
