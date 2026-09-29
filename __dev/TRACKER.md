@@ -55,3 +55,5 @@
 - → next (решено, след. сессия): graph_from_cards — развести два вывода: `--json` под визуализатор
   структуры для оператора (дополнить entry-points/leaves/in-degree — сейчас беднее текста, НЕ удалять),
   плоский текст — дотюнить под ЛЛМ. Детали — `__dev/CONTEXT_RESTORE.md` Next#4.
+
+- → Plan07 (`__dev/plans/Plan07__hq-anchor-paths.md`, вижен `__dev/vision/Vision08__hq-as-anchor.md`): штаб `__HQ` как точка отсчёта — `MAP_DIR`/`LOG_DIR` от HQ, явное > конфиг, свежесть по двум git. Повод: деплой в форк llama.cpp (`y:\SRC\llama.cpp_mix`), штаб со своим git вне git исходников. → next: этап A (код тулов).
