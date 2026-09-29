@@ -281,8 +281,10 @@ def main():
     if buckets["UPTODATE"]:
         print(f"  UPTODATE  {len(buckets['UPTODATE'])} file(s) already current")
     for rel in _ROOT_ORPHANS:
-        if os.path.isfile(os.path.join(target, rel)):
-            print(f"  ORPHAN    {rel}   <- old root entry file; the template keeps everything in "
+        # only OUR old copy — a foreign project may have its own AGENTS.md/START.md (llama.cpp does)
+        ph = blob_id(os.path.join(target, rel))
+        if ph and ph in _history_ids(source, rel):
+            print(f"  ORPHAN    {rel}   <- old root entry file of the template; everything lives in "
                   f"__HQ/ now — delete by hand after review (never auto-deleted)")
 
     drift = config_drift(source, target)
