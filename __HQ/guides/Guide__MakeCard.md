@@ -114,7 +114,7 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
   file, and a **family table** (fact: family, how many declarations, lines, who uses it by folder)
   groups the API — by the author's section comments, else by name prefix. Your slot is
   **`### What each family is for`**: ONE line per family — what that group is FOR and when a caller
-  reaches for it (read the header's comments in that line range first). Not a list of its functions,
+  reaches for it (read the header's comments around it first: `get_codeblock --file H --name <From>`). Not a list of its functions,
   not the signatures. Do not rename a family — the name is the key your line hangs on.
 - **`condition: X`** under a `####` entry (implementation cards) = the definition exists only under
   `X`. Say "only in X builds" if that changes how it is used.
@@ -126,8 +126,10 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
   header's card, not repeated.
 - **Seam hints** (`vtable`, `registry`, `dlopen`) are grep hits: confirm in code, then describe the
   real connection in `## Runtime seams` (`--help-seams` for the Kind/Shape vocabulary).
-- **`opaque L..`** — the parser could not read that range (macro-generated code). Read the code
-  there with `get_codeblock`; do not guess. If a macro wraps declarations, tell the owner — it
+- **Anchors are names, not line numbers.** `in ggml_cuda_init`, `vtable ×12 in <table>`,
+  `From` of a family — read any of them with `get_codeblock --file F --name <name>`.
+- **`opaque in f (~N lines)`** — the parser could not read that place (macro-generated code). Read
+  the code there with `get_codeblock --name f`; do not guess. If a macro wraps declarations, tell the owner — it
   belongs in `CPP_WRAPPER_MACROS` / `CPP_STRIP_MACROS` of the project config.
 
 ---
