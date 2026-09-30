@@ -13,9 +13,9 @@ shows files WITHOUT cards from the include tree (`(no card)`, folded by folder; 
 Registry hooks added: `import_line`, `api_families`, `source_edges` (contract ПОПРАВКИ 2–4).
 Then (same day): get_codeblock fixed for C headers (`#ifdef` frames, bodyless typedefs), `--name`
 (`get_codeblock/name_resolver.py`), C/C++ macros cut before parsing (`get_codeblock/cpp_source.py`).
-**Next (agreed with owner, in order):** `make_interface_card --all --stale`; fold Why by folder
-(written prose never folds); seam hints -> summary by container; families and `#if` zones WITHOUT
-line numbers (name anchors, usable with `--name`) — kills git noise. See tools TRACKER tail.
+Then: `--all --stale`, Why folded by folder, cards WITHOUT line numbers (anchors = names readable
+with `get_codeblock --name`; a line shift no longer rewrites a card). **Next: nothing queued** —
+card prose by Grok on the new form is the owner's call. Bump get_codeblock VERSION at session end.
 
 **Read, in order:** tail of `__HQ/tools/__dev/TRACKER.md` → `__HQ/tools/__dev/vision/Vision10__cards-links-and-meaning.md`
 → `__HQ/tools/__dev/plans/Plan09__cards-links-and-meaning.md` → `__dev/DECISIONS.md` (last 4) →
