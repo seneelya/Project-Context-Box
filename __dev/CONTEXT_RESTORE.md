@@ -3,6 +3,18 @@
 > Это для НАШЕЙ разработки шаблона (не путать с продуктовым `CONTEXT_RESTORE.md` в корне — тот для
 > downstream-проектов). Восстанавливаемся отсюда, снизу вверх, дёшево.
 
+## NEXT STEP (2026-09-30, before app restart)
+
+codebase-memory-mcp (DeusData v0.11.0, call-graph MCP server) installed: exe
+`Y:\Tools\codebase-memory-mcp\codebase-memory-mcp.exe` (SHA-256 matches the release, owner checked
+VirusTotal), registered in `Y:\SRC\.mcp.json` (index cache `Y:\Tools\codebase-memory-mcp\cache`).
+After the restart (owner approves the server): index `y:\SRC\llama.cpp_mix` with its
+`index_repository`, then test on the mix task (see memory: MoE expert parallelism, target
+`qwen4exp`): (1) who calls `build_moe_ffn`; (2) what `ggml_backend_sched_split_graph` calls;
+(3) where expert tensors (`ffn_*_exps`) get their buffer / device. Watch calls through backend
+function tables (`iface.graph_compute`) — likely blind spot; our cards mark them as `vtable` seams.
+Then decide how it sits next to our tools (cards = meaning, get_codeblock = reading, it = call chains).
+
 ## START — Plan09 closed; next = owner's call (card prose by Grok on the 1.3.0 form?)
 
 **Where we are (2026-09-30).** Plan08 (C/C++ stamp) closed except step 9 (clangd — needs a Ninja
