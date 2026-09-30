@@ -152,6 +152,11 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
 - **"write short does+role, or remove" removes the DIRECTIVE line, never the entry.** The `####`
   signature and its `consumers` line always stay; drop only the `<|Agent:…|>` line when the name says
   it all.
+- **THE `####` ENTRIES ARE CHOSEN BY THE STAMP — never replace one with a function you find more
+  important.** An implementation card lists only what no header declares; a key function missing
+  there (e.g. `llama_context::process_ubatch`, declared in `llama-context.h`) belongs in
+  `How it works`, by name. Rewritten entries come back on the next re-stamp and your prose lands in
+  `## Salvage`.
 - **NO LINE NUMBERS IN PROSE.** `line 2002`, `L1958` go stale on the next edit above them. Anchor by
   NAME (`build_moe_ffn`, `llm_graph_context::build_moe_ffn`) — readable with
   `get_codeblock --file F --name <name>`.
