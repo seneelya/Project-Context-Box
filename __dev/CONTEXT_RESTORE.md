@@ -3,16 +3,19 @@
 > Это для НАШЕЙ разработки шаблона (не путать с продуктовым `CONTEXT_RESTORE.md` в корне — тот для
 > downstream-проектов). Восстанавливаемся отсюда, снизу вверх, дёшево.
 
-## NEXT STEP (2026-09-30)
+## NEXT STEP (2026-09-30, end of session)
 
-**Review Grok's card prose** — llama HQ `Plan01-Task01` (`y:\SRC\llama.cpp_mix\__HQ\plans\`): 9 core
-cards of the mix task. Check samples the owner points at: every claim anchored (`get_codeblock --name`),
-nothing invented / over-generalized, scheduler card agrees with `__HQ/recon/subjects/moe-expert-parallel/FINDINGS.md`,
-re-stamp keeps the prose. Mistakes -> fixes in `__HQ/guides/Guide__MakeCard.md` (template).
-codebase-memory-mcp (call-graph MCP, DeusData v0.11.0) is installed (`Y:\Tools\codebase-memory-mcp\`,
-registered in `Y:\SRC\.mcp.json` + `Y:\SRC\.cursor\mcp.json`); **Grok uses it first** (optional in
-Plan01 Context) — read his done-entry on how it worked before relying on it.
-Mix task context: llama HQ `vision/Vision01__moe-expert-parallel.md`, `recon/.../FINDINGS.md`, `TRACKER/` newest entry.
+**Role now: reviewer of card prose in llama HQ.** Executor = Composer 2.5 (owner relays). Plan01 done
+(9 core cards). **Plan02** (66 cards, 6 batches, `y:\SRC\llama.cpp_mix\__HQ\plans\Plan02__card-prose-mix-zone.md`):
+Task01 + Task02 done and reviewed (TRACKER 0015); **Task03 next** (KV, test models, imatrix), then 04–06.
+Review method: re-stamp the batch's cards + `git diff` (prose must stay; Salvage / RENAMED = find the
+stamp bug), spot-check claims with `get_codeblock --name`, fix executor slips, turn them into rules in
+`__HQ/guides/Guide__MakeCard.md` (template), deploy (`py __dev/deploy_hq.py --target y:\SRC\llama.cpp_mix --apply`),
+restamp zone (`make_interface_card.py --all` from `y:\SRC`, zone = llama `STAMP_DIRS`), tracker entry.
+codebase-memory-mcp (`Y:\Tools\codebase-memory-mcp\`, owner fixed the `Y:\Tools` ACL; `Y:\SRC\.mcp.json`
++ `.cursor\mcp.json`) works in Cursor; sees all of ggml-vulkan.cpp, blind to calls through `iface.*`
+tables (llama HQ `recon/subjects/moe-expert-parallel/FINDINGS.md` §4). Mix task: llama HQ
+`vision/Vision01__moe-expert-parallel.md`, first real step later = measure CUDA<->Vulkan hop cost.
 
 ## START — Plan09 closed; next = owner's call (card prose by Grok on the 1.3.0 form?)
 
