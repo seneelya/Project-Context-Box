@@ -118,6 +118,9 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
   not the signatures. Do not rename a family — the name is the key your line hangs on.
 - **`condition: X`** under a `####` entry (implementation cards) = the definition exists only under
   `X`. Say "only in X builds" if that changes how it is used.
+- **Folded Why line** `` `folder/*` (64: acc, add-id, …) — `` = many imports of one folder with no
+  prose yet: write ONE line for the group (what those headers give this file). If one of them
+  deserves its own line, add `` - `name` — … `` separately — it then leaves the group for good.
 - **Implementation card** lists only what the header does NOT declare; its `How it works` explains
   the mechanism (tables of function pointers, registration, lazy init) — the API itself is on the
   header's card, not repeated.
