@@ -3,35 +3,45 @@
 > Это для НАШЕЙ разработки шаблона (не путать с продуктовым `CONTEXT_RESTORE.md` в корне — тот для
 > downstream-проектов). Восстанавливаемся отсюда, снизу вверх, дёшево.
 
-## START 2026-09-30 (evening) — C/C++ stamp DONE; next: card prose + wider zone
+## START — next: Plan09 (cards = links + meaning; scan cache; families)
 
-**Where we are.** Plan07 closed (HQ anchor). **Plan08 closed except step 9** — C/C++/CUDA in the
-stamp, links and graph. Tool plans/visions now live in the TOOLS repo: `__HQ/tools/__dev/`
-(`vision/Vision09__cpp-stamp.md`, `plans/Plan08__cpp-stamp.md` — its "Итог" section = what was
-built and why it deviates). Owner's rules: language = registry entry, never an `if`; tool plans in
-the tools `__dev`.
+**Where we are (2026-09-30).** Plan08 (C/C++ stamp) closed except step 9. After acceptance on
+`llama.cpp_mix` we decided (Vision10): a C/C++ header card must NOT copy signatures — it says
+"API: in source" + a table of API families (decls, lines, used-from by folder) + one prose line per
+family; the card is about LINKS and MEANING. Consumers >8 are already folded into one by-folder
+line. Plan09 step 0 (flag bug) done, step 1 prep done (`_cache/` ignored + not deployed).
+**Next = Plan09 step 1 (scan cache), then 2 (families), 3 (header card form, CARD_FORMAT 1.3.0),
+4 (graph edges from source for files without cards), 5 (acceptance + docs).** Grok writes NO prose
+yet (owner: too early — the card form is changing).
 
-**Read, in order:** tail of `__HQ/tools/__dev/TRACKER.md` → Plan08 "Итог" → `__dev/DECISIONS.md`
-(last 4 entries) → `__HQ/tools/make_interface_card__TLDR.md` § C/C++. Code via `get_codeblock`.
+**Read, in order:** tail of `__HQ/tools/__dev/TRACKER.md` → `__HQ/tools/__dev/vision/Vision10__cards-links-and-meaning.md`
+→ `__HQ/tools/__dev/plans/Plan09__cards-links-and-meaning.md` → `__dev/DECISIONS.md` (last 4) →
+if touching C/C++ code: `__HQ/tools/make_interface_card__TLDR.md` § C/C++ and Plan08 "Итог".
+Code via `get_codeblock` (outline → block), never whole files.
+
+**Owner's rules (standing):** tool plans/visions live in the TOOLS repo `__HQ/tools/__dev/`;
+a language plugs in as a registry entry (`stamp_langs/`, find_code_usage registries), never an
+`if lang ==`; no code before an explicit "поехали"; subagents only with consent.
 
 **Repos (3 gits):** template `t:\AgentsWork\ProjectStarter` · tools `…\__HQ\tools` (nested) ·
-`y:\SRC\llama.cpp_mix` (upstream `7fee17846`, branch `mix`) whose `__HQ/` has its own git (hidden
-by `.git/info/exclude`). Sync tools there: `py __dev/deploy_hq.py --target y:\SRC\llama.cpp_mix --apply`.
-llama config (project-owned) has `LANGUAGE=["cpp","python"]`, `CPP_INCLUDE_DIRS`, `CPP_STRIP_MACROS`,
-`CPP_WRAPPER_MACROS`. Its `__HQ/__map` has 37 C/C++ cards (ggml/include, backend layer, vulkan, cuda core).
-
-**Next (proposal):** card prose is written by **Grok** per `Guide__MakeCard` (§ C/C++); widen the
-zone as the mix work needs it (`tools/server`, model loading in `src/`); step 9 (compile_commands →
-live/dead) once a Ninja build of the mix exists.
+`y:\SRC\llama.cpp_mix` (upstream `7fee17846`, branch `mix`; owner's stable build `y:\SRC\llama.cpp`
+at `2b129ccfa` is 66 commits older on the same line — don't touch it). llama's `__HQ/` has its own
+git (hidden by `.git/info/exclude`), config has `LANGUAGE=["cpp","python"]` + `CPP_*` keys, `__map`
+holds 37 C/C++ cards (zone: ggml/include, backend layer, ggml-vulkan, ggml-cuda core). Sync tools:
+`py __dev/deploy_hq.py --target y:\SRC\llama.cpp_mix --apply` — commit the tools repo FIRST, or the
+deploy sees an unknown version as CONFLICT (then `--force <glob>` after checking the diff).
+Restamp the zone: `python llama.cpp_mix/__HQ/tools/make_interface_card.py --all --path ggml/include
+--path ggml/src/ggml-backend.cpp,ggml/src/ggml-backend-impl.h,ggml/src/ggml-backend-reg.cpp,ggml/src/ggml-backend-dl.cpp,ggml/src/ggml-backend-dl.h
+--path ggml/src/ggml-vulkan --path ggml/src/ggml-cuda/ggml-cuda.cu,ggml/src/ggml-cuda/common.cuh` (from `y:\SRC`).
 
 **Gotchas:**
-- Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 82/0,
+- Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 88/0,
   `run_restamp_fixtures.py` 21/0, `test_split_monster.py` ok, `test__replace_in_files.py` 15/21
   (OLD) — it DELETES fixtures when failing: `git -C __HQ/tools checkout -- test/test__replace_in_files/fixtures`.
-- Bash heredocs EAT backslashes (twice this session: `\n`, `\b` became control chars). Edits with
+- Bash heredocs EAT backslashes (`\n`, `\b` turned into control chars this session). Any edit with
   backslashes: write a .py to the scratchpad with Write, then run it.
 - `tree_sitter_cpp` installed (required for C++ declarations); `tree_sitter_python`/`_c` are not.
-- Session cwd `Y:\SRC`; don't touch memohood/hermes-filetools; subagents only with owner's consent.
+- Session cwd `Y:\SRC`; don't touch memohood/hermes-filetools.
 
 ---
 
