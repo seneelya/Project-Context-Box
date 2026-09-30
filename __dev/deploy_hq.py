@@ -55,7 +55,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 # --- template membership -----------------------------------------------------
 
 _TOOLS_PREFIX = "__HQ/tools/"
-_TOOLS_EXCLUDE_PARTS = {".git", "__delme", "__dev", "__pycache__", "test", "_logs", ".pytest_cache"}
+_TOOLS_EXCLUDE_PARTS = {".git", "__delme", "__dev", "__pycache__", "test", "_logs", "_cache", ".pytest_cache"}
 _HQ_ENTRY = {"__HQ/START.md", "__HQ/CONTEXT_RESTORE.md", "__HQ/RITUAL__session_end.md",
              "__HQ/RULE_sessionRestore.md", "__HQ/WORKFLOW.md"}
 # Entry files that used to live in the project ROOT (before Vision08 moved them into __HQ/):
