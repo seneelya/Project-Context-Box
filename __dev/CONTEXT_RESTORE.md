@@ -10,7 +10,7 @@ build of the mix). Plan09 closed (Vision10 executed): scan cache `tools/_cache/<
 (zone restamp 31 -> 8 s); C/C++ header card = "API: in source" + family table + `### What each
 family is for` (CARD_FORMAT 1.3.0; llama `ggml.h.md` 2637 -> 169 lines); `graph_from_cards --file`
 shows files WITHOUT cards from the include tree (`(no card)`, folded by folder; `--cards-only`).
-Registry hooks added: `import_line`, `api_families`, `source_edges` (contract ПОПРАВКИ 2–4).
+Registry hooks added: `import_line`, `api_families`, `source_edges` (`stamp_langs/CONTRACT.md` amendments 2–4).
 Then (same day): get_codeblock fixed for C headers (`#ifdef` frames, bodyless typedefs), `--name`
 (`get_codeblock/name_resolver.py`), C/C++ macros cut before parsing (`get_codeblock/cpp_source.py`).
 Then: `--all --stale`, Why folded by folder, cards WITHOUT line numbers (anchors = names readable
