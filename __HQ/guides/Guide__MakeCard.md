@@ -145,6 +145,19 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
   (summary, the one-liner under each `####`, the `Why` bullets, the `What each family is for` bullets,
   the prose sections, and the `Runtime
   seams` table's ROWS — those are yours to write, only the `Contract:` line above them is not).
+- **A LONG FACT LIST IS NOT YOURS TO TRIM.** `## Build facts` (the `#if` zone list, seam hints,
+  `included by`), the family table, the deps table — however long or noisy — stay COMPLETE. Deleting
+  lines does not shorten anything: the next re-stamp puts them back and the card changes for nothing.
+  Too noisy? Say so to the owner (the stamp's folding rules get fixed), don't edit it by hand.
+- **"write short does+role, or remove" removes the DIRECTIVE line, never the entry.** The `####`
+  signature and its `consumers` line always stay; drop only the `<|Agent:…|>` line when the name says
+  it all.
+- **NO LINE NUMBERS IN PROSE.** `line 2002`, `L1958` go stale on the next edit above them. Anchor by
+  NAME (`build_moe_ffn`, `llm_graph_context::build_moe_ffn`) — readable with
+  `get_codeblock --file F --name <name>`.
+- **After filling, re-stamp and read its report**: `prose kept: …` must list your sections/entries;
+  anything under `## Salvage` or `RENAMED` means a line did not find its place — tell the owner
+  (it is a tool bug to fix, not something to patch by hand).
 - **`(none)` IS A VALID ANSWER, NOT EMPTY** — for `Discrepancies` and the optional note under
   `External Dependencies`, write `(none)` when nothing applies; it is machine-readable and must stay,
   don't delete the line instead. A MISSING `## Runtime seams` section is not the same thing — it's
