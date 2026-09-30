@@ -38,7 +38,8 @@ Restamp the zone: `python llama.cpp_mix/__HQ/tools/make_interface_card.py --all 
 --path ggml/src/ggml-vulkan --path ggml/src/ggml-cuda/ggml-cuda.cu,ggml/src/ggml-cuda/common.cuh` (from `y:\SRC`).
 
 **Gotchas:**
-- Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 117/0,
+- Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 140/0,
+  `test_name_resolver.py` 32/0, `golden_check.py` 13/13, `sweep_invariants.py` (CRASH=71 = cp1252 fixture, old),
   `run_restamp_fixtures.py` 21/0, `test_split_monster.py` ok, `test__replace_in_files.py` 15/21
   (OLD) — it DELETES fixtures when failing: `git -C __HQ/tools checkout -- test/test__replace_in_files/fixtures`.
 - Bash heredocs EAT backslashes (`\n`, `\b` turned into control chars this session). Any edit with
