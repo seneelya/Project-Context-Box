@@ -3,16 +3,16 @@
 > Это для НАШЕЙ разработки шаблона (не путать с продуктовым `CONTEXT_RESTORE.md` в корне — тот для
 > downstream-проектов). Восстанавливаемся отсюда, снизу вверх, дёшево.
 
-## START — next: Plan09 (cards = links + meaning; scan cache; families)
+## START — Plan09 closed; next = owner's call (card prose by Grok on the 1.3.0 form?)
 
-**Where we are (2026-09-30).** Plan08 (C/C++ stamp) closed except step 9. After acceptance on
-`llama.cpp_mix` we decided (Vision10): a C/C++ header card must NOT copy signatures — it says
-"API: in source" + a table of API families (decls, lines, used-from by folder) + one prose line per
-family; the card is about LINKS and MEANING. Consumers >8 are already folded into one by-folder
-line. Plan09 steps 0 (flag bug) and 1 (scan cache, zone 31 -> 8 s) done.
-**Next = Plan09 step 2 (families), 3 (header card form, CARD_FORMAT 1.3.0),
-4 (graph edges from source for files without cards), 5 (acceptance + docs).** Grok writes NO prose
-yet (owner: too early — the card form is changing).
+**Where we are (2026-09-30).** Plan08 (C/C++ stamp) closed except step 9 (clangd — needs a Ninja
+build of the mix). Plan09 closed (Vision10 executed): scan cache `tools/_cache/<root>-<hash>/`
+(zone restamp 31 -> 8 s); C/C++ header card = "API: in source" + family table + `### What each
+family is for` (CARD_FORMAT 1.3.0; llama `ggml.h.md` 2637 -> 169 lines); `graph_from_cards --file`
+shows files WITHOUT cards from the include tree (`(no card)`, folded by folder; `--cards-only`).
+Registry hooks added: `import_line`, `api_families`, `source_edges` (contract ПОПРАВКИ 2–4).
+**Next: nothing queued.** Candidates: Grok fills prose on the new form (owner said earlier "too
+early" — the form is now stable); widen the llama zone by task (server, model loading).
 
 **Read, in order:** tail of `__HQ/tools/__dev/TRACKER.md` → `__HQ/tools/__dev/vision/Vision10__cards-links-and-meaning.md`
 → `__HQ/tools/__dev/plans/Plan09__cards-links-and-meaning.md` → `__dev/DECISIONS.md` (last 4) →
@@ -35,7 +35,7 @@ Restamp the zone: `python llama.cpp_mix/__HQ/tools/make_interface_card.py --all 
 --path ggml/src/ggml-vulkan --path ggml/src/ggml-cuda/ggml-cuda.cu,ggml/src/ggml-cuda/common.cuh` (from `y:\SRC`).
 
 **Gotchas:**
-- Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 99/0,
+- Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 117/0,
   `run_restamp_fixtures.py` 21/0, `test_split_monster.py` ok, `test__replace_in_files.py` 15/21
   (OLD) — it DELETES fixtures when failing: `git -C __HQ/tools checkout -- test/test__replace_in_files/fixtures`.
 - Bash heredocs EAT backslashes (`\n`, `\b` turned into control chars this session). Any edit with
