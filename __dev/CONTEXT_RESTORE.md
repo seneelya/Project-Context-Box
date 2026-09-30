@@ -9,8 +9,8 @@
 `llama.cpp_mix` we decided (Vision10): a C/C++ header card must NOT copy signatures — it says
 "API: in source" + a table of API families (decls, lines, used-from by folder) + one prose line per
 family; the card is about LINKS and MEANING. Consumers >8 are already folded into one by-folder
-line. Plan09 step 0 (flag bug) done, step 1 prep done (`_cache/` ignored + not deployed).
-**Next = Plan09 step 1 (scan cache), then 2 (families), 3 (header card form, CARD_FORMAT 1.3.0),
+line. Plan09 steps 0 (flag bug) and 1 (scan cache, zone 31 -> 8 s) done.
+**Next = Plan09 step 2 (families), 3 (header card form, CARD_FORMAT 1.3.0),
 4 (graph edges from source for files without cards), 5 (acceptance + docs).** Grok writes NO prose
 yet (owner: too early — the card form is changing).
 
@@ -35,7 +35,7 @@ Restamp the zone: `python llama.cpp_mix/__HQ/tools/make_interface_card.py --all 
 --path ggml/src/ggml-vulkan --path ggml/src/ggml-cuda/ggml-cuda.cu,ggml/src/ggml-cuda/common.cuh` (from `y:\SRC`).
 
 **Gotchas:**
-- Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 88/0,
+- Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 99/0,
   `run_restamp_fixtures.py` 21/0, `test_split_monster.py` ok, `test__replace_in_files.py` 15/21
   (OLD) — it DELETES fixtures when failing: `git -C __HQ/tools checkout -- test/test__replace_in_files/fixtures`.
 - Bash heredocs EAT backslashes (`\n`, `\b` turned into control chars this session). Any edit with
