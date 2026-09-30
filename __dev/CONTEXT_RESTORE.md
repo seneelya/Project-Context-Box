@@ -3,40 +3,35 @@
 > Это для НАШЕЙ разработки шаблона (не путать с продуктовым `CONTEXT_RESTORE.md` в корне — тот для
 > downstream-проектов). Восстанавливаемся отсюда, снизу вверх, дёшево.
 
-## START 2026-09-30 — next: C/C++ stamp (read this block first)
+## START 2026-09-30 (evening) — C/C++ stamp DONE; next: card prose + wider zone
 
-**Where we are.** Plan07 closed (`__dev/plans/done/Plan07__hq-anchor-paths.md`, `## CARRY` inside):
-HQ is the path anchor, everything of ours lives inside `__HQ/` (entry files, `__HQ/__map`), tools take
-`PROJECT_ROOT`/`MAP_DIR` from config and run from any cwd. Next work = **C/C++ stamp + graph** —
-intent in `__HQ/tools/__dev/vision/Vision09__cpp-stamp.md` (tool plans/visions live in the TOOLS repo `__dev/`) (read it whole; no plan yet → Plan08 is the first step).
+**Where we are.** Plan07 closed (HQ anchor). **Plan08 closed except step 9** — C/C++/CUDA in the
+stamp, links and graph. Tool plans/visions now live in the TOOLS repo: `__HQ/tools/__dev/`
+(`vision/Vision09__cpp-stamp.md`, `plans/Plan08__cpp-stamp.md` — its "Итог" section = what was
+built and why it deviates). Owner's rules: language = registry entry, never an `if`; tool plans in
+the tools `__dev`.
 
-**Read, in order:** tail of `__dev/TRACKER.md` → `__dev/DECISIONS.md` (last 2 entries = Vision08
-calls) → `Vision09__cpp-stamp.md` → `Vision08__hq-as-anchor.md` §3 (path rules, only if touching
-paths). Tool code via `get_codeblock` (outline → block), never whole files.
+**Read, in order:** tail of `__HQ/tools/__dev/TRACKER.md` → Plan08 "Итог" → `__dev/DECISIONS.md`
+(last 4 entries) → `__HQ/tools/make_interface_card__TLDR.md` § C/C++. Code via `get_codeblock`.
 
-**Repos (3 separate gits):**
-- `t:\AgentsWork\ProjectStarter` — template (`__HQ/` docs, `__dev/`, `__dev/deploy_hq.py`).
-- `t:\AgentsWork\ProjectStarter\__HQ\tools` — nested tools repo (the code we change).
-- `y:\SRC\llama.cpp_mix` — clone of ggml-org/llama.cpp, branch `mix`, upstream HEAD `7fee17846`;
-  its `__HQ/` has its OWN git, hidden via `.git/info/exclude`. Test card there:
-  `__HQ/__map/convert_hf_to_gguf.py.md`. Sync tools into it by `deploy_hq.py --target y:\SRC\llama.cpp_mix --apply`
-  (CONFIG__TOOLS.py there is project-owned: `PROJECT_ROOT=r'y:\SRC\llama.cpp_mix'`, schema 2).
+**Repos (3 gits):** template `t:\AgentsWork\ProjectStarter` · tools `…\__HQ\tools` (nested) ·
+`y:\SRC\llama.cpp_mix` (upstream `7fee17846`, branch `mix`) whose `__HQ/` has its own git (hidden
+by `.git/info/exclude`). Sync tools there: `py __dev/deploy_hq.py --target y:\SRC\llama.cpp_mix --apply`.
+llama config (project-owned) has `LANGUAGE=["cpp","python"]`, `CPP_INCLUDE_DIRS`, `CPP_STRIP_MACROS`,
+`CPP_WRAPPER_MACROS`. Its `__HQ/__map` has 37 C/C++ cards (ggml/include, backend layer, vulkan, cuda core).
 
-**Plan08 first steps (proposal, agree with owner):** build fixture `__HQ/tools/test/cppSRC/`
-(real folder structure, files listed in Vision09 §9, frozen at `7fee17846`, + LICENSE) →
-`#include` extraction + resolution via `CPP_INCLUDE_DIRS` + condition tagging from tree-sitter preproc
-nodes → header Public API (`CPP_STRIP_MACROS`) → `.h`↔`.cpp` pairing → seam hints → optional
-`compile_commands.json`. Prose for cards is written by **Grok**, not by us.
+**Next (proposal):** card prose is written by **Grok** per `Guide__MakeCard` (§ C/C++); widen the
+zone as the mix work needs it (`tools/server`, model loading in `src/`); step 9 (compile_commands →
+live/dead) once a Ninja build of the mix exists.
 
 **Gotchas:**
-- Session cwd starts at `Y:\SRC`; tools must work from there (that is the point).
-- Regression: `test/check.py` 116/0, `test_cardstamp.py` 144/0, `run_restamp_fixtures.py` 21/0,
-  `test_split_monster.py` ok, `test__replace_in_files.py` 15/21 (OLD failures) — and it DELETES
-  committed fixtures when failing: after a run `git -C __HQ/tools checkout -- test/test__replace_in_files/fixtures`.
-- `tree_sitter_cpp` installed; `tree_sitter_python`/`tree_sitter_c` are NOT (python uses `ast` fallback).
-- Big edits: python scripts with exact `str.replace` + count asserts; files are LF in index.
-- Don't touch memohood/hermes-filetools (migration of our own projects is out of scope for now).
-- Subagents only with the owner's consent.
+- Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 82/0,
+  `run_restamp_fixtures.py` 21/0, `test_split_monster.py` ok, `test__replace_in_files.py` 15/21
+  (OLD) — it DELETES fixtures when failing: `git -C __HQ/tools checkout -- test/test__replace_in_files/fixtures`.
+- Bash heredocs EAT backslashes (twice this session: `\n`, `\b` became control chars). Edits with
+  backslashes: write a .py to the scratchpad with Write, then run it.
+- `tree_sitter_cpp` installed (required for C++ declarations); `tree_sitter_python`/`_c` are not.
+- Session cwd `Y:\SRC`; don't touch memohood/hermes-filetools; subagents only with owner's consent.
 
 ---
 

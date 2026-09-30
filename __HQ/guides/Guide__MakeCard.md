@@ -101,6 +101,25 @@ one section and reshapes Public API (other sections as for a module card):
 
 (`make_interface_card` already emits `## Package layout` and `### Re-exports` for these files.)
 
+## C/C++ / CUDA cards (`.h .hpp .cuh .c .cpp .cu …`)
+
+The stamp TAGS build conditions; it never decides which branch is "real". When you fill prose:
+- **`## Build facts` is fact — never edit it, never write prose there** (rebuilt every stamp). Read it
+  first: `pair:` (header <-> implementation), `defines what these headers declare`, the `#if` zones,
+  `included by` (the WHOLE tree, not just the stamped zone), seam hints, `opaque` ranges.
+- **Kind `conditional(X)`** on a deps row = the edge exists only when `X` holds (`GGML_USE_CUDA`).
+  The `Why` line says what the file uses that header FOR, and — if it matters — under which build.
+- **`condition: X`** under a `####` entry = the declaration exists only under `X`. Describe what it
+  does; say "only in X builds" if that changes how it is used.
+- **Header card** = the API. **Implementation card** lists only what the header does NOT declare;
+  its `How it works` explains the mechanism (tables of function pointers, registration, lazy init)
+  — the API itself is described on the header's card, not repeated.
+- **Seam hints** (`vtable`, `registry`, `dlopen`) are grep hits: confirm in code, then describe the
+  real connection in `## Runtime seams` (`--help-seams` for the Kind/Shape vocabulary).
+- **`opaque L..`** — the parser could not read that range (macro-generated code). Read the code
+  there with `get_codeblock`; do not guess. If a macro wraps declarations, tell the owner — it
+  belongs in `CPP_WRAPPER_MACROS` / `CPP_STRIP_MACROS` of the project config.
+
 ---
 
 ## RULES  (apply when filling prose — Part 1 Step 3 — and in the Part 2 fallback)
