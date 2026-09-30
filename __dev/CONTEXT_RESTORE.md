@@ -11,8 +11,11 @@ build of the mix). Plan09 closed (Vision10 executed): scan cache `tools/_cache/<
 family is for` (CARD_FORMAT 1.3.0; llama `ggml.h.md` 2637 -> 169 lines); `graph_from_cards --file`
 shows files WITHOUT cards from the include tree (`(no card)`, folded by folder; `--cards-only`).
 Registry hooks added: `import_line`, `api_families`, `source_edges` (contract ПОПРАВКИ 2–4).
-**Next: nothing queued.** Candidates: Grok fills prose on the new form (owner said earlier "too
-early" — the form is now stable); widen the llama zone by task (server, model loading).
+Then (same day): get_codeblock fixed for C headers (`#ifdef` frames, bodyless typedefs), `--name`
+(`get_codeblock/name_resolver.py`), C/C++ macros cut before parsing (`get_codeblock/cpp_source.py`).
+**Next (agreed with owner, in order):** `make_interface_card --all --stale`; fold Why by folder
+(written prose never folds); seam hints -> summary by container; families and `#if` zones WITHOUT
+line numbers (name anchors, usable with `--name`) — kills git noise. See tools TRACKER tail.
 
 **Read, in order:** tail of `__HQ/tools/__dev/TRACKER.md` → `__HQ/tools/__dev/vision/Vision10__cards-links-and-meaning.md`
 → `__HQ/tools/__dev/plans/Plan09__cards-links-and-meaning.md` → `__dev/DECISIONS.md` (last 4) →
