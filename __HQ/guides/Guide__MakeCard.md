@@ -109,11 +109,18 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
   `included by` (the WHOLE tree, not just the stamped zone), seam hints, `opaque` ranges.
 - **Kind `conditional(X)`** on a deps row = the edge exists only when `X` holds (`GGML_USE_CUDA`).
   The `Why` line says what the file uses that header FOR, and — if it matters — under which build.
-- **`condition: X`** under a `####` entry = the declaration exists only under `X`. Describe what it
-  does; say "only in X builds" if that changes how it is used.
-- **Header card** = the API. **Implementation card** lists only what the header does NOT declare;
-  its `How it works` explains the mechanism (tables of function pointers, registration, lazy init)
-  — the API itself is described on the header's card, not repeated.
+- **Header card = "API: in source"** (card-format 1.3.0). The header IS the interface, so the card
+  does not copy its signatures: the `API: in source — get_codeblock … --outline` line points at the
+  file, and a **family table** (fact: family, how many declarations, lines, who uses it by folder)
+  groups the API — by the author's section comments, else by name prefix. Your slot is
+  **`### What each family is for`**: ONE line per family — what that group is FOR and when a caller
+  reaches for it (read the header's comments in that line range first). Not a list of its functions,
+  not the signatures. Do not rename a family — the name is the key your line hangs on.
+- **`condition: X`** under a `####` entry (implementation cards) = the definition exists only under
+  `X`. Say "only in X builds" if that changes how it is used.
+- **Implementation card** lists only what the header does NOT declare; its `How it works` explains
+  the mechanism (tables of function pointers, registration, lazy init) — the API itself is on the
+  header's card, not repeated.
 - **Seam hints** (`vtable`, `registry`, `dlopen`) are grep hits: confirm in code, then describe the
   real connection in `## Runtime seams` (`--help-seams` for the Kind/Shape vocabulary).
 - **`opaque L..`** — the parser could not read that range (macro-generated code). Read the code
@@ -130,7 +137,8 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
   trailing `<!-- card-format: … -->` line are stamped by the tool. Leave them EXACTLY as generated: do
   NOT rename or reorder columns, do NOT rewrite a signature or a `consumers` line, do NOT rename a
   section heading, do NOT add / remove / reorder sections. You edit only the slots Step 3 names
-  (summary, the one-liner under each `####`, the `Why` bullets, the prose sections, and the `Runtime
+  (summary, the one-liner under each `####`, the `Why` bullets, the `What each family is for` bullets,
+  the prose sections, and the `Runtime
   seams` table's ROWS — those are yours to write, only the `Contract:` line above them is not).
 - **`(none)` IS A VALID ANSWER, NOT EMPTY** — for `Discrepancies` and the optional note under
   `External Dependencies`, write `(none)` when nothing applies; it is machine-readable and must stay,
