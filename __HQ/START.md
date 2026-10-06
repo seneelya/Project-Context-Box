@@ -51,6 +51,9 @@ and leave behind.
 
 ## Universal rules (language-independent)
 
+- Language: instructions English, everything else in the owner's language →
+  `__HQ/guides/Guide__Language.md`.
+
 - Edit a source file (`*.py`, `*.cpp`, `*.ts`, `*.go`, …) → in the SAME pass update its card in
   `__HQ/__map/` (cards are a cheap map of the code instead of reading the source).
 - Record progress as a **new file** in the folder `__HQ/TRACKER/` (`NNNN__slug.md`,

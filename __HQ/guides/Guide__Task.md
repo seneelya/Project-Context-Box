@@ -8,6 +8,7 @@ task around it; the executor (`Role__Exec`) walks it.
 > the what & why. EVERYTHING hard — read-list, steps, in→out contract, acceptance, tracker tokens —
 > is **ALWAYS English** (English binds procedure harder / fewer tokens; Russian is for creative
 > precision only, where the model produces better output in the working language).
+> General rule → `Guide__Language.md`.
 
 **Assume the executor did NOT read the plan.** A task must be self-sufficient — inside the task, put
 **direct links to every file the executor must read** to do the work:

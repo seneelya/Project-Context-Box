@@ -12,7 +12,7 @@ entry: skip it for the number and for the tail. No entries yet → `0001`. The s
 Latin, address then outcome (`Plan16-Task05-closed`), not a date and not `notes` /
 `update` / `session`. Several outcomes are several files. A correction is a new file.
 
-**Inside.** One claim, short enough to read the file whole. The marker line is English:
+**Inside.** One claim, short enough to read the file whole (language → `Guide__Language.md`). The marker line is English:
 `◐ <address>` · `✅ <address> done → next <address>` · `⏸ <address> — <why>`.
 The last line is always `→ next <address>`, copied from the newest entry. A fully
 deferred chain goes to `__HQ/plans/deferred/`, not a `⏸` file.

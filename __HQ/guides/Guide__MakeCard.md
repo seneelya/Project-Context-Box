@@ -1,6 +1,6 @@
 # Guide: MakeCard — write a code card (STAMP-FIRST)
 
-You are given **ONE source file**. Produce its **card**.
+You are given **ONE source file**. Produce its **card**. Cards are English (`Guide__Language.md`).
 
 ## What a card is
 
