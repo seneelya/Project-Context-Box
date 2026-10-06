@@ -3,21 +3,15 @@
 > Это для НАШЕЙ разработки шаблона (не путать с продуктовым `CONTEXT_RESTORE.md` в корне — тот для
 > downstream-проектов). Восстанавливаемся отсюда, снизу вверх, дёшево.
 
-## NEXT STEP (2026-09-30, end of session)
+## START — Plan09 closed; next = owner's call
 
-**Role now: reviewer of card prose in llama HQ.** Executor = Composer 2.5 (owner relays). Plan01 done
-(9 core cards). **Plan02** (66 cards, 6 batches, `y:\SRC\llama.cpp_mix\__HQ\plans\Plan02__card-prose-mix-zone.md`):
-Task01 + Task02 done and reviewed (TRACKER 0015); **Task03 next** (KV, test models, imatrix), then 04–06.
-Review method: re-stamp the batch's cards + `git diff` (prose must stay; Salvage / RENAMED = find the
-stamp bug), spot-check claims with `get_codeblock --name`, fix executor slips, turn them into rules in
-`__HQ/guides/Guide__MakeCard.md` (template), deploy (`py __dev/deploy_hq.py --target y:\SRC\llama.cpp_mix --apply`),
-restamp zone (`make_interface_card.py --all` from `y:\SRC`, zone = llama `STAMP_DIRS`), tracker entry.
-codebase-memory-mcp (`Y:\Tools\codebase-memory-mcp\`, owner fixed the `Y:\Tools` ACL; `Y:\SRC\.mcp.json`
-+ `.cursor\mcp.json`) works in Cursor; sees all of ggml-vulkan.cpp, blind to calls through `iface.*`
-tables (llama HQ `recon/subjects/moe-expert-parallel/FINDINGS.md` §4). Mix task: llama HQ
-`vision/Vision01__moe-expert-parallel.md`, first real step later = measure CUDA<->Vulkan hop cost.
+> This file is about the TEMPLATE and its tools only. A downstream project's state (plans, tracker,
+> task) lives in that project's own `__HQ/` — restore it from there, never from here.
 
-## START — Plan09 closed; next = owner's call (card prose by Grok on the 1.3.0 form?)
+**Testing tools on a downstream project's card prose** (how the template learns from an executor's
+output): re-stamp the batch's cards + `git diff` (prose must stay; Salvage / RENAMED = a stamp bug to
+find), spot-check claims with `get_codeblock --name`, turn executor slips into rules in
+`__HQ/guides/Guide__MakeCard.md`, commit tools, deploy (`py __dev/deploy_hq.py --target <project> --apply`).
 
 **Where we are (2026-09-30).** Plan08 (C/C++ stamp) closed except step 9 (clangd — needs a Ninja
 build of the mix). Plan09 closed (Vision10 executed): scan cache `tools/_cache/<root>-<hash>/`
@@ -28,8 +22,9 @@ Registry hooks added: `import_line`, `api_families`, `source_edges` (`stamp_lang
 Then (same day): get_codeblock fixed for C headers (`#ifdef` frames, bodyless typedefs), `--name`
 (`get_codeblock/name_resolver.py`), C/C++ macros cut before parsing (`get_codeblock/cpp_source.py`).
 Then: `--all --stale`, Why folded by folder, cards WITHOUT line numbers (anchors = names readable
-with `get_codeblock --name`; a line shift no longer rewrites a card). **Next: nothing queued** —
-card prose by Grok on the new form is the owner's call. Bump get_codeblock VERSION at session end.
+with `get_codeblock --name`; a line shift no longer rewrites a card). get_codeblock 0.7.0 (prototypes
+addressable, recovery after unparsable bodies). **Next: nothing queued** — owner's call. Bump
+get_codeblock VERSION at session end.
 
 **Read, in order:** tail of `__HQ/tools/__dev/TRACKER.md` → `__HQ/tools/__dev/vision/Vision10__cards-links-and-meaning.md`
 → `__HQ/tools/__dev/plans/Plan09__cards-links-and-meaning.md` → `__dev/DECISIONS.md` (last 4) →
@@ -40,16 +35,11 @@ Code via `get_codeblock` (outline → block), never whole files.
 a language plugs in as a registry entry (`stamp_langs/`, find_code_usage registries), never an
 `if lang ==`; no code before an explicit "поехали"; subagents only with consent.
 
-**Repos (3 gits):** template `t:\AgentsWork\ProjectStarter` · tools `…\__HQ\tools` (nested) ·
-`y:\SRC\llama.cpp_mix` (upstream `7fee17846`, branch `mix`; owner's stable build `y:\SRC\llama.cpp`
-at `2b129ccfa` is 66 commits older on the same line — don't touch it). llama's `__HQ/` has its own
-git (hidden by `.git/info/exclude`), config has `LANGUAGE=["cpp","python"]` + `CPP_*` keys, `__map`
-holds 37 C/C++ cards (zone: ggml/include, backend layer, ggml-vulkan, ggml-cuda core). Sync tools:
-`py __dev/deploy_hq.py --target y:\SRC\llama.cpp_mix --apply` — commit the tools repo FIRST, or the
+**Repos:** template `t:\AgentsWork\ProjectStarter` · tools `…\__HQ\tools` (nested git).
+C/C++ test bed: `y:\SRC\llama.cpp_mix` (its `__HQ/` has its own git; stamp zone = its config
+`STAMP_DIRS`, so `make_interface_card.py --all` there; don't touch the owner's `y:\SRC\llama.cpp`).
+Sync tools: `py __dev/deploy_hq.py --target <project> --apply` — commit the tools repo FIRST, or the
 deploy sees an unknown version as CONFLICT (then `--force <glob>` after checking the diff).
-Restamp the zone: `python llama.cpp_mix/__HQ/tools/make_interface_card.py --all --path ggml/include
---path ggml/src/ggml-backend.cpp,ggml/src/ggml-backend-impl.h,ggml/src/ggml-backend-reg.cpp,ggml/src/ggml-backend-dl.cpp,ggml/src/ggml-backend-dl.h
---path ggml/src/ggml-vulkan --path ggml/src/ggml-cuda/ggml-cuda.cu,ggml/src/ggml-cuda/common.cuh` (from `y:\SRC`).
 
 **Gotchas:**
 - Regression: `test/check.py` 121/0, `test_cardstamp.py` 155/0, `test_cpp.py` 140/0,
