@@ -3,7 +3,7 @@
 > Это для НАШЕЙ разработки шаблона (не путать с продуктовым `CONTEXT_RESTORE.md` в корне — тот для
 > downstream-проектов). Восстанавливаемся отсюда, снизу вверх, дёшево.
 
-## START — Plan09 closed; next = owner's call
+## START — REQ-012/013 done; next = owner's call
 
 > This file is about the TEMPLATE and its tools only. A downstream project's state (plans, tracker,
 > task) lives in that project's own `__HQ/` — restore it from there, never from here.
@@ -13,23 +13,15 @@ output): re-stamp the batch's cards + `git diff` (prose must stay; Salvage / REN
 find), spot-check claims with `get_codeblock --name`, turn executor slips into rules in
 `__HQ/guides/Guide__MakeCard.md`, commit tools, deploy (`py __dev/deploy_hq.py --target <project> --apply`).
 
-**Where we are (2026-09-30).** Plan08 (C/C++ stamp) closed except step 9 (clangd — needs a Ninja
-build of the mix). Plan09 closed (Vision10 executed): scan cache `tools/_cache/<root>-<hash>/`
-(zone restamp 31 -> 8 s); C/C++ header card = "API: in source" + family table + `### What each
-family is for` (CARD_FORMAT 1.3.0; llama `ggml.h.md` 2637 -> 169 lines); `graph_from_cards --file`
-shows files WITHOUT cards from the include tree (`(no card)`, folded by folder; `--cards-only`).
-Registry hooks added: `import_line`, `api_families`, `source_edges` (`stamp_langs/CONTRACT.md` amendments 2–4).
-Then (same day): get_codeblock fixed for C headers (`#ifdef` frames, bodyless typedefs), `--name`
-(`get_codeblock/name_resolver.py`), C/C++ macros cut before parsing (`get_codeblock/cpp_source.py`).
-Then: `--all --stale`, Why folded by folder, cards WITHOUT line numbers (anchors = names readable
-with `get_codeblock --name`; a line shift no longer rewrites a card). get_codeblock 0.7.0 (prototypes
-addressable, recovery after unparsable bodies). **Next: nothing queued** — owner's call. Bump
-get_codeblock VERSION at session end.
+**Where we are (2026-10-06).** Tools: get_codeblock 0.8.0 (REQ-013 YAML frontmatter in `.md`,
+REQ-012 shell `.sh` / `.ps1` / `.bat`, `--name`), CARD_FORMAT 1.3.0 with C/C++ cards — full state and
+the regression list in `__HQ/tools/__dev/CONTEXT_RESTORE.md`. Template: `__HQ/guides/Guide__Language.md`
+(instructions English, the rest in the owner's language), linked from START and the guides.
+**Next: nothing queued** — owner's call.
 
-**Read, in order:** tail of `__HQ/tools/__dev/TRACKER.md` → `__HQ/tools/__dev/vision/Vision10__cards-links-and-meaning.md`
-→ `__HQ/tools/__dev/plans/Plan09__cards-links-and-meaning.md` → `__dev/DECISIONS.md` (last 4) →
-if touching C/C++ code: `__HQ/tools/make_interface_card__TLDR.md` § C/C++ and Plan08 "Итог".
-Code via `get_codeblock` (outline → block), never whole files.
+**Read, in order:** `__HQ/tools/__dev/CONTEXT_RESTORE.md` (tools) → tail of `__dev/TRACKER.md` and
+`__dev/DECISIONS.md` (template) → the template doc you are about to change. Code via `get_codeblock`
+(outline → block), never whole files.
 
 **Owner's rules (standing):** tool plans/visions live in the TOOLS repo `__HQ/tools/__dev/`;
 a language plugs in as a registry entry (`stamp_langs/`, find_code_usage registries), never an
