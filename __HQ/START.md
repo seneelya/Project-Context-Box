@@ -42,9 +42,10 @@ anywhere — the owner tells you the full path of this file.
 | **`__HQ/Role__Recon.md`** | "investigate/map how [the foreign system] does X", "research the target system", "how does <host app> handle …" |
 
 **Restoring** ("we stopped at …", "continue") → first open **`__HQ/CONTEXT_RESTORE.md`**; HOW to read
-while restoring (outline → block, never whole) → **`__HQ/RULE_sessionRestore.md`**. If you were in
-the **Recon** role, its own journal `__HQ/recon/CONTEXT_RESTORE_RECON.md` is the more specific entry
-point — that role accumulates state outside the tracker.
+while restoring (outline → block, never whole) → **`__HQ/RULE_sessionRestore.md`**. A role that
+accumulates state outside the tracker keeps its own journal **`__HQ/CONTEXT_RESTORE_<ROLE>.md`**
+(project-owned; Recon's is `__HQ/recon/CONTEXT_RESTORE_RECON.md`) — if one exists for your role, it is
+the more specific entry point.
 
 **Ending a session** (or a compaction is near) → **`__HQ/RITUAL__session_end.md`** — what to check
 and leave behind.
@@ -85,7 +86,7 @@ Full addressing rules — in your role file.
 - **Plan index** → `__HQ/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
 - **Settled decisions** → `__HQ/DECISIONS.md` — locked calls + one-line why; **read before (re)designing, don't relitigate**. Owned by the **Plan** role.
 - **Lessons from closed plans** → grep `^## CARRY` in `__HQ/plans/done/` (deviations · smells · next-gen TODO — jump to the line, don't read whole plans). **Open contract-drift** → grep `KICKBACK` in `__HQ/` (Exec kicked a wrong contract back to Plan).
-- **Context restore** → `__HQ/CONTEXT_RESTORE.md` + the newest entry file in `__HQ/TRACKER/`.
+- **Context restore** → `__HQ/CONTEXT_RESTORE.md` + the newest entry file in `__HQ/TRACKER/` + your role's journal `__HQ/CONTEXT_RESTORE_<ROLE>.md` if it exists.
 - **How the whole scheme works** (roles, flow, naming — the big picture) → `__HQ/WORKFLOW.md`. Read this to understand how the project is organised.
 - **Intent / design (product)** → `__HQ/vision/` — WHY this *product* should work as it does; needed by the **Plan** role; NOT by a task executor.
 - **As-built docs** → `__HQ/docs/` — how the system works **NOW** (where things live, example configs, the real flow). A landed plan's lasting consequence, reconciled by the **Doc** role.

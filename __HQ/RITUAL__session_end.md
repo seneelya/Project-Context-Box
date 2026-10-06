@@ -32,8 +32,11 @@ Tests are deliberately NOT listed: they run constantly anyway, and the full pass
 ## Do
 
 - **Newest tracker file** — a new file in the folder `__HQ/TRACKER/` for what was done → `next …` (facts only). See `Guide__Tracker`.
-- **`__HQ/CONTEXT_RESTORE.md`** — prepare it for the next session: what to read, which role, what
-  not to do. How to restore → `__HQ/RULE_sessionRestore.md`.
+- **Your role's journal `__HQ/CONTEXT_RESTORE_<ROLE>.md`** — prepare it for the next session: state
+  the tracker doesn't hold, what to read, what not to do. No journal yet and the role keeps such
+  state → create it. The shared `__HQ/CONTEXT_RESTORE.md` is the template's redirect — don't write
+  project state into it (the next deploy reports it as CONFLICT). How to restore →
+  `__HQ/RULE_sessionRestore.md`.
 - **Closed tasks/plans** → `__HQ/plans/done/`, with `## CARRY` at the end (lessons, smells,
   do-not-reopen). Move a plan as a FAMILY; a single task only if the owner said so explicitly.
 - **A plan still IN PROGRESS, with compaction ahead** — append a `HANDOFF` section: data shape,
