@@ -10,6 +10,9 @@ the real restore method lives per-role.
 2. Which role were you in? (`Plan` / `Exec` / `CodeMap` / `CodeMapLocal` / `EnvSetup` / `Doc`.)
    Unclear → check `__HQ/START.md`, or ask the user.
 3. Open that role file (`__HQ/Role__*.md`) and follow its **Restore** section.
+   A role may keep its own journal for state the tracker doesn't hold: `__HQ/CONTEXT_RESTORE_<ROLE>.md`
+   (project-owned, the template never ships one; Recon's lives at `__HQ/recon/CONTEXT_RESTORE_RECON.md`).
+   One exists for your role → read it right after the role file.
 4. Check `git status` → what is half-done. Decide: continue if it is clear, else roll back the
    uncommitted changes and restart that unit. Unsure → **ask the user**.
 
