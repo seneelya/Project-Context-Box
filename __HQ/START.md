@@ -28,6 +28,8 @@ anywhere — the owner tells you the full path of this file.
 2. None fits / unclear → **ask the user**, return to step 1.
 3. Open the role file (`__HQ/Role__*.md`) and follow it strictly — it holds both the method
    and how to restore context for exactly that role.
+4. If **`__HQ/START__project.md`** exists, read it too: the project's OWN additions (extra roles,
+   rules, areas to respect). It is project-owned — the template never ships or overwrites it.
 
 ## Roles
 

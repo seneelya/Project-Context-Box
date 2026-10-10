@@ -13,6 +13,9 @@ the real restore method lives per-role.
    A role may keep its own journal for state the tracker doesn't hold: `__HQ/CONTEXT_RESTORE_<ROLE>.md`
    (project-owned, the template never ships one; Recon's lives at `__HQ/recon/CONTEXT_RESTORE_RECON.md`).
    One exists for your role → read it right after the role file.
+   The project may also keep one general journal, **`__HQ/CONTEXT_RESTORE_PROJECT.md`**
+   (project-owned, never shipped by the template): state, rules that cost mistakes, open items.
+   It exists → read it right after this file, before the role file.
 4. Check `git status` → what is half-done. Decide: continue if it is clear, else roll back the
    uncommitted changes and restart that unit. Unsure → **ask the user**.
 
