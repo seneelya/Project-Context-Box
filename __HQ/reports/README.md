@@ -16,6 +16,7 @@ If a same-day report of the same kind already exists, add a counter: `…_audit-
 ## Who writes here
 
 - **Auditor** (`Guide__AuditCards.md`) → `<date>_audit.md` (issue · file · what's wrong · recommendation).
+- **Reviewer** (`Role__Review.md`, episodic) → `<date>_review-<slug>.md` (header: commit, scope, verdict; then findings table).
 - **CodeMap orchestrator** (`Role__CodeMap*.md`) → progress / pass logs.
 
 Instruction files (guides, roles) hold ONLY instructions — never progress or reports.

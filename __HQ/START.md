@@ -40,6 +40,7 @@ anywhere — the owner tells you the full path of this file.
 | **`__HQ/Role__EnvSetup.md`** | "set up the environment", "how to run / test this", taking a new/foreign project |
 | **`__HQ/Role__Doc.md`** | "the plan is done, update the docs", "reconcile the as-built docs", "document what changed" |
 | **`__HQ/Role__Recon.md`** | "investigate/map how [the foreign system] does X", "research the target system", "how does <host app> handle …" |
+| **`__HQ/Role__Review.md`** | *(episodic)* "review <scope>", "check what landed", "second pair of eyes on this code" |
 
 **Restoring** ("we stopped at …", "continue") → first open **`__HQ/CONTEXT_RESTORE.md`**; HOW to read
 while restoring (outline → block, never whole) → **`__HQ/RULE_sessionRestore.md`**. A role that

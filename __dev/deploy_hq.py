@@ -12,6 +12,7 @@ WHAT IS DEPLOYED (template-owned; everything else in the project is left untouch
   - entry + rules, all INSIDE the HQ (Vision08 — nothing of ours outside __HQ/):
     __HQ/START.md, __HQ/CONTEXT_RESTORE.md, __HQ/RITUAL__session_end.md, __HQ/RULE_sessionRestore.md
   - __HQ/WORKFLOW.md, __HQ/Role__*.md, __HQ/guides/**
+  - __HQ/reports/README.md   (the folder's rules only; the reports <date>_*.md are project-owned)
   - __HQ/TRACKER/0000__rule.md   (the rule only; entry files NNNN__slug.md stay project-owned)
   - __HQ/tools/**   (minus .git / __delme / __dev / __pycache__ / test / _logs / .pytest_cache /
                      *.pyc / *.tmp / *.bak)
@@ -57,7 +58,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 _TOOLS_PREFIX = "__HQ/tools/"
 _TOOLS_EXCLUDE_PARTS = {".git", "__delme", "__dev", "__pycache__", "test", "_logs", "_cache", ".pytest_cache"}
 _HQ_ENTRY = {"__HQ/START.md", "__HQ/CONTEXT_RESTORE.md", "__HQ/RITUAL__session_end.md",
-             "__HQ/RULE_sessionRestore.md", "__HQ/WORKFLOW.md"}
+             "__HQ/RULE_sessionRestore.md", "__HQ/WORKFLOW.md",
+             "__HQ/reports/README.md"}   # the rules of the reports folder; the reports themselves stay project-owned
 # Entry files that used to live in the project ROOT (before Vision08 moved them into __HQ/):
 # their old-path history counts as "known versions" of the new path (a stale unedited copy is an
 # UPDATE, not a CONFLICT), and a leftover root copy is reported as ORPHAN.

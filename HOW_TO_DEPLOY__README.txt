@@ -15,7 +15,8 @@ Example:
 WHAT GETS DEPLOYED (template-owned — overwritten):
     everything lives INSIDE __HQ/ (Vision08) — nothing is written to the project root:
     __HQ/START.md, __HQ/CONTEXT_RESTORE.md, __HQ/RITUAL__session_end.md, __HQ/RULE_sessionRestore.md
-    __HQ/WORKFLOW.md, __HQ/Role__*.md (incl. Role__Recon), __HQ/guides/**
+    __HQ/WORKFLOW.md, __HQ/Role__*.md (incl. Role__Recon, Role__Review), __HQ/guides/**
+    __HQ/reports/README.md   (rules only — the reports themselves are project-owned, never touched)
     __HQ/TRACKER/0000__rule.md   (the rule only — the folder's entry files are not template)
     __HQ/tools/**  (minus .git / __delme / __pycache__ / test / _logs / .pytest_cache / *.tmp / *.pyc / *.bak)
     --init also creates __HQ/TRACKER/archive/
