@@ -43,8 +43,8 @@ The card comes with the **FACT** sections already filled:
   holds a `<|fillN|>` marker is reported by the validator as **awaiting agent** (a status, not an
   error): it means the prose pass isn't done yet. Fill or delete every directive.
 - Every slot carries the same marker; **its place says what to write** (the list in Step 3). The
-  `<!-- Fill each … -->` line above the H1 points to that list — the stamp writes it while a slot is
-  left and drops it on the next re-stamp once all are filled. Don't edit it. To fill a slot, replace
+  `<!-- Fill each … -->` line above the H1 points to that list — the stamp writes it on every card,
+  filled or not. Don't edit or delete it. To fill a slot, replace
   the marker itself (`<|fill7|>` is unique in the card — the whole old_string you need).
 
 ### Step 1b — if the card ALREADY exists → it MERGES (just re-run)
