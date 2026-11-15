@@ -39,9 +39,13 @@ The card comes with the **FACT** sections already filled:
 - `## Public API` — real signatures grouped by kind (`### Functions/Classes/…`); under each entry a
   fact line `consumers N:` + one file per line below it (who really imports it; `consumers 0` = nobody).
 - `## In-Project Dependencies`/`External Dependencies`; `## Package layout` (for a package/index file).
-- Prose slots are **directives** `<|Agent: … |>` — that is YOUR job (Step 3). Any card that still
-  holds a `<|Agent: … |>` marker is reported by the validator as **awaiting agent** (a status, not an
+- Prose slots are **directives** `<|fillN|>` — that is YOUR job (Step 3). Any card that still
+  holds a `<|fillN|>` marker is reported by the validator as **awaiting agent** (a status, not an
   error): it means the prose pass isn't done yet. Fill or delete every directive.
+- Every slot carries the same marker; **its place says what to write** (the list in Step 3). The
+  `<!-- Fill each … -->` line above the H1 points to that list — the stamp writes it while a slot is
+  left and drops it on the next re-stamp once all are filled. Don't edit it. To fill a slot, replace
+  the marker itself (`<|fill7|>` is unique in the card — the whole old_string you need).
 
 ### Step 1b — if the card ALREADY exists → it MERGES (just re-run)
 Re-running `make_interface_card --out` on an existing card **merges**: it refreshes the FACTS from the
@@ -65,11 +69,18 @@ parser is missing, the card is on the regex fallback, and pass the exact command
 Meanwhile continue on the fallback unless told otherwise.
 
 ### Step 3 — fill the prose (read the source ONCE), following the RULES below
+What to write in a `<|fillN|>` depends on WHERE it stands:
 - summary line under the H1 → one line: what the module does;
 - each `#### <symbol>` → one concise sentence (what it does + its role), OR **delete the directive
   line** if trivial;
-- `## In-Project Dependencies`'s `### Why these imports are used` bullets; `## How it works`;
-  `## Discrepancies`; `## Package layout`.
+- `### What each family is for` bullet (header cards) → what the family is for (see C/C++ below);
+- `## Package layout` → one line per submodule — what it holds;
+- `### Why these imports are used` bullet → what this file uses that import for;
+- `## External Dependencies` → one line ONLY if a lib above is non-obvious, else `(none)`; never
+  edit the import list itself;
+- `## How it works` → the actual mechanism/flow, precise — do NOT generalize a per-case detail to
+  "each/every" unless it holds for all;
+- `## Discrepancies` → docstring vs code contradictions, else `(none)`.
 - **KEEP the fact lines** (`consumers N: …`) — verified; never invent or alter them.
 - **`## Runtime seams`** — a connection the import graph can't see (dynamic load by path, a
   separate process it launches, a file/store shared with another process, an event bus). The
@@ -150,7 +161,7 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
   lines does not shorten anything: the next re-stamp puts them back and the card changes for nothing.
   Too noisy? Say so to the owner (the stamp's folding rules get fixed), don't edit it by hand.
 - **"write short does+role, or remove" removes the DIRECTIVE line, never the entry.** The `####`
-  signature and its `consumers` line always stay; drop only the `<|Agent:…|>` line when the name says
+  signature and its `consumers` line always stay; drop only the `<|fillN|>` line when the name says
   it all.
 - **THE `####` ENTRIES ARE CHOSEN BY THE STAMP — never replace one with a function you find more
   important.** An implementation card lists only what no header declares; a key function missing

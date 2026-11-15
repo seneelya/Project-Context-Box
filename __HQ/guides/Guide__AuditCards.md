@@ -84,7 +84,7 @@ Read every card under `__HQ/__map/`. Do not skip any — even a tiny one.
 - **A. Broken link** — a dependency `File Path` names a file/card not in the tree (check existence, don't open source).
 - **B. Junk in internal deps** — stdlib/external packages under In-Project Dependencies (they belong under External).
 - **C. Self-reference** — a card lists itself as a dependency.
-- **D. Placeholder / empty** — `<|Agent: … |>` left unfilled (validator flags this as *awaiting agent*),
+- **D. Placeholder / empty** — `<|fillN|>` left unfilled (validator flags this as *awaiting agent*),
   `(not processed)`, `...`, or an empty required section. `(none)` in `Discrepancies` or the
   `External Dependencies` note is a valid, machine-readable answer, NOT a placeholder — never flag or
   delete it. A MISSING `## Runtime seams` is never a placeholder either — it's optional and the stamp
@@ -95,7 +95,7 @@ Read every card under `__HQ/__map/`. Do not skip any — even a tiny one.
 
 ### Fix vs report
 - **Fix in place** the mechanical ones (junk lines, typos, self-refs, misplaced deps, private-in-API,
-  leftover `<|Agent: … |>` directives, stray placeholders).
+  leftover `<|fillN|>` directives, stray placeholders).
 - **Cannot fix** without re-generating (card broken/empty) → report it for the orchestrator to re-run creation.
 - **Never** change the card TEMPLATE, and **never** add information that isn't there.
 
