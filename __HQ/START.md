@@ -85,6 +85,8 @@ Full addressing rules — in your role file.
 - **Dev tools (your hands)** → `__HQ/tools/` — small CLIs (reverse usage index, code blocks, the
   card stamp, …). Catalog + how to run → **`__HQ/tools/TOOLS.md`** (router: pick a tool by task,
   then read its `<name>__TLDR.md`). Prefer them over reading whole files.
+- **Search the docs by meaning** ("where was this discussed?", exact words unknown) → byeori over
+  `__HQ` (or the project's docs). Not installed → install it. How → `__HQ/guides/Guide__DocSearch.md`.
 - **Plans and tasks** → `__HQ/plans/` (active); closed → `done/` / `superseded/`; deferred → `deferred/` (all under `__HQ/plans/`).
 - **Plan index** → `__HQ/plans/INDEX.md` — catalog of all plans, one line each (+ rough status). What plans exist at a glance; maintained by the **Plan** role.
 - **Settled decisions** → `__HQ/DECISIONS.md` — locked calls + one-line why; **read before (re)designing, don't relitigate**. Owned by the **Plan** role.

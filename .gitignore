@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 /__HQ/tools/
 !/__HQ/tools/CLONE_TOOLS_HERE.md
+.byeori/
