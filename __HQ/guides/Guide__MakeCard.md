@@ -90,7 +90,10 @@ What to write in a `<|fillN|>` depends on WHERE it stands:
   connection. If unsure where to look, `<file> --info-seams` greps known dynamic-call patterns
   first — it only points at candidate lines, YOU still decide Kind/Shape/Why. If the section
   ALREADY exists, don't touch its table (same rule as the fact sections below) — only its
-  `Contract: ...` line is machine-written and refreshed on every stamp.
+  `Contract: ...` line is machine-written and refreshed on every stamp. The same logic written
+  twice with no call between them (a CPU function and its GLSL shader) is Kind `twin`, Shape `equal`.
+- **`## Other`** — optional free text for what fits no other section (a rule, a caveat, history
+  that matters). The stamp never creates it and keeps it as is on every re-stamp.
 
 ### Step 4 — validate
 ```
