@@ -88,7 +88,8 @@ Read every card under `__HQ/__map/`. Do not skip any — even a tiny one.
   `(not processed)`, `...`, or an empty required section. `(none)` in `Discrepancies` or the
   `External Dependencies` note is a valid, machine-readable answer, NOT a placeholder — never flag or
   delete it. A MISSING `## Runtime seams` is never a placeholder either — it's optional and the stamp
-  never creates it empty; don't ask for one to be added.
+  never creates it empty; don't ask for one to be added. The same for `## Other` (optional free
+  text of the agent, card-format 1.5.0) — a valid section when present, never required.
 - **E. Structural mismatch** — an object in `## Discrepancies` that is not in the Public API.
 - **F. Private in public** — a leading-`_` object in Public API outside `Re-exports`/`Consumed internals`.
 - **G. Typos / inconsistent terminology.**
