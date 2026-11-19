@@ -135,6 +135,9 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
 - **Folded Why line** `` `folder/*` (64: acc, add-id, …) — `` = many imports of one folder with no
   prose yet: write ONE line for the group (what those headers give this file). If one of them
   deserves its own line, add `` - `name` — … `` separately — it then leaves the group for good.
+- **Own header Why** `` - `x` — its own header: the declarations this file implements. `` is stamped
+  ready on `x.cpp` (no `<|fillN|>`). Leave it; rewrite it only if the header gives this file more
+  than its own declarations — your text is kept on re-stamp.
 - **Implementation card** lists only what the header does NOT declare; its `How it works` explains
   the mechanism (tables of function pointers, registration, lazy init) — the API itself is on the
   header's card, not repeated.
