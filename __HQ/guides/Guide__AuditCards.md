@@ -20,6 +20,8 @@ Two layers of checking, cheapest first:
 # <name><ext>                     H1 = ONLY the file name (== the source file name)
 
 <one-line summary>                first non-empty line after H1 (blank line after H1 is fine)
+Why for importers: <one line>     optional (1.6.0): the module's role for EVERY importer; feeds
+                                  importers' `(auto)` Why lines; never the summary
 
 ## <H2 section>                   all required H2, in order; empty section body → (none)
 ### <H3 subsection>               only inside Public API: group by kind

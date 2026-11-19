@@ -71,6 +71,10 @@ Meanwhile continue on the fallback unless told otherwise.
 ### Step 3 — fill the prose (read the source ONCE), following the RULES below
 What to write in a `<|fillN|>` depends on WHERE it stands:
 - summary line under the H1 → one line: what the module does;
+- `Why for importers: …` (optional line right under the summary, card-format 1.6.0) → write it ONLY
+  when the module plays the same role for EVERY importer (a base type: `vec3.h` →
+  `Why for importers: 3D vector type for positions.`). The stamp copies it into each importer's Why
+  list as `(auto) …`. Skip it when importers use the module for different things;
 - each `#### <symbol>` → one concise sentence (what it does + its role), OR **delete the directive
   line** if trivial;
 - `### What each family is for` bullet (header cards) → what the family is for (see C/C++ below);
@@ -135,8 +139,8 @@ The stamp TAGS build conditions; it never decides which branch is "real". When y
 - **Folded Why line** `` `folder/*` (64: acc, add-id, …) — `` = many imports of one folder with no
   prose yet: write ONE line for the group (what those headers give this file). If one of them
   deserves its own line, add `` - `name` — … `` separately — it then leaves the group for good.
-- **`(auto)` Why line** (e.g. own header on `x.cpp`: `` - `x` — (auto) its own header: … ``) = written by
-  the stamp, rewritten on every stamp. Leave it. To say something of your own, rewrite the line and
+- **`(auto)` Why line** (own header on `x.cpp`: `` - `x` — (auto) its own header: … ``, or the dep's
+  `Why for importers:` line) = written by the stamp, rewritten on every stamp. Leave it. To say something of your own, rewrite the line and
   DROP `(auto)` — then it is yours and kept for good.
 - **Implementation card** lists only what the header does NOT declare; its `How it works` explains
   the mechanism (tables of function pointers, registration, lazy init) — the API itself is on the
