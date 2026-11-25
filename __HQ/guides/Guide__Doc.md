@@ -24,7 +24,8 @@ current; a small change is a couple of edited lines, a big new capability is a n
 **Mandatory:** every `##` / `###` section with content opens with a one-line callout right under
 the heading — `> [!info] <what this section holds or decided>`. `get_codeblock --outline` shows it
 after the title, so the map tells what is inside without opening the body. A section without it is
-not finished.
+not finished. The callout does not retell the heading: it adds what the title could not hold (the
+main fact, number or decision), one phrase of up to ~120 characters.
 
 How to cut the markdown so `--outline` is enough to open it — `Guide__Outline`. This file says
 what a Doc contains; that one says how any long markdown (docs included) must be headed and sized.
