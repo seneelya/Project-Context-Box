@@ -39,7 +39,15 @@ python -m byeori index __HQ && python -m byeori search __HQ "phrase with the con
 - Modes: `--mode hybrid` (default, meaning + exact words), `semantic`, `lexical`. `--json` for machine
   output.
 - Output = a file list, no lines. Then open the file with `get_codeblock --file F` (outline) and
-  `--line N --query`.
+  `--line N --query`. The outline shows each section's `> [!info]` note after its title: pick the
+  section by it.
+
+## Writing docs: the section note is mandatory
+
+Every `##` / `###` section with content opens with a one-line callout right under the heading:
+`> [!info] <what this section holds or decided>`. It names the concept in plain words, so the
+search finds the file, and the outline then shows which section to open. Details:
+`Guide__Doc`, `Guide__Outline`.
 
 ## Tips
 
