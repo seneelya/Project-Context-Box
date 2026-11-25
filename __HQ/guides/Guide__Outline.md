@@ -40,8 +40,8 @@ and the file gets read whole.
 In markdown the only split is an ATX heading. `--query` on a line in a section returns
 that section's `~content` body: everything up to the next heading, glued into one block.
 A numbered list, a bullet list, a `>` callout, a `---` rule, and a blank line do not
-break it. Of these, only a typed callout right under the heading shows in `--outline`,
-as the section's note.
+break it. Of these, only a typed callout shows in `--outline`, as the section's note
+(found anywhere in the section's own body; by type: summary, info, note, other, warning).
 
 Use that on purpose. Points that must be read together stay a short list under the
 heading, and one `--query` brings them all back. A point that must be found from the
