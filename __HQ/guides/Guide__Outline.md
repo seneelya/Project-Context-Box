@@ -27,7 +27,11 @@ and the file gets read whole.
 
 - The body under a heading should fit one `--query`. Aim for under ~60 lines; split
   before ~80. A section past ~120 lines with no child heading has failed.
-- Open the body with the one sentence the title could not hold. The rest is evidence.
+- Open the body with the one sentence the title could not hold, as a callout right under
+  the heading: `> [!info] <what the section holds or decided>`. One line, no details.
+  `--outline` shows it after the title (first 200 chars), so the map reads as a table of
+  contents with notes. Any callout type works; a plain `> quote` does not show.
+  The rest is evidence.
 - A fact you would grep for deserves its own heading. Do not leave it in the middle of
   a wall.
 
@@ -36,7 +40,8 @@ and the file gets read whole.
 In markdown the only split is an ATX heading. `--query` on a line in a section returns
 that section's `~content` body: everything up to the next heading, glued into one block.
 A numbered list, a bullet list, a `>` callout, a `---` rule, and a blank line do not
-break it and do not show up in `--outline`.
+break it. Of these, only a typed callout right under the heading shows in `--outline`,
+as the section's note.
 
 Use that on purpose. Points that must be read together stay a short list under the
 heading, and one `--query` brings them all back. A point that must be found from the
