@@ -8,12 +8,14 @@ A checklist of QUESTIONS, not a role. Skip what does not apply.
 python __HQ/tools/validate_cards.py
 python __HQ/tools/graph_from_cards.py --discrepancies
 python __HQ/tools/check_doc_info.py __HQ/docs
+python __HQ/tools/check_doc_names.py __HQ/docs
 ```
 
 Touched code → its card is restamped in the same pass. The graph catches what memory does not:
 a module with no card, an undeclared runtime seam. Touched docs → `check_doc_info` names the
 blocks where fewer than half of the sections carry their `> [!info]` summary; add them with the
-main fact (Guide__Doc). All runs take seconds.
+main fact (Guide__Doc); `check_doc_names` (rough) lists the quoted names and paths the code no
+longer has. All runs take seconds.
 
 Tests are deliberately NOT listed: they run constantly anyway, and the full pass is slow.
 
